@@ -5,8 +5,8 @@
 
 ## Build Requirements
 
-* [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2136151.html)
-* [Android SDK](https://developer.android.com/sdk/index.html#Other)
+* [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [Android SDK (not studio)](https://developer.android.com/studio/index.html#downloads)
 
 ## Setup
 
@@ -18,7 +18,7 @@ Homebrew requires [xcode](https://developer.apple.com/xcode/downloads/).
 
 Install Homebrew:
 
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 If you need to install `git` and clone the project, do that first:
 
@@ -29,7 +29,7 @@ If you need to install `git` and clone the project, do that first:
 
 Install Build requirements:
 
-    brew install caskroom/cask/brew-cask
+    brew tap caskroom/cask
     brew cask install java
     brew install android-sdk
     echo yes | android update sdk -a --filter "platform-tools,build-tools-20.0.0,android-20" --no-ui --force
