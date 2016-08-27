@@ -5,16 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Config;
 
 public class MenuScreen extends BaseScreen {
 
-    private SpriteBatch batch;
     private Texture img;
 
     public MenuScreen() {
-        batch = Assets.batch;
         img = Assets.mgr.get("images/spritesheet.png", Texture.class);
     }
 
@@ -22,6 +21,10 @@ public class MenuScreen extends BaseScreen {
     public void update(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
+        }
+
+        if (Gdx.input.justTouched()) {
+            LudumDare36.game.screen = new GameScreen();
         }
     }
 
