@@ -10,10 +10,7 @@ import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Sort;
-import lando.systems.ld36.entities.EightTrack;
-import lando.systems.ld36.entities.FlashDrive;
-import lando.systems.ld36.entities.GameObject;
-import lando.systems.ld36.entities.Player;
+import lando.systems.ld36.entities.*;
 import lando.systems.ld36.utils.Assets;
 
 import java.util.Comparator;
@@ -128,6 +125,13 @@ public class Level {
                 t.position.y = y;
                 t.isMoving = true;
                 objects.add(t);
+            }
+            else if (type.equals("betamax")) {
+                Betamax b = new Betamax();
+                b.position.x = x;
+                b.position.y = y;
+                b.isMoving = true;
+                objects.add(b);
             }
 //            else if (type.equals("...")) {
 //                new GameObject(this, x / 16, (y / 16) + 1, false);

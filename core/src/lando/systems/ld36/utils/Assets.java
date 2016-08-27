@@ -49,6 +49,9 @@ public class Assets {
     public static Animation eightTrackWalk;
     public static Animation eightTrackPunch;
 
+    public static Animation betamaxWalk;
+    public static Animation betamaxPunch;
+
 
     public static void load() {
         initialized = false;
@@ -128,6 +131,16 @@ public class Assets {
 
         Array<TextureAtlas.AtlasRegion> eightTrackPunchTextures = atlas.findRegions("Eight_Track_Punch");
         eightTrackPunch = new Animation(.1f, eightTrackPunchTextures);
+
+
+        betamaxWalk = new Animation(.15f, atlas.findRegions("Betamax_Walk"));
+        betamaxWalk.setPlayMode(Animation.PlayMode.LOOP);
+
+        Array<TextureAtlas.AtlasRegion> betamaxPunchTextures = atlas.findRegions("Betamax_Punch");
+        betamaxPunchTextures.add(betamaxPunchTextures.get(2));
+        betamaxPunchTextures.add(betamaxPunchTextures.get(1));
+        betamaxPunchTextures.add(betamaxPunchTextures.get(0));
+        betamaxPunch = new Animation(.1f, betamaxPunchTextures);
 
         return 1f;
     }
