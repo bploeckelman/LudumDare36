@@ -152,7 +152,7 @@ public class Assets {
     }
 
     private static ShaderProgram compileShaderProgram(FileHandle vertSource, FileHandle fragSource) {
-        ShaderProgram.pedantic = false;
+//        ShaderProgram.pedantic = false;
         final ShaderProgram shader = new ShaderProgram(vertSource, fragSource);
         if (!shader.isCompiled()) {
             throw new GdxRuntimeException("Failed to compile shader program:\n" + shader.getLog());

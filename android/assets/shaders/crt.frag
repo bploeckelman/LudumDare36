@@ -2,11 +2,10 @@
 precision mediump float;
 #endif
 
-#define RGBA(r, g, b, a)	vec4(float(r)/255.0, float(g)/255.0, float(b)/255.0, float(a)/255.0)
-
 varying vec2 v_texCoords; // Comes in from default.vert
 
 uniform sampler2D u_texture;
+uniform vec2 u_kWarp;
 
 //const vec3 kBackgroundColor = RGBA(0xff, 0x00, 0xff, 0xff).rgb; // test magenta
 
@@ -31,7 +30,7 @@ const float kHardPix = -3.0;
 // Display warp.
 // 0.0 = none
 // 1.0 / 8.0 = extreme
-const vec2 kWarp = vec2(1.0 / 16.0, 1.0 / 10.0);
+//const vec2 kWarp = vec2(1.0 / 16.0, 1.0 / 10.0);
 //const vec2 kWarp = vec2(0);
 
 // Amount of shadow mask.
@@ -167,8 +166,8 @@ vec2 warp(vec2 pos)
 {
 	pos = pos * 2.0 - 1.0;
 	pos *= vec2(
-		1.0 + (pos.y * pos.y) * kWarp.x,
-		1.0 + (pos.x * pos.x) * kWarp.y
+		1.0 + (pos.y * pos.y) * u_kWarp.x,
+		1.0 + (pos.x * pos.x) * u_kWarp.y
 	);
 	return pos * 0.5 + 0.5;
 }

@@ -71,10 +71,13 @@ public class LudumDare36 extends ApplicationAdapter {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         Assets.batch.setShader(Assets.crtShader);
+        Assets.crtShader.begin();
+        Assets.crtShader.setUniformf("u_kWarp", 1/10f, 1/10f);
         Assets.batch.setProjectionMatrix(screenCamera.combined);
         Assets.batch.begin();
         Assets.batch.draw(currentTexture, 0, currentFBO.getHeight(), currentFBO.getWidth(), -currentFBO.getHeight());
         Assets.batch.end();
+        Assets.crtShader.end();
         Assets.batch.setShader(null);
 
 
