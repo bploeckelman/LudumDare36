@@ -14,7 +14,7 @@ import lando.systems.ld36.utils.KeyMapping;
  * Created by dsgraham on 8/27/16.
  */
 public class Player extends GameObject {
-    public final float moveSpeed = 100;
+    public final float moveSpeed = 150;
     public boolean isMoving = false;
     public boolean isAttacking = false;
     public float timer = 0f;
@@ -32,7 +32,7 @@ public class Player extends GameObject {
         isFacingRight = true;
     }
 
-    public void update(float dt){
+    public void update(float dt, float leftEdge){
         super.update(dt);
 
         timer += dt;
@@ -63,6 +63,10 @@ public class Player extends GameObject {
         if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.DOWN)){
             position.y -= moveSpeed * dt;
             isMoving = true;
+        }
+
+        if (position.x < leftEdge){
+            position.x = leftEdge;
         }
 
         if(Assets.keyMapping.isActionPressed(KeyMapping.ACTION.ATTACK) && !isAttacking) {

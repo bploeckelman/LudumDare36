@@ -32,6 +32,7 @@ public class Assets {
     public static BitmapFont font;
 
     public static ShaderProgram fontShader;
+    public static ShaderProgram crtShader;
 
     public static TextureAtlas atlas;
 
@@ -92,6 +93,8 @@ public class Assets {
         if (!fontShader.isCompiled()) {
             Gdx.app.error("fontShader", "compilation failed:\n" + fontShader.getLog());
         }
+
+        crtShader = compileShaderProgram(Gdx.files.internal("shaders/default.vert"), Gdx.files.internal("shaders/crt.frag"));
 
         debugTexture = mgr.get("images/spritesheet.png", Texture.class);
         shadowTexture = mgr.get("images/shadow.png", Texture.class);

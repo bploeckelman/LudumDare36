@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.levels.Level;
@@ -30,6 +32,17 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             LudumDare36.game.screen = new MenuScreen();
         }
+        debugPlayer.update(dt, camera.position.x - camera.viewportWidth/2);
+
+        // have camera follow player
+        if (debugPlayer.position.x > camera.position.x - debugPlayer.width){
+            float screenXDif = debugPlayer.position.x - camera.position.x + debugPlayer.width;
+            camera.position.x += screenXDif * .05f;
+        }
+
+        //TODO: make camera stop at edge of level
+
+        camera.update();
 
         level.update(dt);
     }

@@ -16,7 +16,7 @@ import lando.systems.ld36.utils.Assets;
  */
 public class Level {
 
-    TiledMap map;
+    public TiledMap map;
     TiledMapRenderer renderer;
     TiledMapTileLayer groundLayer;
     Array<TiledMapImageLayer> imageLayers;

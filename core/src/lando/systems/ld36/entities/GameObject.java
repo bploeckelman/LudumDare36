@@ -9,8 +9,8 @@ import lando.systems.ld36.utils.Assets;
  * Created by dsgraham on 8/27/16.
  */
 public class GameObject {
-    public final float GRAVITY = -350;
-    public float jumpVelocity = 200;
+    public final float GRAVITY = -1000;
+    public float jumpVelocity = 300;
 
     public Vector3 position;
     public float verticalVelocity;
