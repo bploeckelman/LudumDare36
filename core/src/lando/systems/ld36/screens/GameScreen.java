@@ -20,8 +20,9 @@ public class GameScreen extends BaseScreen {
     public GameScreen() {
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
         camera.update();
-        level = new Level("levels/level0.tmx");
         debugPlayer = new Player();
+        level = new Level("levels/level0.tmx");
+        level.setPlayer(debugPlayer);
     }
 
     @Override
@@ -29,7 +30,8 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             LudumDare36.game.screen = new MenuScreen();
         }
-        debugPlayer.update(dt);
+
+        level.update(dt);
     }
 
     @Override
@@ -39,10 +41,7 @@ public class GameScreen extends BaseScreen {
 
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        {
-            level.render(batch, camera);
-            debugPlayer.render(batch);
-        }
+        level.render(batch, camera);
         batch.end();
     }
 

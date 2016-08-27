@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.utils.Assets;
 
 /**
@@ -20,8 +21,18 @@ public class Level {
     TiledMapTileLayer groundLayer;
     Array<TiledMapImageLayer> imageLayers;
 
+    Player player;
+
     public Level(String name) {
         load(name, Assets.batch);
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void update(float dt) {
+        player.update(dt);
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
@@ -30,6 +41,8 @@ public class Level {
             renderer.renderImageLayer(imageLayer);
         }
         renderer.renderTileLayer(groundLayer);
+
+        player.render(batch);
     }
 
     private void load(String mapName, SpriteBatch batch){
