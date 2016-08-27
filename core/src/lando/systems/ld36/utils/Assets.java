@@ -46,6 +46,9 @@ public class Assets {
     public static Animation flashWalk;
     public static Animation flashPunch;
 
+    public static Animation eightTrackWalk;
+    public static Animation eightTrackPunch;
+
 
     public static void load() {
         initialized = false;
@@ -118,6 +121,13 @@ public class Assets {
         flashPunchTextures.add(flashPunchTextures.get(1));
         flashPunchTextures.add(flashPunchTextures.get(0));
         flashPunch = new Animation(.1f, flashPunchTextures);
+
+
+        eightTrackWalk = new Animation(.15f, atlas.findRegions("Eight_Track_Walk"));
+        eightTrackWalk.setPlayMode(Animation.PlayMode.LOOP);
+
+        Array<TextureAtlas.AtlasRegion> eightTrackPunchTextures = atlas.findRegions("Eight_Track_Punch");
+        eightTrackPunch = new Animation(.1f, eightTrackPunchTextures);
 
         return 1f;
     }

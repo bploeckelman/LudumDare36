@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Sort;
+import lando.systems.ld36.entities.EightTrack;
 import lando.systems.ld36.entities.FlashDrive;
 import lando.systems.ld36.entities.GameObject;
 import lando.systems.ld36.entities.Player;
@@ -120,6 +121,13 @@ public class Level {
                 f.position.y = y;
                 f.isMoving = true;
                 objects.add(f);
+            }
+            else if (type.equals("eighttrack")) {
+                EightTrack t = new EightTrack();
+                t.position.x = x;
+                t.position.y = y;
+                t.isMoving = true;
+                objects.add(t);
             }
 //            else if (type.equals("...")) {
 //                new GameObject(this, x / 16, (y / 16) + 1, false);
