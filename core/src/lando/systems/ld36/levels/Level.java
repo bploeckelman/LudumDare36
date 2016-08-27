@@ -8,11 +8,14 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Sort;
 import lando.systems.ld36.entities.*;
 import lando.systems.ld36.utils.Assets;
 
+import java.awt.*;
 import java.util.Comparator;
 
 /**
@@ -27,6 +30,13 @@ public class Level {
     Array<TiledMapImageLayer> imageLayers;
 
     Player player;
+
+    private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
+        @Override
+        protected Rectangle newObject () {
+            return new Rectangle();
+        }
+    };
 
     Comparator<GameObject> gameObjectYPosComparator = new Comparator<GameObject>() {
         @Override
@@ -136,6 +146,30 @@ public class Level {
 //            else if (type.equals("...")) {
 //                new GameObject(this, x / 16, (y / 16) + 1, false);
 //            }
+        }
+    }
+
+    public float getLevelWidth(){
+        return groundLayer.getWidth() * groundLayer.getTileWidth();
+    }
+
+    public void getGroundTiles (Vector3 position, Array<Rectangle> tiles) {
+        int startX = (int)(position.x / groundLayer.getTileWidth()) -1;
+        int startY = (int)(position.y / groundLayer.getTileHeight()) -1;
+        int endX = startX + 4;
+        int endY = startY + 4;
+
+        rectPool.freeAll(tiles);
+        tiles.clear();
+        for (int y = startY; y <= endY; y++) {
+            for (int x = startX; x <= endX; x++) {
+                TiledMapTileLayer.Cell cell = groundLayer.getCell(x, y);
+                if (cell != null) {
+                    Rectangle rect = rectPool.obtain();
+                    rect.setBounds(x * 32, y * 32, 32, 32);
+                    tiles.add(rect);
+                }
+            }
         }
     }
 

@@ -32,7 +32,7 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             LudumDare36.game.screen = new MenuScreen();
         }
-        debugPlayer.update(dt, camera.position.x - camera.viewportWidth/2);
+        debugPlayer.update(dt, camera.position.x - camera.viewportWidth/2, level);
 
         // have camera follow player
         if (debugPlayer.position.x > camera.position.x - debugPlayer.width){
@@ -40,7 +40,9 @@ public class GameScreen extends BaseScreen {
             camera.position.x += screenXDif * .05f;
         }
 
-        //TODO: make camera stop at edge of level
+        if (camera.position.x > level.getLevelWidth() - (camera.viewportWidth/2))  {
+            camera.position.x = level.getLevelWidth() - (camera.viewportWidth/2);
+        }
 
         camera.update();
 
