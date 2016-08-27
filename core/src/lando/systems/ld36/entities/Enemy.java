@@ -6,13 +6,18 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 public class Enemy extends GameObject {
     public boolean isAttacking = false;
     public boolean isMoving = false;
+    public boolean isHurt = false;
+    public boolean isDead = false;
     public MutableFloat animationTimer;
     public float timer = 0f;
+    public float hurtCooldown = 0f;
+    public int health;
     public Animation walkAnimation;
     public Animation attackAnimation;
 
     public Enemy() {
         animationTimer = new MutableFloat(0f);
+        health = 1;
     }
 
     public void update(float dt) {
@@ -24,5 +29,22 @@ public class Enemy extends GameObject {
         else if (isMoving) {
             tex = walkAnimation.getKeyFrame(timer);
         }
+
+        if (isHurt) {
+            if ((hurtCooldown -= dt) <= 0f) {
+                hurtCooldown = 0f;
+                isHurt = false;
+            }
+        }
     }
+
+    public void getHurt(int dmg) {
+        if ((health -= dmg) <= 0) {
+            isDead = true;
+        } else {
+            isHurt = true;
+            hurtCooldown = 1f;
+        }
+    }
+
 }

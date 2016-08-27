@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -25,6 +26,7 @@ public class Assets {
     public static TweenManager tween;
 
     public static SpriteBatch batch;
+    public static ShapeRenderer shapes;
 
     public static KeyMapping keyMapping;
 
@@ -92,6 +94,7 @@ public class Assets {
         initialized = true;
 
         batch = new SpriteBatch();
+        shapes = new ShapeRenderer();
 
         Texture distText = new Texture(Gdx.files.internal("fonts/ubuntu.png"), true);
         distText.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.Linear);
@@ -147,6 +150,7 @@ public class Assets {
 
     public static void dispose() {
         batch.dispose();
+        shapes.dispose();
         font.dispose();
         mgr.clear();
     }

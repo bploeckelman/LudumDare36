@@ -60,9 +60,26 @@ public class Level {
         for (GameObject object : objects) {
             object.update(dt);
         }
-        player.update(dt);
 
         Sort.instance().sort(objects, gameObjectYPosComparator);
+
+        if (player.isAttacking) {
+            for (int i = objects.size - 1; i >= 0; --i) {
+                GameObject object = objects.get(i);
+                if (!(object instanceof Enemy)) continue;
+
+                final Enemy enemy = (Enemy) object;
+                if (!enemy.isHurt && player.doesHit(enemy)) {
+                    enemy.getHurt(1);
+                }
+
+                if (enemy.isDead) {
+                    // TODO: spawn cool explosion thing
+                    objects.removeIndex(i);
+                }
+            }
+        }
+
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {

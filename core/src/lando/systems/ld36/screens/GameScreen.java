@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.levels.Level;
+import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Config;
 
 /**
@@ -53,6 +54,8 @@ public class GameScreen extends BaseScreen {
     public void render(SpriteBatch batch) {
         Gdx.gl.glClearColor(Config.bgColor.r, Config.bgColor.g, Config.bgColor.b, Config.bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        Assets.shapes.setProjectionMatrix(camera.combined);
 
         batch.begin();
         batch.setProjectionMatrix(camera.combined);

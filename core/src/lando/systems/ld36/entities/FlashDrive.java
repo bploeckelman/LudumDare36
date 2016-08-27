@@ -1,5 +1,6 @@
 package lando.systems.ld36.entities;
 
+import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld36.utils.Assets;
 
 public class FlashDrive extends Enemy {
@@ -14,11 +15,13 @@ public class FlashDrive extends Enemy {
         height = tex.getRegionHeight();
 
         jumpVelocity = .05f;
+        hitBounds = new Rectangle(position.x, position.y, 32f, tex.getRegionHeight());
     }
 
     public void update(float dt) {
-        timer += dt;
-
         super.update(dt);
+        timer += dt;
+        hitBounds.x = position.x;
+        hitBounds.y = position.y;
     }
 }

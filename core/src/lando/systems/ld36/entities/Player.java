@@ -4,8 +4,6 @@ import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.primitives.MutableFloat;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -44,6 +42,7 @@ public class Player extends GameObject {
         attackAnimation = Assets.floppyPunch;
         isFacingRight = true;
         footBounds = new Rectangle();
+        hitBounds = new Rectangle(position.x + 15f, position.y + 4f, 30f, tex.getRegionHeight() - 8f);
     }
 
     public void update(float dt, float leftEdge, Level level){
@@ -124,10 +123,16 @@ public class Player extends GameObject {
         else if (isMoving) {
             tex = walkAnimation.getKeyFrame(timer);
         }
+
+        hitBounds.x = position.x + 15f;
+        hitBounds.y = position.y;
     }
 
     public void render(SpriteBatch batch){
         super.render(batch);
+    }
 
+    public boolean doesHit(Enemy enemy) {
+        return true;
     }
 }

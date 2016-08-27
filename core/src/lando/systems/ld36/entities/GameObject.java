@@ -1,7 +1,10 @@
 package lando.systems.ld36.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld36.utils.Assets;
 
@@ -9,10 +12,14 @@ import lando.systems.ld36.utils.Assets;
  * Created by dsgraham on 8/27/16.
  */
 public class GameObject {
+
+    public static boolean DRAW_BOUNDS = true;
+
     public final float GRAVITY = -200;
     public float jumpVelocity = 200;
 
     public Vector3 position;
+    public Rectangle hitBounds;
     public float verticalVelocity;
     public TextureRegion tex;
     public TextureRegion shadowTex;
@@ -26,6 +33,7 @@ public class GameObject {
         position = new Vector3();
         width = 50;
         height = width;
+        hitBounds = new Rectangle(position.x, position.y, tex.getRegionWidth(), tex.getRegionHeight());
     }
 
     public void update(float dt){
@@ -36,9 +44,6 @@ public class GameObject {
             verticalVelocity += GRAVITY * dt;
         }
         position.z += verticalVelocity * dt;
-
-
-
     }
 
     public void render(SpriteBatch batch){
@@ -47,6 +52,15 @@ public class GameObject {
             batch.draw(tex, position.x, position.y + position.z, width, height);
         } else {
             batch.draw(tex, position.x + (width/1.5f), position.y + position.z, -width, height);
+        }
+
+        if (DRAW_BOUNDS) {
+            batch.end();
+            Assets.shapes.setColor(Color.RED);
+            Assets.shapes.begin(ShapeRenderer.ShapeType.Line);
+            Assets.shapes.rect(hitBounds.x, hitBounds.y, hitBounds.width, hitBounds.height);
+            Assets.shapes.end();
+            batch.begin();
         }
     }
 
