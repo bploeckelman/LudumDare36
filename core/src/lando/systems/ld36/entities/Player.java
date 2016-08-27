@@ -1,5 +1,9 @@
 package lando.systems.ld36.entities;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -12,12 +16,18 @@ import lando.systems.ld36.utils.KeyMapping;
 public class Player extends GameObject {
     public final float moveSpeed = 100;
     public boolean isMoving = false;
+    public boolean isAttacking = false;
     public float timer = 0f;
+    public MutableFloat animationTimer;
     public Animation walkAnimation;
+    public Animation attackAnimation;
 
     public Player(){
+        animationTimer = new MutableFloat(0f);
         walkAnimation = Assets.floppyWalk;
         tex = walkAnimation.getKeyFrame(timer);
+
+        attackAnimation = Assets.floppyPunch;
     }
 
     public void update(float dt){
@@ -48,17 +58,36 @@ public class Player extends GameObject {
             isMoving = true;
         }
 
-        if (isMoving) {
-            tex = walkAnimation.getKeyFrame(timer);
+        if(Assets.keyMapping.isActionPressed(KeyMapping.ACTION.ATTACK) && !isAttacking) {
+            isAttacking = true;
+            animationTimer.setValue(0f);
+            Tween.to(animationTimer, -1, attackAnimation.getAnimationDuration())
+                .target(attackAnimation.getAnimationDuration())
+                .setCallback(new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        isAttacking = false;
+                    }
+                })
+                .start(Assets.tween);
 
-            if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT) &&
-                    Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT)) {
-                // do nothing?
-            } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) && tex.isFlipX()) {
-                tex.flip(true, false);
-            } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT) && !tex.isFlipX()) {
-                tex.flip(true, false);
-            }
+        }
+
+        if (isAttacking) {
+            tex = attackAnimation.getKeyFrame(animationTimer.floatValue());
+        }
+        else if (isMoving) {
+            tex = walkAnimation.getKeyFrame(timer);
+        }
+
+        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT) &&
+            Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT))
+        {
+            // do nothing?
+        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) && tex.isFlipX()) {
+            tex.flip(true, false);
+        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT) && !tex.isFlipX()) {
+            tex.flip(true, false);
         }
     }
 }

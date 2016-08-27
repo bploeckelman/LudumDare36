@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.ObjectMap;
  * Created by dsgraham on 8/27/16.
  */
 public class KeyMapping {
-    public enum ACTION {JUMP, LEFT, RIGHT, UP, DOWN}
+    public enum ACTION {JUMP, LEFT, RIGHT, UP, DOWN, ATTACK}
 
     public ObjectMap<ACTION, Integer> actionMap;
 
@@ -20,6 +20,7 @@ public class KeyMapping {
         actionMap.put(ACTION.RIGHT, Input.Keys.D);
         actionMap.put(ACTION.UP, Input.Keys.W);
         actionMap.put(ACTION.DOWN, Input.Keys.S);
+        actionMap.put(ACTION.ATTACK, Input.Keys.H);
     }
 
     public boolean isActionPressed(ACTION action){

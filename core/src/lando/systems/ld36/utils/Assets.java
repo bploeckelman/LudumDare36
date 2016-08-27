@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import lando.systems.ld36.utils.accessors.*;
 
@@ -39,6 +40,7 @@ public class Assets {
     public static Texture shadowTexture;
 
     public static Animation floppyWalk;
+    public static Animation floppyPunch;
 
 
     public static void load() {
@@ -96,6 +98,10 @@ public class Assets {
 
         floppyWalk = new Animation(.15f, atlas.findRegions("Floppy_Walk"));
         floppyWalk.setPlayMode(Animation.PlayMode.LOOP);
+        Array<TextureAtlas.AtlasRegion> floppyPunchTextures = atlas.findRegions("Floppy_Punch");
+        floppyPunchTextures.add(floppyPunchTextures.get(1));
+        floppyPunchTextures.add(floppyPunchTextures.get(0));
+        floppyPunch = new Animation(.1f, floppyPunchTextures);
 
         return 1f;
     }
