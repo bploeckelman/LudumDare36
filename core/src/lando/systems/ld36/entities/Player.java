@@ -50,6 +50,15 @@ public class Player extends GameObject {
 
         if (isMoving) {
             tex = walkAnimation.getKeyFrame(timer);
+
+            if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT) &&
+                    Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT)) {
+                // do nothing?
+            } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) && tex.isFlipX()) {
+                tex.flip(true, false);
+            } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT) && !tex.isFlipX()) {
+                tex.flip(true, false);
+            }
         }
     }
 }
