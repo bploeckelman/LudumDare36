@@ -15,11 +15,13 @@ public class GameObject {
     public Vector3 position;
     public float verticalVelocity;
     public TextureRegion tex;
+    public TextureRegion shadowTex;
     public boolean facingLeft;
     public float width;
 
     public GameObject(){
         tex = new TextureRegion(Assets.debugTexture, 50, 50);
+        shadowTex = new TextureRegion(Assets.shadowTexture, 32, 32);
         position = new Vector3();
         width = 50;
     }
@@ -38,6 +40,7 @@ public class GameObject {
     }
 
     public void render(SpriteBatch batch){
+        batch.draw(shadowTex, position.x, position.y, width, width);
         batch.draw(tex, position.x, position.y + position.z, width, width);
     }
 

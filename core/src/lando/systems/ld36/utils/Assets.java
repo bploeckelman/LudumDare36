@@ -34,6 +34,7 @@ public class Assets {
 
     public static boolean initialized;
     public static Texture debugTexture;
+    public static Texture shadowTexture;
 
 
     public static void load() {
@@ -60,7 +61,8 @@ public class Assets {
         params.magFilter = Texture.TextureFilter.Linear;
 
         mgr = new AssetManager();
-        mgr.load("images/spritesheet.png", Texture.class);
+        mgr.load("images/spritesheet.png", Texture.class, params);
+        mgr.load("images/shadow.png", Texture.class, params);
 
         keyMapping = new KeyMapping();
     }
@@ -83,6 +85,7 @@ public class Assets {
         }
 
         debugTexture = mgr.get("images/spritesheet.png", Texture.class);
+        shadowTexture = mgr.get("images/shadow.png", Texture.class);
 
         return 1f;
     }
