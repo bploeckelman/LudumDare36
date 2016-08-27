@@ -43,6 +43,9 @@ public class Assets {
     public static Animation floppyWalk;
     public static Animation floppyPunch;
 
+    public static Animation flashWalk;
+    public static Animation flashPunch;
+
 
     public static void load() {
         initialized = false;
@@ -105,6 +108,16 @@ public class Assets {
         floppyPunchTextures.add(floppyPunchTextures.get(1));
         floppyPunchTextures.add(floppyPunchTextures.get(0));
         floppyPunch = new Animation(.1f, floppyPunchTextures);
+
+
+        flashWalk = new Animation(.15f, atlas.findRegions("Flash_Walk"));
+        flashWalk.setPlayMode(Animation.PlayMode.LOOP);
+
+        Array<TextureAtlas.AtlasRegion> flashPunchTextures = atlas.findRegions("Flash_Punch");
+        flashPunchTextures.add(flashPunchTextures.get(2));
+        flashPunchTextures.add(flashPunchTextures.get(1));
+        flashPunchTextures.add(flashPunchTextures.get(0));
+        flashPunch = new Animation(.1f, flashPunchTextures);
 
         return 1f;
     }
