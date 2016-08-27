@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Sort;
+import lando.systems.ld36.entities.FlashDrive;
 import lando.systems.ld36.entities.GameObject;
 import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.utils.Assets;
@@ -112,6 +113,13 @@ public class Level {
                 p.position.x = x;
                 p.position.y = y;
                 objects.add(p);
+            }
+            else if (type.equals("flashdrive")) {
+                FlashDrive f = new FlashDrive();
+                f.position.x = x;
+                f.position.y = y;
+                f.isMoving = true;
+                objects.add(f);
             }
 //            else if (type.equals("...")) {
 //                new GameObject(this, x / 16, (y / 16) + 1, false);
