@@ -21,6 +21,7 @@ public class Player extends GameObject {
     public MutableFloat animationTimer;
     public Animation walkAnimation;
     public Animation attackAnimation;
+    public boolean isFacingRight;
 
     public Player(){
         animationTimer = new MutableFloat(0f);
@@ -28,6 +29,7 @@ public class Player extends GameObject {
         tex = walkAnimation.getKeyFrame(timer);
 
         attackAnimation = Assets.floppyPunch;
+        isFacingRight = true;
     }
 
     public void update(float dt){
@@ -41,14 +43,19 @@ public class Player extends GameObject {
         }
 
         // TODO: Don't allow movement off of the screen;
-        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT)){
+        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) &&
+                Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)){
+            // Do nothing
+        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT)){
             position.x += moveSpeed * dt;
             isMoving = true;
-        }
-        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)){
+            isFacingRight = true;
+        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)){
             position.x -= moveSpeed * dt;
             isMoving = true;
+            isFacingRight = false;
         }
+
         if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.UP)){
             position.y += moveSpeed * dt;
             isMoving = true;
@@ -80,13 +87,9 @@ public class Player extends GameObject {
             tex = walkAnimation.getKeyFrame(timer);
         }
 
-        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT) &&
-            Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT))
-        {
-            // do nothing?
-        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) && tex.isFlipX()) {
+        if (isFacingRight && tex.isFlipX()) {
             tex.flip(true, false);
-        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT) && !tex.isFlipX()) {
+        } else if (!isFacingRight && !tex.isFlipX()) {
             tex.flip(true, false);
         }
     }
