@@ -25,12 +25,15 @@ public class Assets {
 
     public static SpriteBatch batch;
 
+    public static KeyMapping keyMapping;
+
     public static GlyphLayout glyphLayout;
     public static BitmapFont font;
 
     public static ShaderProgram fontShader;
 
     public static boolean initialized;
+    public static Texture debugTexture;
 
 
     public static void load() {
@@ -58,6 +61,8 @@ public class Assets {
 
         mgr = new AssetManager();
         mgr.load("images/spritesheet.png", Texture.class);
+
+        keyMapping = new KeyMapping();
     }
 
     public static float update() {
@@ -76,6 +81,8 @@ public class Assets {
         if (!fontShader.isCompiled()) {
             Gdx.app.error("fontShader", "compilation failed:\n" + fontShader.getLog());
         }
+
+        debugTexture = mgr.get("images/spritesheet.png", Texture.class);
 
         return 1f;
     }

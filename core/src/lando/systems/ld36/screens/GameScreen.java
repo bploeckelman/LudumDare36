@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import lando.systems.ld36.LudumDare36;
+import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.utils.Config;
 
 import static lando.systems.ld36.utils.Assets.batch;
@@ -20,11 +21,13 @@ public class GameScreen extends BaseScreen {
     TiledMapRenderer mapRenderer;
     TiledMapTileLayer groundLayer;
     TiledMapImageLayer backgroundLayer;
+    Player debugPlayer;
 
     public GameScreen() {
         loadMap("levels/level0.tmx");
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
         camera.update();
+        debugPlayer = new Player();
     }
 
     @Override
@@ -32,6 +35,7 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             LudumDare36.game.screen = new MenuScreen();
         }
+        debugPlayer.update(dt);
     }
 
     @Override
@@ -45,6 +49,7 @@ public class GameScreen extends BaseScreen {
         {
             mapRenderer.renderImageLayer(backgroundLayer);
             mapRenderer.renderTileLayer(groundLayer);
+            debugPlayer.render(batch);
         }
         batch.end();
     }
