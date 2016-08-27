@@ -70,7 +70,7 @@ public class LudumDare36 extends ApplicationAdapter {
         currentTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-//        Assets.batch.setShader(Assets.crtShader);
+        Assets.batch.setShader(Assets.crtShader);
         Assets.batch.setProjectionMatrix(screenCamera.combined);
         Assets.batch.begin();
         Assets.batch.draw(currentTexture, 0, currentFBO.getHeight(), currentFBO.getWidth(), -currentFBO.getHeight());
