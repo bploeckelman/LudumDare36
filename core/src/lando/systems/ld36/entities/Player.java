@@ -28,6 +28,9 @@ public class Player extends GameObject {
         walkAnimation = Assets.floppyWalk;
         tex = walkAnimation.getKeyFrame(timer);
 
+        width = tex.getRegionWidth();
+        height = tex.getRegionHeight();
+
         attackAnimation = Assets.floppyPunch;
         isFacingRight = true;
     }

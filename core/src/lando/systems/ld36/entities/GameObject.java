@@ -18,12 +18,14 @@ public class GameObject {
     public TextureRegion shadowTex;
     public boolean facingLeft;
     public float width;
+    public float height;
 
     public GameObject(){
         tex = new TextureRegion(Assets.debugTexture, 50, 50);
         shadowTex = new TextureRegion(Assets.shadowTexture, 32, 32);
         position = new Vector3();
         width = 50;
+        height = width;
     }
 
     public void update(float dt){
@@ -40,8 +42,8 @@ public class GameObject {
     }
 
     public void render(SpriteBatch batch){
-        batch.draw(shadowTex, position.x, position.y, width, width);
-        batch.draw(tex, position.x, position.y + position.z, width, width);
+        batch.draw(shadowTex, position.x, position.y, width, height);
+        batch.draw(tex, position.x, position.y + position.z, width, height);
     }
 
 
