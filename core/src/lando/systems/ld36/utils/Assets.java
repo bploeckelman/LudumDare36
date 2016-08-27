@@ -32,9 +32,13 @@ public class Assets {
 
     public static ShaderProgram fontShader;
 
+    public static TextureAtlas atlas;
+
     public static boolean initialized;
     public static Texture debugTexture;
     public static Texture shadowTexture;
+
+    public static Animation floppyWalk;
 
 
     public static void load() {
@@ -64,6 +68,9 @@ public class Assets {
         mgr.load("images/spritesheet.png", Texture.class, params);
         mgr.load("images/shadow.png", Texture.class, params);
 
+        atlas = new TextureAtlas(Gdx.files.internal("sprites.atlas"));
+
+
         keyMapping = new KeyMapping();
     }
 
@@ -86,6 +93,9 @@ public class Assets {
 
         debugTexture = mgr.get("images/spritesheet.png", Texture.class);
         shadowTexture = mgr.get("images/shadow.png", Texture.class);
+
+        floppyWalk = new Animation(.15f, atlas.findRegions("Floppy_Walk"));
+        floppyWalk.setPlayMode(Animation.PlayMode.LOOP);
 
         return 1f;
     }
