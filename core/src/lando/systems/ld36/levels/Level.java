@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -15,7 +16,6 @@ import com.badlogic.gdx.utils.Sort;
 import lando.systems.ld36.entities.*;
 import lando.systems.ld36.utils.Assets;
 
-import java.awt.*;
 import java.util.Comparator;
 
 /**
@@ -166,7 +166,7 @@ public class Level {
                 TiledMapTileLayer.Cell cell = groundLayer.getCell(x, y);
                 if (cell != null) {
                     Rectangle rect = rectPool.obtain();
-                    rect.setBounds(x * 32, y * 32, 32, 32);
+                    rect.set(x * 32, y * 32, 32, 32);
                     tiles.add(rect);
                 }
             }

@@ -9,12 +9,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.KeyMapping;
-
-import java.awt.*;
 
 /**
  * Created by dsgraham on 8/27/16.
@@ -85,10 +84,10 @@ public class Player extends GameObject {
         position.x = MathUtils.clamp(position.x, leftEdge, level.getLevelWidth() - (width/2)) ;
 
         level.getGroundTiles(position, tiles);
-        footBounds.setRect(position.x + 10, position.y, 45, 5);
+        footBounds.set(position.x + 10, position.y, 45, 5);
         boolean falling = true;
         for (Rectangle tile : tiles){
-            if (footBounds.intersects(tile) || tile.contains(footBounds)){
+            if (footBounds.overlaps(tile) || tile.contains(footBounds)){
                 falling = false;
                 break;
             }
