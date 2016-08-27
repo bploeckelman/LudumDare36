@@ -4,29 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.*;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.entities.Player;
+import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Config;
-
-import static lando.systems.ld36.utils.Assets.batch;
 
 /**
  * Created by Brian on 8/27/2016.
  */
 public class GameScreen extends BaseScreen {
 
-    TiledMap map;
-    TiledMapRenderer mapRenderer;
-    TiledMapTileLayer groundLayer;
-    TiledMapImageLayer backgroundLayer;
     Player debugPlayer;
+    Level level;
 
     public GameScreen() {
-        loadMap("levels/level0.tmx");
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
         camera.update();
+        level = new Level("levels/level0.tmx");
         debugPlayer = new Player();
     }
 
@@ -43,27 +37,13 @@ public class GameScreen extends BaseScreen {
         Gdx.gl.glClearColor(Config.bgColor.r, Config.bgColor.g, Config.bgColor.b, Config.bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        mapRenderer.setView(camera);
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
         {
-            mapRenderer.renderImageLayer(backgroundLayer);
-            mapRenderer.renderTileLayer(groundLayer);
+            level.render(batch, camera);
             debugPlayer.render(batch);
         }
         batch.end();
-    }
-
-    private void loadMap(String mapName){
-        final TmxMapLoader mapLoader = new TmxMapLoader();
-
-        map = mapLoader.load(mapName);
-//        loadMapObjects();
-
-        mapRenderer = new OrthogonalTiledMapRenderer(map, 1f, batch);
-
-        backgroundLayer = (TiledMapImageLayer) map.getLayers().get("background");
-        groundLayer = (TiledMapTileLayer) map.getLayers().get("ground");
     }
 
 }
