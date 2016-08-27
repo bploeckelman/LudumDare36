@@ -21,7 +21,6 @@ public class Player extends GameObject {
     public MutableFloat animationTimer;
     public Animation walkAnimation;
     public Animation attackAnimation;
-    public boolean isFacingRight;
 
     public Player(){
         animationTimer = new MutableFloat(0f);
@@ -92,12 +91,6 @@ public class Player extends GameObject {
         }
         else if (isMoving) {
             tex = walkAnimation.getKeyFrame(timer);
-        }
-
-        if (isFacingRight && tex.isFlipX()) {
-            tex.flip(true, false);
-        } else if (!isFacingRight && !tex.isFlipX()) {
-            tex.flip(true, false);
         }
     }
 }

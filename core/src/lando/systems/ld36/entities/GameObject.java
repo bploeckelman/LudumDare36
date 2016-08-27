@@ -16,7 +16,7 @@ public class GameObject {
     public float verticalVelocity;
     public TextureRegion tex;
     public TextureRegion shadowTex;
-    public boolean facingLeft;
+    public boolean isFacingRight = true;
     public float width;
     public float height;
 
@@ -43,7 +43,11 @@ public class GameObject {
 
     public void render(SpriteBatch batch){
         batch.draw(shadowTex, position.x, position.y, width, height);
-        batch.draw(tex, position.x, position.y + position.z, width, height);
+        if (isFacingRight) {
+            batch.draw(tex, position.x, position.y + position.z, width, height);
+        } else {
+            batch.draw(tex, position.x + (width/2), position.y + position.z, -width, height);
+        }
     }
 
 
