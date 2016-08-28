@@ -16,22 +16,6 @@ import lando.systems.ld36.utils.Assets;
 
 public class Enemy extends GameObject {
 
-    /**
-     * Simple State Machine for Enemies
-     */
-    enum ACTION {
-        /**
-         * Wander around aimlessly
-         */
-        WANDER,
-        /**
-         * Chase the player
-         */
-        CHASE,
-        /**
-         * Wait until they are just on screen
-         */
-        WAIT}
     public boolean isAttacking = false;
     public boolean isMoving = false;
     public boolean isHurt = false;
@@ -41,7 +25,6 @@ public class Enemy extends GameObject {
     public int health;
     public Animation walkAnimation;
     public Animation attackAnimation;
-    public ACTION currentState;
     public StateMachine stateMachine;
 
 
@@ -51,7 +34,6 @@ public class Enemy extends GameObject {
         animationTimer = new MutableFloat(0f);
         health = 5;
 
-        currentState = ACTION.CHASE;
         moveSpeed = 50;
 
         initializeStates();
