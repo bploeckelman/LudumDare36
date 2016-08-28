@@ -1,6 +1,7 @@
 package lando.systems.ld36.entities;
 
 import aurelienribon.tweenengine.primitives.MutableFloat;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.LudumDare36;
@@ -11,6 +12,7 @@ import lando.systems.ld36.ai.states.ChaseState;
 import lando.systems.ld36.ai.states.WaitState;
 import lando.systems.ld36.ai.states.WanderState;
 import lando.systems.ld36.levels.Level;
+import lando.systems.ld36.utils.Assets;
 
 public class Enemy extends GameObject {
 
@@ -105,6 +107,7 @@ public class Enemy extends GameObject {
     public void getHurt(int dmg, int dir) {
         if ((health -= dmg) <= 0) {
             dead = true;
+            Assets.particles.addParticle(hitBounds, Color.WHITE);
         } else {
             LudumDare36.game.wobbleScreen();
             isHurt = true;

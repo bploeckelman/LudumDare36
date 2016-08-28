@@ -18,12 +18,14 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import lando.systems.ld36.utils.accessors.*;
+import lando.systems.ld36.utils.particles.ParticleManager;
 
 
 public class Assets {
 
     public static AssetManager mgr;
     public static TweenManager tween;
+    public static ParticleManager particles;
 
     public static SpriteBatch batch;
     public static ShapeRenderer shapes;
@@ -93,6 +95,7 @@ public class Assets {
         mgr.load("images/spritesheet.png", Texture.class, nearestParams);
         mgr.load("images/shadow.png", Texture.class, linearParams);
         mgr.load("images/title-screen.png", Texture.class, linearParams);
+        mgr.load("images/pcb-full.png", Texture.class, nearestParams);
 
         atlas = new TextureAtlas(Gdx.files.internal("sprites.atlas"));
 
@@ -107,6 +110,7 @@ public class Assets {
 
         batch = new SpriteBatch();
         shapes = new ShapeRenderer();
+        particles = new ParticleManager();
 
         Texture distText = new Texture(Gdx.files.internal("fonts/ubuntu.png"), true);
         distText.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.Linear);

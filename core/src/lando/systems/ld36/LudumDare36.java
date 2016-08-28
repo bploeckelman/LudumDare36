@@ -1,7 +1,6 @@
 package lando.systems.ld36;
 
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.equations.Bounce;
 import aurelienribon.tweenengine.equations.Elastic;
 import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import lando.systems.ld36.screens.BaseScreen;
-import lando.systems.ld36.screens.CharacterSelectScreen;
 import lando.systems.ld36.screens.MenuScreen;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Config;
@@ -63,15 +61,12 @@ public class LudumDare36 extends ApplicationAdapter {
 	public void render () {
         float dt = Math.min(Gdx.graphics.getDeltaTime(), 1f / 60f);
         Assets.tween.update(dt);
+        Assets.particles.update(dt);
         screen.update(dt);
 
-
         currentFBO.begin();
-
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
         screen.render(Assets.batch);
-
         currentFBO.end();
 
         Texture currentTexture = currentFBO.getColorBufferTexture();
@@ -87,8 +82,6 @@ public class LudumDare36 extends ApplicationAdapter {
         Assets.batch.end();
         Assets.crtShader.end();
         Assets.batch.setShader(null);
-
-
     }
 
     public void setScreen(BaseScreen screen){

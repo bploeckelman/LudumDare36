@@ -69,7 +69,9 @@ public class GameScreen extends BaseScreen {
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
         level.render(batch, camera);
+        Assets.particles.render(batch);
         batch.end();
+
         batch.begin();
         batch.setProjectionMatrix(hudCamera.combined);
         // Draw HUD stuff
