@@ -54,6 +54,9 @@ public class Assets {
     public static Animation betamaxWalk;
     public static Animation betamaxPunch;
 
+    public static Animation smartPhone;
+    public static Animation smartPhoneKnife;
+
     public static NinePatch hudPatch;
 
     public static TextureRegion white;
@@ -151,7 +154,17 @@ public class Assets {
         betamaxPunchTextures.add(betamaxPunchTextures.get(2));
         betamaxPunchTextures.add(betamaxPunchTextures.get(1));
         betamaxPunchTextures.add(betamaxPunchTextures.get(0));
-        betamaxPunch = new Animation(.1f, betamaxPunchTextures);
+        betamaxPunch = new Animation(.01f, betamaxPunchTextures);
+
+
+        smartPhone = new Animation(.15f, atlas.findRegions("Cell_Phone"));
+        smartPhone.setPlayMode(Animation.PlayMode.LOOP);
+
+        Array<TextureAtlas.AtlasRegion> smartPhoneKnifeTextures = atlas.findRegions("Cell_Phone_Knife");
+        smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(2));
+        smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(1));
+        smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(0));
+        smartPhoneKnife = new Animation(.01f, smartPhoneKnifeTextures);
 
         hudPatch = new NinePatch(atlas.findRegion("ninepatch-hud"), 24, 24, 24, 24);
 
