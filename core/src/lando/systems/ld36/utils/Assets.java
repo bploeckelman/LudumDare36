@@ -128,7 +128,7 @@ public class Assets {
         Array<TextureAtlas.AtlasRegion> floppyPunchTextures = atlas.findRegions("Floppy_Punch");
         floppyPunchTextures.add(floppyPunchTextures.get(1));
         floppyPunchTextures.add(floppyPunchTextures.get(0));
-        floppyPunch = new Animation(.1f, floppyPunchTextures);
+        floppyPunch = new Animation(.05f, floppyPunchTextures);
 
 
         flashWalk = new Animation(.15f, atlas.findRegions("Flash_Walk"));
@@ -138,13 +138,13 @@ public class Assets {
         flashPunchTextures.add(flashPunchTextures.get(2));
         flashPunchTextures.add(flashPunchTextures.get(1));
         flashPunchTextures.add(flashPunchTextures.get(0));
-        flashPunch = new Animation(.1f, flashPunchTextures);
+        flashPunch = new Animation(.05f, flashPunchTextures);
 
         eightTrackWalk = new Animation(.15f, atlas.findRegions("Eight_Track_Walk"));
         eightTrackWalk.setPlayMode(Animation.PlayMode.LOOP);
 
         Array<TextureAtlas.AtlasRegion> eightTrackPunchTextures = atlas.findRegions("Eight_Track_Punch");
-        eightTrackPunch = new Animation(.1f, eightTrackPunchTextures);
+        eightTrackPunch = new Animation(.08f, eightTrackPunchTextures);
 
 
         betamaxWalk = new Animation(.15f, atlas.findRegions("Betamax_Walk"));
@@ -154,7 +154,7 @@ public class Assets {
         betamaxPunchTextures.add(betamaxPunchTextures.get(2));
         betamaxPunchTextures.add(betamaxPunchTextures.get(1));
         betamaxPunchTextures.add(betamaxPunchTextures.get(0));
-        betamaxPunch = new Animation(.01f, betamaxPunchTextures);
+        betamaxPunch = new Animation(.03f, betamaxPunchTextures);
 
 
         smartPhone = new Animation(.15f, atlas.findRegions("Smart_Phone_Walk"));
