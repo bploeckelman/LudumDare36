@@ -15,14 +15,15 @@ public class FlashDrive extends Enemy {
         width = tex.getRegionWidth();
         height = tex.getRegionHeight();
 
-        jumpVelocity = .05f;
+        jumpVelocity = 50f;
         hitBounds = new Rectangle(position.x, position.y, 32f, tex.getRegionHeight());
     }
 
     public void update(float dt) {
         super.update(dt);
+        if (isOnGround()) jump();
         timer += dt;
         hitBounds.x = position.x;
-        hitBounds.y = position.y;
+        hitBounds.y = position.y + position.z;
     }
 }

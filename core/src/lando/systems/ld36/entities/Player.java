@@ -6,10 +6,7 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.KeyMapping;
@@ -111,8 +108,7 @@ public class Player extends GameObject {
         }
 
         hitBounds.x = position.x + 15f;
-        hitBounds.y = position.y;
-
+        hitBounds.y = position.y + position.z;
     }
 
     public void render(SpriteBatch batch){
