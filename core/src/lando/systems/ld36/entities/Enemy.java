@@ -2,9 +2,11 @@ package lando.systems.ld36.entities;
 
 import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld36.levels.Level;
 
 public class Enemy extends GameObject {
+    public Vector2 bounceBack;
     public boolean isAttacking = false;
     public boolean isMoving = false;
     public boolean isHurt = false;
@@ -18,7 +20,8 @@ public class Enemy extends GameObject {
     public Enemy(Level level) {
         super(level);
         animationTimer = new MutableFloat(0f);
-        health = 1;
+        health = 5;
+        bounceBack = new Vector2();
     }
 
     public void update(float dt) {
@@ -37,14 +40,22 @@ public class Enemy extends GameObject {
                 isHurt = false;
             }
         }
+
+        position.x += bounceBack.x;
+        position.y += bounceBack.y;
+        bounceBack.scl(0.8f);
+        if (bounceBack.epsilonEquals(0.0f, 0.0f, 0.1f)) {
+            bounceBack.set(0f, 0f);
+        }
     }
 
-    public void getHurt(int dmg) {
+    public void getHurt(int dmg, int dir) {
         if ((health -= dmg) <= 0) {
             dead = true;
         } else {
             isHurt = true;
             hurtCooldown = 1f;
+            bounceBack.set(dir * 10f, 0f);
         }
     }
 

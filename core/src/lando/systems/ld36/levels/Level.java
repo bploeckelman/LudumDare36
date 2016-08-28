@@ -71,8 +71,11 @@ public class Level {
                 if (!(object instanceof Enemy)) continue;
 
                 final Enemy enemy = (Enemy) object;
-                if (!enemy.isHurt && player.doesHit(enemy)) {
-                    enemy.getHurt(1);
+                if (!enemy.isHurt) {
+                    int dir = player.doesHit(enemy);
+                    if (dir != 0) {
+                        enemy.getHurt(player.damageAmount, dir);
+                    }
                 }
 
                 if (enemy.dead) {

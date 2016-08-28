@@ -23,6 +23,7 @@ public class Player extends GameObject {
     public boolean isMoving = false;
     public boolean isAttacking = false;
     public float timer = 0f;
+    public int damageAmount = 1;
     public MutableFloat animationTimer;
     public Animation walkAnimation;
     public Animation attackAnimation;
@@ -122,14 +123,18 @@ public class Player extends GameObject {
         super.render(batch);
     }
 
-    public boolean doesHit(Enemy enemy) {
+    public int doesHit(Enemy enemy) {
         if (enemy.position.y > (this.position.y - HIT_DELTA_Y)
          && enemy.position.y < (this.position.y + HIT_DELTA_Y)) {
-            return (isFacingRight && (enemy.hitBounds.x > hitBounds.x) && (enemy.hitBounds.x < hitBounds.x + hitBounds.width + HIT_DELTA_X))
-               || (!isFacingRight && (enemy.hitBounds.x + enemy.hitBounds.width < hitBounds.x + hitBounds.width)
-                                  && (enemy.hitBounds.x + enemy.hitBounds.width > hitBounds.x - HIT_DELTA_X));
+            if (isFacingRight && (enemy.hitBounds.x > hitBounds.x) && (enemy.hitBounds.x < hitBounds.x + hitBounds.width + HIT_DELTA_X)) {
+                return 1;
+            }
+            if (!isFacingRight && (enemy.hitBounds.x + enemy.hitBounds.width < hitBounds.x + hitBounds.width)
+                               && (enemy.hitBounds.x + enemy.hitBounds.width > hitBounds.x - HIT_DELTA_X)) {
+                return -1;
+            }
         }
-        return false;
+        return 0;
     }
 
     public void respawn(){
