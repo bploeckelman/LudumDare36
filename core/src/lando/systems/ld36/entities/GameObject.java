@@ -20,7 +20,6 @@ public class GameObject {
     public static boolean DRAW_BOUNDS = false;
 
     public final float INVULERABLITIYDELAY = 3f;
-    public final float INVULERABLITIYFLASHSPEED = .5f;
     public final float GRAVITY = -200;
     public float jumpVelocity = 200;
     public float moveSpeed;
@@ -46,6 +45,7 @@ public class GameObject {
     public Array<Vector2> lastSafePlace;
     public float invunerableTimer;
     public Vector2 bounceBack;
+    public float invulerabilityFlashSpeed = .5f;
 
     public Vector2 movePoint;
     public Vector2 direction;
@@ -117,7 +117,7 @@ public class GameObject {
         // Flash the thing if it is invulnerable
         float alpha = 1;
         if (invunerableTimer > 0){
-            alpha = (invunerableTimer % INVULERABLITIYFLASHSPEED) * (1/INVULERABLITIYFLASHSPEED);
+            alpha = (invunerableTimer % invulerabilityFlashSpeed) * (1/ invulerabilityFlashSpeed);
         }
         batch.setColor(1,1,1,alpha);
         if (isFacingRight) {

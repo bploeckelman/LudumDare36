@@ -3,7 +3,9 @@ package lando.systems.ld36.entities;
 import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
-import lando.systems.ld36.ai.*;
+import lando.systems.ld36.LudumDare36;
+import lando.systems.ld36.ai.StateMachine;
+import lando.systems.ld36.ai.Transition;
 import lando.systems.ld36.ai.conditions.NearScreenCondition;
 import lando.systems.ld36.ai.states.ChaseState;
 import lando.systems.ld36.ai.states.WaitState;
@@ -104,8 +106,11 @@ public class Enemy extends GameObject {
         if ((health -= dmg) <= 0) {
             dead = true;
         } else {
+            LudumDare36.game.wobbleScreen();
             isHurt = true;
-            hurtCooldown = 1f;
+            hurtCooldown = 1f / dmg;
+            invunerableTimer = hurtCooldown;
+            invulerabilityFlashSpeed = 0.1f;
             bounceBack.set(dir * 10f, 0f);
         }
     }
