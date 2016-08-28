@@ -17,7 +17,7 @@ import lando.systems.ld36.utils.Assets;
  */
 public class GameObject {
 
-    public static boolean DRAW_BOUNDS = true;
+    public static boolean DRAW_BOUNDS = false;
 
     public final float INVULERABLITIYDELAY = 3f;
     public final float INVULERABLITIYFLASHSPEED = .5f;
