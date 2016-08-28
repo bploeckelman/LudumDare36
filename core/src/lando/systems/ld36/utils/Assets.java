@@ -35,6 +35,8 @@ public class Assets {
     public static GlyphLayout glyphLayout;
     public static BitmapFont font;
 
+    public static BitmapFont emuLogicFont;
+
     public static ShaderProgram fontShader;
     public static ShaderProgram crtShader;
 
@@ -129,6 +131,11 @@ public class Assets {
         if (!fontShader.isCompiled()) {
             Gdx.app.error("fontShader", "compilation failed:\n" + fontShader.getLog());
         }
+
+        Texture emuFontTexture = new Texture(Gdx.files.internal("fonts/emulogic-16pt.png"), true);
+        emuFontTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.Linear);
+        emuLogicFont = new BitmapFont(Gdx.files.internal("fonts/emulogic-16pt.fnt"),
+            new TextureRegion(emuFontTexture));
 
         crtShader = compileShaderProgram(Gdx.files.internal("shaders/default.vert"), Gdx.files.internal("shaders/crt.frag"));
 

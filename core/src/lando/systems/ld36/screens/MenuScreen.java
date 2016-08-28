@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.StringBuilder;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.entities.PlayerCharacter;
@@ -26,7 +28,13 @@ public class MenuScreen extends BaseScreen {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            LudumDare36.game.setScreen( new CharacterSelectScreen());
+            LudumDare36.game.setScreen(new TextScreen(new StringBuilder()
+                .append("The mighty technologies of yesteryear have fallen into the heap ")
+                .append("in humanities wake.  The evil internet is poised to destroy another ")
+                .append("of COUNCIL OF OBSOLETE TECHNOLOGIES.  We must save Tapetress... or ")
+                .append("she will be lost to history.")
+                .toString()
+            ));
         }
     }
 
