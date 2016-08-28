@@ -73,7 +73,7 @@ public class LudumDare36 extends ApplicationAdapter {
 
         Assets.batch.setShader(Assets.crtShader);
         Assets.crtShader.begin();
-        Assets.crtShader.setUniformf("u_kWarp", 1/10f, 1/10f);
+        Assets.crtShader.setUniformf("u_kWarp", 1/16f, 1/16f);
         Assets.batch.setProjectionMatrix(screenCamera.combined);
         Assets.batch.begin();
         Assets.batch.draw(currentTexture, 0, currentFBO.getHeight(), currentFBO.getWidth(), -currentFBO.getHeight());

@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Sort;
 import lando.systems.ld36.entities.*;
+import lando.systems.ld36.screens.GameScreen;
 import lando.systems.ld36.utils.Assets;
 
 import java.util.Comparator;
@@ -28,7 +29,7 @@ public class Level {
     TiledMapRenderer renderer;
     TiledMapTileLayer groundLayer;
     Array<TiledMapImageLayer> imageLayers;
-
+    public GameScreen screen;
     Player player;
 
     private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
@@ -47,7 +48,8 @@ public class Level {
         }
     };
 
-    public Level(String name) {
+    public Level(String name, GameScreen screen) {
+        this.screen = screen;
         load(name, Assets.batch);
     }
 

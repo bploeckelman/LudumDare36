@@ -51,6 +51,7 @@ public class Player extends GameObject {
     public void update(float dt, float leftEdge){
         super.update(dt);
         if (dead){
+            level.screen.screenShake.shake(1f);
             respawn();
         }
 
