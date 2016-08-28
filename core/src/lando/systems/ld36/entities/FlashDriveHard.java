@@ -10,10 +10,16 @@ import lando.systems.ld36.ai.states.ChaseState;
 import lando.systems.ld36.ai.states.WaitState;
 import lando.systems.ld36.ai.states.WanderState;
 import lando.systems.ld36.levels.Level;
+import lando.systems.ld36.utils.Assets;
 
 public class FlashDriveHard extends FlashDriveMedium {
     public FlashDriveHard(Level level, float x, float y) {
         super(level, x, y);
+
+        walkAnimation = Assets.flashWalkHard;
+        attackAnimation = Assets.flashPunchHard;
+
+        tex = walkAnimation.getKeyFrame(timer);
 
         health = 10;
     }

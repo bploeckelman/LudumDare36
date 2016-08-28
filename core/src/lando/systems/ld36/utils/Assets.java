@@ -49,6 +49,10 @@ public class Assets {
 
     public static Animation flashWalk;
     public static Animation flashPunch;
+    public static Animation flashWalkMedium;
+    public static Animation flashPunchMedium;
+    public static Animation flashWalkHard;
+    public static Animation flashPunchHard;
 
     public static Animation eightTrackWalk;
     public static Animation eightTrackPunch;
@@ -135,14 +139,32 @@ public class Assets {
         floppyPunch = new Animation(.05f, floppyPunchTextures);
 
 
-        flashWalk = new Animation(.15f, atlas.findRegions("Flash_Walk"));
-        flashWalk.setPlayMode(Animation.PlayMode.LOOP);
-
         Array<TextureAtlas.AtlasRegion> flashPunchTextures = atlas.findRegions("Flash_Punch");
         flashPunchTextures.add(flashPunchTextures.get(2));
         flashPunchTextures.add(flashPunchTextures.get(1));
         flashPunchTextures.add(flashPunchTextures.get(0));
         flashPunch = new Animation(.05f, flashPunchTextures);
+
+        flashWalk = new Animation(.15f, atlas.findRegions("Flash_Walk"));
+        flashWalk.setPlayMode(Animation.PlayMode.LOOP);
+
+        Array<TextureAtlas.AtlasRegion> flashPunchMediumTextures = atlas.findRegions("Flash_Punch_Medium");
+        flashPunchMediumTextures.add(flashPunchMediumTextures.get(2));
+        flashPunchMediumTextures.add(flashPunchMediumTextures.get(1));
+        flashPunchMediumTextures.add(flashPunchMediumTextures.get(0));
+        flashPunchMedium = new Animation(.05f, flashPunchMediumTextures);
+
+        flashWalkMedium = new Animation(.15f, atlas.findRegions("Flash_Walk_Medium"));
+        flashWalkMedium.setPlayMode(Animation.PlayMode.LOOP);
+
+        Array<TextureAtlas.AtlasRegion> flashPunchHardTextures = atlas.findRegions("Flash_Punch_Hard");
+        flashPunchHardTextures.add(flashPunchHardTextures.get(2));
+        flashPunchHardTextures.add(flashPunchHardTextures.get(1));
+        flashPunchHardTextures.add(flashPunchHardTextures.get(0));
+        flashPunchHard = new Animation(.05f, flashPunchHardTextures);
+
+        flashWalkHard = new Animation(.15f, atlas.findRegions("Flash_Walk_Hard"));
+        flashWalkHard.setPlayMode(Animation.PlayMode.LOOP);
 
         eightTrackWalk = new Animation(.15f, atlas.findRegions("Eight_Track_Walk"));
         eightTrackWalk.setPlayMode(Animation.PlayMode.LOOP);

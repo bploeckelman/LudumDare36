@@ -8,10 +8,16 @@ import lando.systems.ld36.ai.conditions.NearObjectCondition;
 import lando.systems.ld36.ai.conditions.NearScreenCondition;
 import lando.systems.ld36.ai.states.*;
 import lando.systems.ld36.levels.Level;
+import lando.systems.ld36.utils.Assets;
 
 public class FlashDriveMedium extends FlashDriveEasy {
     public FlashDriveMedium(Level level, float x, float y) {
         super(level, x, y);
+
+        walkAnimation = Assets.flashWalkMedium;
+        attackAnimation = Assets.flashPunchMedium;
+
+        tex = walkAnimation.getKeyFrame(timer);
 
         health = 5;
     }
