@@ -165,6 +165,8 @@ public class Assets {
         smartPhone.setPlayMode(Animation.PlayMode.LOOP);
 
         Array<TextureAtlas.AtlasRegion> smartPhoneKnifeTextures = atlas.findRegions("Smart_Phone_Knife");
+        smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(4));
+        smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(3));
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(2));
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(1));
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(0));
