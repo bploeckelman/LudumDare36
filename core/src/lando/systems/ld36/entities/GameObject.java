@@ -19,6 +19,7 @@ public class GameObject {
 
     public static boolean DRAW_BOUNDS = true;
 
+    public final float INVULERABLITIYDELAY = 3f;
     public final float GRAVITY = -200;
     public float jumpVelocity = 200;
 
@@ -39,7 +40,8 @@ public class GameObject {
     public float leftEdge;
     public int jumpCount;
     public boolean dead;
-    public Vector2 lastSafePlace;
+    public Array<Vector2> lastSafePlace;
+    public float invunerableTimer;
 
 
 
@@ -54,13 +56,18 @@ public class GameObject {
         tiles = new Array<Rectangle>();
         footBounds = new Rectangle();
         jumpCount = 0;
-        lastSafePlace = new Vector2();
+        lastSafePlace = new Array<Vector2>();
 
     }
 
     public void update(float dt){
 
-
+        if (invunerableTimer > 0){
+            invunerableTimer -= dt;
+            if (invunerableTimer<=0){
+                invunerableTimer = 0;
+            }
+        }
         // Keep player on play area
         position.y = MathUtils.clamp(position.y, bottomPlayArea, topPlayArea);
         position.x = MathUtils.clamp(position.x, leftEdge, level.getLevelWidth() - (width/2)) ;
@@ -82,7 +89,10 @@ public class GameObject {
         if (!falling && isOnGround()){
             jumpCount = 0;
             verticalVelocity = 0;
-            lastSafePlace.set(position.x, position.y);
+            lastSafePlace.add(new Vector2(position.x, position.y));
+            if (lastSafePlace.size>60){
+                lastSafePlace.removeIndex(0);
+            }
         } else {
             verticalVelocity += GRAVITY * dt;
         }
@@ -101,12 +111,19 @@ public class GameObject {
         if (!falling) {
             batch.draw(shadowTex, position.x, position.y - 10, 64, height);
         }
+
+        // Flash the thing if it is invulnerable
+        float alpha = 1;
+        if (invunerableTimer > 0){
+            alpha = (invunerableTimer % .5f) * 2f;
+        }
+        batch.setColor(1,1,1,alpha);
         if (isFacingRight) {
             batch.draw(tex, position.x, position.y + position.z, width, height);
         } else {
             batch.draw(tex, position.x + (width/1.5f), position.y + position.z, -width, height);
         }
-
+        batch.setColor(Color.WHITE);
         if (DRAW_BOUNDS) {
             batch.end();
             Assets.shapes.setColor(Color.RED);
@@ -130,5 +147,9 @@ public class GameObject {
         jumpCount++;
         verticalVelocity = jumpVelocity;
         position.z += .01f;
+    }
+
+    public boolean isInvulerable(){
+        return invunerableTimer > 0;
     }
 }

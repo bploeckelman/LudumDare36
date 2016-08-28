@@ -135,7 +135,8 @@ public class Player extends GameObject {
         position.z = 0;
         jumpCount =0;
         verticalVelocity = 0;
-        position.x = lastSafePlace.x;
-        position.y = lastSafePlace.y;
+        position.x = lastSafePlace.get(0).x;
+        position.y = lastSafePlace.get(0).y;
+        invunerableTimer = INVULERABLITIYDELAY;
     }
 }
