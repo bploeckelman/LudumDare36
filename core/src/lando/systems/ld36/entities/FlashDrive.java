@@ -21,7 +21,7 @@ public class FlashDrive extends Enemy {
 
     public void update(float dt) {
         super.update(dt);
-        if (isOnGround()) jump();
+        jump();
         timer += dt;
         hitBounds.x = position.x;
         hitBounds.y = position.y + position.z;

@@ -38,7 +38,7 @@ public class LudumDare36 extends ApplicationAdapter {
             progress = Assets.update();
         } while (progress != 1f);
         game = this;
-        screen = new CharacterSelectScreen();
+        screen = new MenuScreen();
     }
 
     @Override

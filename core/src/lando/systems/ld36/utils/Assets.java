@@ -85,6 +85,7 @@ public class Assets {
         mgr = new AssetManager();
         mgr.load("images/spritesheet.png", Texture.class, params);
         mgr.load("images/shadow.png", Texture.class, params);
+        mgr.load("images/title-screen.png", Texture.class, params);
 
         atlas = new TextureAtlas(Gdx.files.internal("sprites.atlas"));
 

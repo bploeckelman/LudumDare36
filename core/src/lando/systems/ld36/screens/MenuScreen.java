@@ -16,7 +16,7 @@ public class MenuScreen extends BaseScreen {
     private Texture img;
 
     public MenuScreen() {
-        img = Assets.mgr.get("images/spritesheet.png", Texture.class);
+        img = Assets.mgr.get("images/title-screen.png", Texture.class);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class MenuScreen extends BaseScreen {
         }
 
         if (Gdx.input.justTouched()) {
-            LudumDare36.game.screen = new GameScreen(PlayerCharacter.FLOPPY);
+            LudumDare36.game.screen = new CharacterSelectScreen();
         }
     }
 
@@ -35,9 +35,8 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClearColor(Config.bgColor.r, Config.bgColor.g, Config.bgColor.b, Config.bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(img,
-                Gdx.graphics.getWidth()  / 2f - img.getWidth()  / 2f,
-                Gdx.graphics.getHeight() / 2f - img.getHeight() / 2f);
+        batch.setProjectionMatrix(camera.combined);
+        batch.draw(img, 0, 0, camera.viewportWidth, camera.viewportHeight);
         batch.end();
     }
 

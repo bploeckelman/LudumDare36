@@ -49,7 +49,7 @@ public class CharacterSelectScreen extends BaseScreen {
         timer += dt;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
+            LudumDare36.game.screen = new MenuScreen();
         }
 
         PlayerCharacter[] characters = PlayerCharacter.values();
