@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -17,6 +18,7 @@ public class CharacterSelectScreen extends BaseScreen {
     Rectangle topPanel;
     Array<Rectangle> characterPanels;
     float timer = 0f;
+    float bouncer = 0f;
     int hoverCharacter;
     Vector3 cursorPoint;
     Vector3 lastCursorPoint;
@@ -52,6 +54,8 @@ public class CharacterSelectScreen extends BaseScreen {
     @Override
     public void update(float dt) {
         timer += dt;
+        bouncer += 500f * dt;
+        if (bouncer > 360f) bouncer -= 360f;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             LudumDare36.game.setScreen( new MenuScreen());
@@ -72,26 +76,25 @@ public class CharacterSelectScreen extends BaseScreen {
 
         lastCursorPoint.set(cursorPoint);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A) || Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
             hoverCharacter--;
             if (hoverCharacter<0){
                 hoverCharacter += characterPanels.size;
             }
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.D)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
             hoverCharacter++;
             if (hoverCharacter >= characterPanels.size){
                 hoverCharacter -= characterPanels.size;
             }
         }
 
-        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) && hoverCharacter >= 0) {
-            LudumDare36.game.setScreen(new GameScreen(characters[hoverCharacter]));
-        }
-
         if (hoverCharacter >= 0) {
             characters[hoverCharacter].keyframe = characters[hoverCharacter].walkAnimation.getKeyFrame(timer);
+            if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER))) {
+                LudumDare36.game.setScreen(new GameScreen(characters[hoverCharacter]));
+            }
         }
     }
 
@@ -122,20 +125,23 @@ public class CharacterSelectScreen extends BaseScreen {
                 characters[i].keyframe.getRegionHeight() * 2
             );
 
-            Assets.drawString(
-                batch,
-                characters[i].name,
-                p.x + Assets.hudPatch.getPadLeft(),
-                p.y + Assets.hudPatch.getPadBottom() + 20,
-                Color.WHITE,
-                .4f
-            );
+            for (int c = 0; c < characters[i].name.length(); ++c) {
+                Assets.drawString(
+                    batch,
+                    "" + characters[i].name.charAt(c),
+                    p.x + Assets.hudPatch.getPadLeft() + (Assets.font.getSpaceWidth() * 0.279f * c),
+                    p.y + Assets.hudPatch.getPadBottom() + 25
+                        + ((i != hoverCharacter) ? 0 : MathUtils.sinDeg(bouncer + 20f*(c+1)) * 5f - 2.5f),
+                    (i != hoverCharacter) ? Color.WHITE : Color.YELLOW,
+                    .4f
+                );
+            }
 
             Assets.drawString(
                 batch,
                 "Speed",
                 p.x + Assets.hudPatch.getPadLeft(),
-                p.y + Assets.hudPatch.getPadBottom() + 120,
+                p.y + Assets.hudPatch.getPadBottom() + 130,
                 Color.WHITE,
                 .4f
             );
@@ -144,7 +150,7 @@ public class CharacterSelectScreen extends BaseScreen {
             batch.draw(
                 Assets.white,
                 p.x + Assets.hudPatch.getPadLeft(),
-                p.y + Assets.hudPatch.getPadBottom() + 80,
+                p.y + Assets.hudPatch.getPadBottom() + 90,
                 100,
                 15
             );
@@ -152,10 +158,38 @@ public class CharacterSelectScreen extends BaseScreen {
             batch.draw(
                 Assets.white,
                 p.x + Assets.hudPatch.getPadLeft(),
-                p.y + Assets.hudPatch.getPadBottom() + 80,
+                p.y + Assets.hudPatch.getPadBottom() + 90,
                 (characters[i].moveSpeed / PlayerCharacter.maxMoveSpeed) * 100,
                 15
             );
+
+            Assets.drawString(
+                batch,
+                "Attack",
+                p.x + Assets.hudPatch.getPadLeft(),
+                p.y + Assets.hudPatch.getPadBottom() + 80,
+                Color.WHITE,
+                .4f
+            );
+
+            batch.setColor(Color.BLACK);
+            batch.draw(
+                    Assets.white,
+                    p.x + Assets.hudPatch.getPadLeft(),
+                    p.y + Assets.hudPatch.getPadBottom() + 40,
+                    100,
+                    15
+            );
+            batch.setColor(Color.RED);
+            batch.draw(
+                    Assets.white,
+                    p.x + Assets.hudPatch.getPadLeft(),
+                    p.y + Assets.hudPatch.getPadBottom() + 40,
+                    (characters[i].attackPower/ PlayerCharacter.maxAttackPower) * 100,
+                    15
+            );
+
+
             if (i != hoverCharacter) {
                 batch.setColor(new Color(0, 0, 0, .5f));
                 batch.draw(Assets.white, p.x, p.y, p.width, p.height);

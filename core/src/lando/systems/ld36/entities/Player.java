@@ -23,7 +23,7 @@ public class Player extends GameObject {
     public boolean isMoving = false;
     public boolean isAttacking = false;
     public float timer = 0f;
-    public int damageAmount = 1;
+    public int attackPower = 1;
     public MutableFloat animationTimer;
     public Animation walkAnimation;
     public Animation attackAnimation;
@@ -40,6 +40,7 @@ public class Player extends GameObject {
     public Player(PlayerCharacter character, Level level){
         super(level);
         this.moveSpeed = character.moveSpeed;
+        this.attackPower = character.attackPower;
 
         animationTimer = new MutableFloat(0f);
         this.walkAnimation = character.walkAnimation;

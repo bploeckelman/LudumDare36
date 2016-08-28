@@ -74,7 +74,7 @@ public class Level {
                 if (!enemy.isHurt) {
                     int dir = player.doesHit(enemy);
                     if (dir != 0) {
-                        enemy.getHurt(player.damageAmount, dir);
+                        enemy.getHurt(player.attackPower, dir);
                     }
                 }
 
