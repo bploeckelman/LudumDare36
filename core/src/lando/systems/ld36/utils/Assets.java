@@ -176,13 +176,11 @@ public class Assets {
 
     public static void drawString(SpriteBatch batch, String text, float x, float y, Color c, float scale){
         batch.setShader(Assets.fontShader);
-        Assets.fontShader.begin();
-        //Assets.fontShader.setUniformf("u_scale", scale);
+        Assets.fontShader.setUniformf("u_scale", scale);
         font.getData().setScale(scale);
         font.setColor(c);
         font.draw(batch, text, x, y);
         font.getData().setScale(1f);
-        Assets.fontShader.end();
         batch.setShader(null);
     }
 
