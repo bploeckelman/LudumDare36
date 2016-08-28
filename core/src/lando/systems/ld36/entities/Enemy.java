@@ -23,8 +23,7 @@ public class Enemy extends GameObject {
     public float timer = 0f;
     public float hurtCooldown = 0f;
     public int health;
-    public Animation walkAnimation;
-    public Animation attackAnimation;
+
     public StateMachine stateMachine;
 
 
@@ -36,7 +35,6 @@ public class Enemy extends GameObject {
 
         moveSpeed = 50;
 
-        initializeStates();
 
     }
 
@@ -76,6 +74,8 @@ public class Enemy extends GameObject {
 
         stateMachine.update(dt);
 
+        tryAttack();
+
         isFacingRight = direction.x > 0;
 
         position.x += bounceBack.x;
@@ -98,6 +98,10 @@ public class Enemy extends GameObject {
             invulerabilityFlashSpeed = 0.1f;
             bounceBack.set(dir * 10f, 0f);
         }
+    }
+
+    public void tryAttack(){
+
     }
 
 

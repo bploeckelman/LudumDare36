@@ -1,6 +1,7 @@
 package lando.systems.ld36.entities;
 
 import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.primitives.MutableFloat;
@@ -20,13 +21,9 @@ public class Player extends GameObject {
     private static final float HIT_DELTA_Y = 32;
     private static final float HIT_DELTA_Z = 32;
 
-    public boolean isMoving = false;
-    public boolean isAttacking = false;
-    public float timer = 0f;
+
     public int attackPower = 1;
-    public MutableFloat animationTimer;
-    public Animation walkAnimation;
-    public Animation attackAnimation;
+
     public Rectangle footBounds;
 
 
@@ -63,7 +60,6 @@ public class Player extends GameObject {
             respawn();
         }
 
-        timer += dt;
         isMoving = false;
         this.leftEdge = leftEdge;
 
@@ -94,27 +90,11 @@ public class Player extends GameObject {
         }
 
 
-        if(Assets.keyMapping.isActionPressed(KeyMapping.ACTION.ATTACK) && !isAttacking) {
-            isAttacking = true;
-            animationTimer.setValue(0f);
-            Tween.to(animationTimer, -1, attackAnimation.getAnimationDuration())
-                .target(attackAnimation.getAnimationDuration())
-                .setCallback(new TweenCallback() {
-                    @Override
-                    public void onEvent(int type, BaseTween<?> source) {
-                        isAttacking = false;
-                    }
-                })
-                .start(Assets.tween);
-
+        if(Assets.keyMapping.isActionPressed(KeyMapping.ACTION.ATTACK)) {
+            attack();
         }
 
-        if (isAttacking) {
-            tex = attackAnimation.getKeyFrame(animationTimer.floatValue());
-        }
-        else if (isMoving) {
-            tex = walkAnimation.getKeyFrame(timer);
-        }
+
 
         hitBounds.x = position.x + 15f;
         hitBounds.y = position.y + position.z;

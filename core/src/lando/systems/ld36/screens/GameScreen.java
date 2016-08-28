@@ -33,6 +33,7 @@ public class GameScreen extends BaseScreen {
         level = new Level("levels/level0.tmx", this);
         debugPlayer = new Player(character, level);
         level.setPlayer(debugPlayer);
+        level.initilizeStates();
         cameraCenter = new Vector2(camera.position.x, camera.position.y);
     }
 

@@ -1,6 +1,12 @@
 package lando.systems.ld36.entities;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Timeline;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -46,6 +52,13 @@ public class GameObject {
     public float invunerableTimer;
     public Vector2 bounceBack;
     public float invulerabilityFlashSpeed = .5f;
+    public boolean isMoving = false;
+    public boolean isAttacking = false;
+    public Animation walkAnimation;
+    public Animation attackAnimation;
+    public MutableFloat animationTimer;
+    public float timer = 0f;
+
 
     public Vector2 movePoint;
     public Vector2 direction;
@@ -71,7 +84,11 @@ public class GameObject {
         testPosition = new Vector3();
     }
 
+    public void initializeStates() {
+    }
+
     public void update(float dt){
+        timer += dt;
 
         if (invunerableTimer > 0){
             invunerableTimer -= dt;
@@ -106,6 +123,13 @@ public class GameObject {
 
         if (position.y + position.z < -height){
             dead = true;
+        }
+
+        if (isAttacking) {
+            tex = attackAnimation.getKeyFrame(animationTimer.floatValue());
+        }
+        else if (isMoving) {
+            tex = walkAnimation.getKeyFrame(timer);
         }
     }
 
@@ -151,6 +175,33 @@ public class GameObject {
         position.z += .01f;
     }
 
+    public void attack(){
+        if (isAttacking) return;    // Early out if you are attacking
+
+        animationTimer.setValue(0f);
+        Timeline.createSequence()
+                .push(Tween.to(animationTimer, -1, attackAnimation.getAnimationDuration() /3f)
+                      .target(attackAnimation.getAnimationDuration()/3f))
+                .push(Tween.call(new TweenCallback() {
+                    @Override
+                    public void onEvent(int i, BaseTween<?> baseTween) {
+                        isAttacking = true;  // Start checking for attacks hitting a third of the way through the animation
+                    }
+                }))
+                .push(Tween.to(animationTimer, -1, attackAnimation.getAnimationDuration() /3f)
+                        .target(attackAnimation.getAnimationDuration() / 3f * 2f))
+                .push(Tween.call(new TweenCallback() {
+                    @Override
+                    public void onEvent(int i, BaseTween<?> baseTween) {
+                        isAttacking = false; // Stop checking after 2/3s of the animation are completed
+                    }
+                }))
+                .push(Tween.to(animationTimer, -1, attackAnimation.getAnimationDuration() / 3f)
+                    .target(attackAnimation.getAnimationDuration()))
+                .start(Assets.tween);
+
+    }
+
     public boolean isInvulerable(){
         return invunerableTimer > 0;
     }
@@ -171,6 +222,7 @@ public class GameObject {
 
     public float updateMove(float dt, float moveLeft){
         float dist = Vector2.dst(movePoint.x, movePoint.y, position.x, position.y);
+        isMoving = dist > 0;
         if (dist < moveLeft){
             testPosition.set(movePoint.x, movePoint.y, 0);
             if (!notSafeToWalk(testPosition)) {

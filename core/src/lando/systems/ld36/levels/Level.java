@@ -188,6 +188,13 @@ public class Level {
                     break;
             }
         }
+
+    }
+
+    public void initilizeStates(){
+        for (GameObject object : objects){
+            object.initializeStates();
+        }
     }
 
     public float getLevelWidth(){

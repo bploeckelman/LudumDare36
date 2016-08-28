@@ -8,11 +8,10 @@ import lando.systems.ld36.entities.GameObject;
  */
 public class NearScreenCondition extends Condition {
     OrthographicCamera camera;
-    GameObject owner;
 
     public NearScreenCondition(OrthographicCamera camera, GameObject owner){
+        super(owner);
         this.camera = camera;
-        this.owner = owner;
     }
 
 
