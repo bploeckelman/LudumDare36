@@ -4,31 +4,30 @@
   <image source="../images/spritesheet.png" width="512" height="512"/>
  </tileset>
  <imagelayer name="background1">
-  <image source="../images/shiba-teeth.jpg" width="597" height="448"/>
+  <image source="../images/backgrounds/bluescreen.jpg" width="717" height="448"/>
   <properties>
    <property name="offset_x" type="float" value="0"/>
-   <property name="offset_y" type="float" value="0"/>
   </properties>
  </imagelayer>
- <imagelayer name="background2" offsetx="597" offsety="0">
-  <image source="../images/shiba-teeth.jpg" width="597" height="448"/>
+ <imagelayer name="background2" offsetx="704" offsety="32">
+  <image source="../images/backgrounds/Fake-Blue-Screen-of-Death.jpg" width="731" height="448"/>
   <properties>
-   <property name="offset_x" type="float" value="597"/>
-   <property name="offset_y" type="float" value="0"/>
+   <property name="offset_x" type="float" value="704"/>
+   <property name="offset_y" type="float" value="-32"/>
   </properties>
  </imagelayer>
- <imagelayer name="background3" offsetx="1152" offsety="0">
-  <image source="../images/shiba-teeth.jpg" width="597" height="448"/>
+ <imagelayer name="background3" offsetx="1408" offsety="32">
+  <image source="../images/backgrounds/kernel_panics_lion.png" width="829" height="448"/>
   <properties>
-   <property name="offset_x" type="float" value="1152"/>
-   <property name="offset_y" type="float" value="0"/>
+   <property name="offset_x" type="float" value="1408"/>
+   <property name="offset_y" type="float" value="-32"/>
   </properties>
  </imagelayer>
- <imagelayer name="background4" offsetx="1728" offsety="0">
-  <image source="../images/shiba-teeth.jpg" width="597" height="448"/>
+ <imagelayer name="background4" offsetx="2208" offsety="96">
+  <image source="../images/backgrounds/You-Have-Died-of-Dysentery.jpg" width="400" height="400"/>
   <properties>
-   <property name="offset_x" type="float" value="1728"/>
-   <property name="offset_y" type="float" value="0"/>
+   <property name="offset_x" type="float" value="2208"/>
+   <property name="offset_y" type="float" value="-96"/>
   </properties>
  </imagelayer>
  <layer name="ground" width="100" height="20">
