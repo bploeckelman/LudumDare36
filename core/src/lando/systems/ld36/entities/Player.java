@@ -30,6 +30,9 @@ public class Player extends GameObject {
 
     Array<Rectangle> tiles;
 
+    public int health = 100;
+    public int deaths = 0;
+
     public Player(){
         tiles = new Array<Rectangle>();
         animationTimer = new MutableFloat(0f);

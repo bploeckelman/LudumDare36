@@ -2,6 +2,7 @@ package lando.systems.ld36.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -19,6 +20,8 @@ public class GameScreen extends BaseScreen {
 
     Player debugPlayer;
     Level level;
+    float hudHeight = 100;
+    float hudBorderWidth = 4;
 
     public GameScreen() {
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
@@ -60,6 +63,61 @@ public class GameScreen extends BaseScreen {
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
         level.render(batch, camera);
+        batch.end();
+        batch.begin();
+        batch.setProjectionMatrix(hudCamera.combined);
+        // Draw HUD stuff
+        Assets.hudPatch.draw(
+            batch,
+            hudBorderWidth,
+            hudCamera.viewportHeight - (hudHeight + hudBorderWidth),
+            hudCamera.viewportWidth - (hudBorderWidth * 2),
+            hudHeight
+        );
+        Assets.drawString(
+            batch,
+            "Player    Deaths",
+            hudBorderWidth + Assets.hudPatch.getPadLeft(),
+            hudCamera.viewportHeight - Assets.hudPatch.getPadTop(),
+            Color.WHITE,
+            .4f
+        );
+        Assets.drawString(
+            batch,
+            Integer.toString(debugPlayer.deaths),
+            hudBorderWidth + Assets.hudPatch.getPadLeft() + 150,
+            hudCamera.viewportHeight - (Assets.hudPatch.getPadTop() + 30),
+            Color.WHITE,
+            .4f
+        );
+        Assets.drawString(
+            batch,
+            "Enemy",
+            hudCamera.viewportWidth - 100 - hudBorderWidth - Assets.hudPatch.getPadRight(),
+            hudCamera.viewportHeight - Assets.hudPatch.getPadTop(),
+            Color.WHITE,
+            .4f
+        );
+
+        // Draw Player Health bar
+        batch.setColor(Color.BLACK);
+        batch.draw(
+            Assets.white,
+            hudBorderWidth + Assets.hudPatch.getPadLeft(),
+            hudCamera.viewportHeight - 75,
+            100, // Full health
+            15
+        );
+        batch.setColor(Color.RED);
+        batch.draw(
+            Assets.white,
+            hudBorderWidth + Assets.hudPatch.getPadLeft(),
+            hudCamera.viewportHeight - 75,
+            debugPlayer.health,
+            15
+        );
+        batch.setColor(Color.WHITE);
+
         batch.end();
     }
 

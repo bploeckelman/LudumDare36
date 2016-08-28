@@ -54,6 +54,10 @@ public class Assets {
     public static Animation betamaxWalk;
     public static Animation betamaxPunch;
 
+    public static NinePatch hudPatch;
+
+    public static TextureRegion white;
+
 
     public static void load() {
         initialized = false;
@@ -128,7 +132,6 @@ public class Assets {
         flashPunchTextures.add(flashPunchTextures.get(0));
         flashPunch = new Animation(.1f, flashPunchTextures);
 
-
         eightTrackWalk = new Animation(.15f, atlas.findRegions("Eight_Track_Walk"));
         eightTrackWalk.setPlayMode(Animation.PlayMode.LOOP);
 
@@ -144,6 +147,10 @@ public class Assets {
         betamaxPunchTextures.add(betamaxPunchTextures.get(1));
         betamaxPunchTextures.add(betamaxPunchTextures.get(0));
         betamaxPunch = new Animation(.1f, betamaxPunchTextures);
+
+        hudPatch = new NinePatch(atlas.findRegion("ninepatch-hud"), 24, 24, 24, 24);
+
+        white = atlas.findRegion("white");
 
         return 1f;
     }
@@ -169,11 +176,13 @@ public class Assets {
 
     public static void drawString(SpriteBatch batch, String text, float x, float y, Color c, float scale){
         batch.setShader(Assets.fontShader);
-        Assets.fontShader.setUniformf("u_scale", scale);
+        Assets.fontShader.begin();
+        //Assets.fontShader.setUniformf("u_scale", scale);
         font.getData().setScale(scale);
         font.setColor(c);
         font.draw(batch, text, x, y);
         font.getData().setScale(1f);
+        Assets.fontShader.end();
         batch.setShader(null);
     }
 
