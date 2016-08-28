@@ -39,7 +39,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void update(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            LudumDare36.game.screen = new CharacterSelectScreen();
+            LudumDare36.game.setScreen(new CharacterSelectScreen());
         }
         debugPlayer.update(dt, cameraCenter.x - camera.viewportWidth/2);
 

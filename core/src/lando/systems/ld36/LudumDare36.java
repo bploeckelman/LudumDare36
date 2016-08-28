@@ -1,5 +1,9 @@
 package lando.systems.ld36;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.equations.Bounce;
+import aurelienribon.tweenengine.equations.Elastic;
+import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
@@ -17,9 +21,10 @@ public class LudumDare36 extends ApplicationAdapter {
 
     public static LudumDare36 game;
 
-    public BaseScreen screen;
+    private BaseScreen screen;
     private FrameBuffer currentFBO;
     private OrthographicCamera screenCamera;
+    private MutableFloat screenWarp;
 
 
     @Override
@@ -38,7 +43,8 @@ public class LudumDare36 extends ApplicationAdapter {
             progress = Assets.update();
         } while (progress != 1f);
         game = this;
-        screen = new MenuScreen();
+        screenWarp = new MutableFloat(1/16f);
+        setScreen(new MenuScreen());
     }
 
     @Override
@@ -74,7 +80,7 @@ public class LudumDare36 extends ApplicationAdapter {
 
         Assets.batch.setShader(Assets.crtShader);
         Assets.crtShader.begin();
-        Assets.crtShader.setUniformf("u_kWarp", 1/16f, 1/16f);
+        Assets.crtShader.setUniformf("u_kWarp", screenWarp.floatValue(), screenWarp.floatValue());
         Assets.batch.setProjectionMatrix(screenCamera.combined);
         Assets.batch.begin();
         Assets.batch.draw(currentTexture, 0, currentFBO.getHeight(), currentFBO.getWidth(), -currentFBO.getHeight());
@@ -83,6 +89,19 @@ public class LudumDare36 extends ApplicationAdapter {
         Assets.batch.setShader(null);
 
 
+    }
+
+    public void setScreen(BaseScreen screen){
+        this.screen = screen;
+        wobbleScreen();
+    }
+
+    public void wobbleScreen(){
+        screenWarp.setValue(1/24f);
+        Tween.to(screenWarp, 0, .5f)
+                .target(1 / 16f)
+                .ease(Elastic.OUT)
+                .start(Assets.tween);
     }
 
 }

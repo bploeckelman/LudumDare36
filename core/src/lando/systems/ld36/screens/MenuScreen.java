@@ -26,7 +26,7 @@ public class MenuScreen extends BaseScreen {
         }
 
         if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            LudumDare36.game.screen = new CharacterSelectScreen();
+            LudumDare36.game.setScreen( new CharacterSelectScreen());
         }
     }
 

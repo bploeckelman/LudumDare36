@@ -49,7 +49,7 @@ public class CharacterSelectScreen extends BaseScreen {
         timer += dt;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            LudumDare36.game.screen = new MenuScreen();
+            LudumDare36.game.setScreen( new MenuScreen());
         }
 
         PlayerCharacter[] characters = PlayerCharacter.values();
@@ -65,7 +65,7 @@ public class CharacterSelectScreen extends BaseScreen {
         }
 
         if (Gdx.input.justTouched() && hoverCharacter >= 0) {
-            LudumDare36.game.screen = new GameScreen(characters[hoverCharacter]);
+            LudumDare36.game.setScreen(new GameScreen(characters[hoverCharacter]));
         }
 
         if (hoverCharacter >= 0) {
