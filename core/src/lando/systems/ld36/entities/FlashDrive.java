@@ -1,11 +1,12 @@
 package lando.systems.ld36.entities;
 
 import com.badlogic.gdx.math.Rectangle;
+import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 
 public class FlashDrive extends Enemy {
-    public FlashDrive() {
-        super();
+    public FlashDrive(Level level) {
+        super(level);
         walkAnimation = Assets.flashWalk;
         attackAnimation = Assets.flashPunch;
 

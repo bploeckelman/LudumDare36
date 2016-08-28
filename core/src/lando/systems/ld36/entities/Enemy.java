@@ -2,6 +2,7 @@ package lando.systems.ld36.entities;
 
 import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import lando.systems.ld36.levels.Level;
 
 public class Enemy extends GameObject {
     public boolean isAttacking = false;
@@ -15,7 +16,8 @@ public class Enemy extends GameObject {
     public Animation walkAnimation;
     public Animation attackAnimation;
 
-    public Enemy() {
+    public Enemy(Level level) {
+        super(level);
         animationTimer = new MutableFloat(0f);
         health = 1;
     }

@@ -26,9 +26,10 @@ public class GameScreen extends BaseScreen {
     public GameScreen() {
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
         camera.update();
-        debugPlayer = new Player();
         level = new Level("levels/level0.tmx");
+        debugPlayer = new Player(level);
         level.setPlayer(debugPlayer);
+
     }
 
     @Override
@@ -36,7 +37,7 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             LudumDare36.game.screen = new MenuScreen();
         }
-        debugPlayer.update(dt, camera.position.x - camera.viewportWidth/2, level);
+        debugPlayer.update(dt, camera.position.x - camera.viewportWidth/2);
 
         // have camera follow player
         if (debugPlayer.position.x > camera.position.x - debugPlayer.width){

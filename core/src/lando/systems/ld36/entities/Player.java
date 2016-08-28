@@ -22,8 +22,7 @@ public class Player extends GameObject {
     private static final float HIT_DELTA_Y = 32;
 
     public final float moveSpeed = 150;
-    public final float bottomPlayArea = 0;
-    public final float topPlayArea = 5.5f * 32;
+
     public boolean isMoving = false;
     public boolean isAttacking = false;
     public float timer = 0f;
@@ -32,13 +31,12 @@ public class Player extends GameObject {
     public Animation attackAnimation;
     public Rectangle footBounds;
 
-    Array<Rectangle> tiles;
 
     public int health = 100;
     public int deaths = 0;
 
-    public Player(){
-        tiles = new Array<Rectangle>();
+    public Player(Level level){
+        super(level);
         animationTimer = new MutableFloat(0f);
         walkAnimation = Assets.floppyWalk;
         tex = walkAnimation.getKeyFrame(timer);
@@ -52,17 +50,17 @@ public class Player extends GameObject {
         hitBounds = new Rectangle(position.x + 15f, position.y + 4f, 30f, tex.getRegionHeight() - 8f);
     }
 
-    public void update(float dt, float leftEdge, Level level){
+    public void update(float dt, float leftEdge){
         super.update(dt);
 
         timer += dt;
         isMoving = false;
+        this.leftEdge = leftEdge;
 
         if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.JUMP) && isOnGround()){
             jump();
         }
 
-        // TODO: Don't allow movement off of the screen;
         if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) &&
                 Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)){
             // Do nothing
@@ -85,24 +83,7 @@ public class Player extends GameObject {
             isMoving = true;
         }
 
-        // Keep player on play area
-        position.y = MathUtils.clamp(position.y, bottomPlayArea, topPlayArea);
-        position.x = MathUtils.clamp(position.x, leftEdge, level.getLevelWidth() - (width/2)) ;
 
-        level.getGroundTiles(position, tiles);
-        footBounds.set(position.x + 10, position.y, 45, 5);
-        boolean falling = true;
-        for (Rectangle tile : tiles){
-            if (footBounds.overlaps(tile) || tile.contains(footBounds)){
-                falling = false;
-                break;
-            }
-        }
-
-        // Can't fall when when jumping
-        if (position.z > 0){
-            falling = false;
-        }
 
         if (falling){
             System.out.println("Falling");

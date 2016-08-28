@@ -134,27 +134,27 @@ public class Level {
 
             // Instantiate based on type
             if (type.equals("player")) {
-                Player p = new Player();
+                Player p = new Player(this);
                 p.position.x = x;
                 p.position.y = y;
                 objects.add(p);
             }
             else if (type.equals("flashdrive")) {
-                FlashDrive f = new FlashDrive();
+                FlashDrive f = new FlashDrive(this);
                 f.position.x = x;
                 f.position.y = y;
                 f.isMoving = true;
                 objects.add(f);
             }
             else if (type.equals("eighttrack")) {
-                EightTrack t = new EightTrack();
+                EightTrack t = new EightTrack(this);
                 t.position.x = x;
                 t.position.y = y;
                 t.isMoving = true;
                 objects.add(t);
             }
             else if (type.equals("betamax")) {
-                Betamax b = new Betamax();
+                Betamax b = new Betamax(this);
                 b.position.x = x;
                 b.position.y = y;
                 b.isMoving = true;
