@@ -62,6 +62,10 @@ public class Assets {
 
     public static Animation smartPhone;
     public static Animation smartPhoneKnife;
+    public static Animation smartPhoneMedium;
+    public static Animation smartPhoneKnifeMedium;
+    public static Animation smartPhoneHard;
+    public static Animation smartPhoneKnifeHard;
 
     public static NinePatch hudPatch;
 
@@ -193,6 +197,28 @@ public class Assets {
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(1));
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(0));
         smartPhoneKnife = new Animation(.01f, smartPhoneKnifeTextures);
+
+        smartPhoneMedium = new Animation(.15f, atlas.findRegions("Smart_Phone_Walk_Medium"));
+        smartPhoneMedium.setPlayMode(Animation.PlayMode.LOOP);
+
+        Array<TextureAtlas.AtlasRegion> smartPhoneKnifeTexturesMedium = atlas.findRegions("Smart_Phone_Knife_Medium");
+        smartPhoneKnifeTexturesMedium.add(smartPhoneKnifeTexturesMedium.get(4));
+        smartPhoneKnifeTexturesMedium.add(smartPhoneKnifeTexturesMedium.get(3));
+        smartPhoneKnifeTexturesMedium.add(smartPhoneKnifeTexturesMedium.get(2));
+        smartPhoneKnifeTexturesMedium.add(smartPhoneKnifeTexturesMedium.get(1));
+        smartPhoneKnifeTexturesMedium.add(smartPhoneKnifeTexturesMedium.get(0));
+        smartPhoneKnifeMedium = new Animation(.01f, smartPhoneKnifeTexturesMedium);
+
+        smartPhoneHard = new Animation(.15f, atlas.findRegions("Smart_Phone_Walk_Hard"));
+        smartPhoneHard.setPlayMode(Animation.PlayMode.LOOP);
+
+        Array<TextureAtlas.AtlasRegion> smartPhoneKnifeTexturesHard = atlas.findRegions("Smart_Phone_Knife_Hard");
+        smartPhoneKnifeTexturesHard.add(smartPhoneKnifeTexturesHard.get(4));
+        smartPhoneKnifeTexturesHard.add(smartPhoneKnifeTexturesHard.get(3));
+        smartPhoneKnifeTexturesHard.add(smartPhoneKnifeTexturesHard.get(2));
+        smartPhoneKnifeTexturesHard.add(smartPhoneKnifeTexturesHard.get(1));
+        smartPhoneKnifeTexturesHard.add(smartPhoneKnifeTexturesHard.get(0));
+        smartPhoneKnifeHard = new Animation(.01f, smartPhoneKnifeTexturesHard);
 
         hudPatch = new NinePatch(atlas.findRegion("ninepatch-hud"), 24, 24, 24, 24);
 
