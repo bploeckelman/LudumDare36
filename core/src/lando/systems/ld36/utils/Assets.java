@@ -78,14 +78,18 @@ public class Assets {
 //        font.getData().setScale(2f);
 //        font.getData().markupEnabled = true;
 
-        final TextureLoader.TextureParameter params = new TextureLoader.TextureParameter();
-        params.minFilter = Texture.TextureFilter.Linear;
-        params.magFilter = Texture.TextureFilter.Linear;
+        final TextureLoader.TextureParameter linearParams = new TextureLoader.TextureParameter();
+        linearParams.minFilter = Texture.TextureFilter.Linear;
+        linearParams.magFilter = Texture.TextureFilter.Linear;
+
+        final TextureLoader.TextureParameter nearestParams = new TextureLoader.TextureParameter();
+        nearestParams.minFilter = Texture.TextureFilter.Nearest;
+        nearestParams.magFilter = Texture.TextureFilter.Nearest;
 
         mgr = new AssetManager();
-        mgr.load("images/spritesheet.png", Texture.class, params);
-        mgr.load("images/shadow.png", Texture.class, params);
-        mgr.load("images/title-screen.png", Texture.class, params);
+        mgr.load("images/spritesheet.png", Texture.class, nearestParams);
+        mgr.load("images/shadow.png", Texture.class, linearParams);
+        mgr.load("images/title-screen.png", Texture.class, linearParams);
 
         atlas = new TextureAtlas(Gdx.files.internal("sprites.atlas"));
 
