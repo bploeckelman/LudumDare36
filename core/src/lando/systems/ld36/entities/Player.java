@@ -18,6 +18,7 @@ public class Player extends GameObject {
 
     private static final float HIT_DELTA_X = 32;
     private static final float HIT_DELTA_Y = 32;
+    private static final float HIT_DELTA_Z = 32;
 
     public float moveSpeed;
     public boolean isMoving = false;
@@ -125,7 +126,9 @@ public class Player extends GameObject {
 
     public int doesHit(Enemy enemy) {
         if (enemy.position.y > (this.position.y - HIT_DELTA_Y)
-         && enemy.position.y < (this.position.y + HIT_DELTA_Y)) {
+         && enemy.position.y < (this.position.y + HIT_DELTA_Y)
+         && enemy.position.z > (this.position.z - HIT_DELTA_Z)
+         && enemy.position.z < (this.position.z + HIT_DELTA_Z)) {
             if (isFacingRight && (enemy.hitBounds.x > hitBounds.x) && (enemy.hitBounds.x < hitBounds.x + hitBounds.width + HIT_DELTA_X)) {
                 return 1;
             }
