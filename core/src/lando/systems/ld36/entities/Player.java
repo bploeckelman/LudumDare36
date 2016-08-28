@@ -17,6 +17,10 @@ import lando.systems.ld36.utils.KeyMapping;
  * Created by dsgraham on 8/27/16.
  */
 public class Player extends GameObject {
+
+    private static final float HIT_DELTA_X = 32;
+    private static final float HIT_DELTA_Y = 32;
+
     public final float moveSpeed = 150;
     public final float bottomPlayArea = 0;
     public final float topPlayArea = 5.5f * 32;
@@ -136,6 +140,12 @@ public class Player extends GameObject {
     }
 
     public boolean doesHit(Enemy enemy) {
-        return true;
+        if (enemy.position.y > (this.position.y - HIT_DELTA_Y)
+         && enemy.position.y < (this.position.y + HIT_DELTA_Y)) {
+            return (isFacingRight && (enemy.hitBounds.x > hitBounds.x) && (enemy.hitBounds.x < hitBounds.x + hitBounds.width + HIT_DELTA_X))
+               || (!isFacingRight && (enemy.hitBounds.x + enemy.hitBounds.width < hitBounds.x + hitBounds.width)
+                                  && (enemy.hitBounds.x + enemy.hitBounds.width > hitBounds.x - HIT_DELTA_X));
+        }
+        return false;
     }
 }
