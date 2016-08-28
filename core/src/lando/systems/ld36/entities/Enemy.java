@@ -2,11 +2,12 @@ package lando.systems.ld36.entities;
 
 import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld36.levels.Level;
 
 public class Enemy extends GameObject {
-    public Vector2 bounceBack;
+    enum ACTION {WANDER};
     public boolean isAttacking = false;
     public boolean isMoving = false;
     public boolean isHurt = false;
@@ -16,12 +17,19 @@ public class Enemy extends GameObject {
     public int health;
     public Animation walkAnimation;
     public Animation attackAnimation;
+    public ACTION currentState;
+    public Vector2 movePoint;
+    public Vector2 direction;
+
 
     public Enemy(Level level) {
         super(level);
         animationTimer = new MutableFloat(0f);
         health = 5;
-        bounceBack = new Vector2();
+        movePoint = new Vector2();
+        direction = new Vector2();
+        currentState = ACTION.WANDER;
+        moveSpeed = 50;
     }
 
     public void update(float dt) {
@@ -41,6 +49,12 @@ public class Enemy extends GameObject {
             }
         }
 
+        switch(currentState){
+            case WANDER:
+                wander(dt);
+                break;
+        }
+
         position.x += bounceBack.x;
         position.y += bounceBack.y;
         bounceBack.scl(0.8f);
@@ -56,6 +70,32 @@ public class Enemy extends GameObject {
             isHurt = true;
             hurtCooldown = 1f;
             bounceBack.set(dir * 10f, 0f);
+        }
+    }
+
+    public void wander(float dt){
+        float moveLeft = moveSpeed * dt;
+        while (moveLeft > 0) {
+            if (movePoint.epsilonEquals(0, 0, .5f)) {
+                float x = position.x + MathUtils.random(200) - 100;
+                float y = position.y + MathUtils.random(200) - 100;
+                y = MathUtils.clamp(y, bottomPlayArea, topPlayArea);
+                x = MathUtils.clamp(x, leftEdge, level.getLevelWidth() - (width / 2));
+                movePoint.set(x, y);
+            }
+
+            float dist = Vector2.dst(movePoint.x, movePoint.y, position.x, position.y);
+            if (dist < moveLeft){
+                position.x = movePoint.x;
+                position.y = movePoint.y;
+                moveLeft -= dist;
+                movePoint.setZero();
+            } else {
+                direction.set(movePoint.cpy().sub(position.x, position.y));
+                direction.nor().scl(moveLeft);
+                position.add(direction.x, direction.y, 0);
+                moveLeft = 0;
+            }
         }
     }
 

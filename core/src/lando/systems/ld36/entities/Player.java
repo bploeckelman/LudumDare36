@@ -20,7 +20,6 @@ public class Player extends GameObject {
     private static final float HIT_DELTA_Y = 32;
     private static final float HIT_DELTA_Z = 32;
 
-    public float moveSpeed;
     public boolean isMoving = false;
     public boolean isAttacking = false;
     public float timer = 0f;

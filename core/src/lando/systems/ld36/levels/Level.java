@@ -80,8 +80,17 @@ public class Level {
 
                 if (enemy.dead) {
                     // TODO: spawn cool explosion thing
-                    objects.removeIndex(i);
                 }
+            }
+        }
+
+        for (int i = objects.size -1; i>=0; i--){
+            GameObject object = objects.get(i);
+            if (!(object instanceof Enemy)) continue;
+
+            final Enemy enemy = (Enemy) object;
+            if (enemy.dead) {
+                objects.removeIndex(i);
             }
         }
 

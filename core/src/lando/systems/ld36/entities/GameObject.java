@@ -23,6 +23,8 @@ public class GameObject {
     public final float INVULERABLITIYFLASHSPEED = .5f;
     public final float GRAVITY = -200;
     public float jumpVelocity = 200;
+    public float moveSpeed;
+
 
     public final float bottomPlayArea = 0;
     public final float topPlayArea = 5.5f * 32;
@@ -43,6 +45,8 @@ public class GameObject {
     public boolean dead;
     public Array<Vector2> lastSafePlace;
     public float invunerableTimer;
+    public Vector2 bounceBack;
+
 
 
 
@@ -58,6 +62,7 @@ public class GameObject {
         footBounds = new Rectangle();
         jumpCount = 0;
         lastSafePlace = new Array<Vector2>();
+        bounceBack = new Vector2();
 
     }
 
