@@ -157,10 +157,10 @@ public class Assets {
         betamaxPunch = new Animation(.01f, betamaxPunchTextures);
 
 
-        smartPhone = new Animation(.15f, atlas.findRegions("Cell_Phone"));
+        smartPhone = new Animation(.15f, atlas.findRegions("Smart_Phone_Walk"));
         smartPhone.setPlayMode(Animation.PlayMode.LOOP);
 
-        Array<TextureAtlas.AtlasRegion> smartPhoneKnifeTextures = atlas.findRegions("Cell_Phone_Knife");
+        Array<TextureAtlas.AtlasRegion> smartPhoneKnifeTextures = atlas.findRegions("Smart_Phone_Knife");
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(2));
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(1));
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(0));

@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -30,7 +31,7 @@ public class Level {
     TiledMapTileLayer groundLayer;
     Array<TiledMapImageLayer> imageLayers;
     public GameScreen screen;
-    Player player;
+    public Player player;
 
     private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override

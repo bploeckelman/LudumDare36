@@ -47,6 +47,9 @@ public class GameObject {
     public float invunerableTimer;
     public Vector2 bounceBack;
 
+    public Vector2 movePoint;
+    public Vector2 direction;
+    public Vector3 testPosition;
 
 
 
@@ -63,7 +66,9 @@ public class GameObject {
         jumpCount = 0;
         lastSafePlace = new Array<Vector2>();
         bounceBack = new Vector2();
-
+        movePoint = new Vector2();
+        direction = new Vector2();
+        testPosition = new Vector3();
     }
 
     public void update(float dt){
@@ -78,16 +83,7 @@ public class GameObject {
         position.y = MathUtils.clamp(position.y, bottomPlayArea, topPlayArea);
         position.x = MathUtils.clamp(position.x, leftEdge, level.getLevelWidth() - (width/2)) ;
 
-        level.getGroundTiles(position, tiles);
-        footBounds.set(position.x + 10, position.y, 45, 5);
-        falling = true;
-        for (Rectangle tile : tiles){
-            if (position.z >= 0 && footBounds.overlaps(tile) || tile.contains(footBounds)){
-                falling = false;
-                break;
-            }
-        }
-
+        falling = notSafeToWalk(position);
 
 
         // Jumping
@@ -157,5 +153,44 @@ public class GameObject {
 
     public boolean isInvulerable(){
         return invunerableTimer > 0;
+    }
+
+
+    public boolean notSafeToWalk(Vector3 pos){
+        level.getGroundTiles(pos, tiles);
+        footBounds.set(pos.x + 10, pos.y, 45, 5);
+        boolean willFall = true;
+        for (Rectangle tile : tiles){
+            if (pos.z >= 0 && footBounds.overlaps(tile) || tile.contains(footBounds)){
+                willFall = false;
+                break;
+            }
+        }
+        return  willFall;
+    }
+
+    public float updateMove(float dt, float moveLeft){
+        float dist = Vector2.dst(movePoint.x, movePoint.y, position.x, position.y);
+        if (dist < moveLeft){
+            testPosition.set(movePoint.x, movePoint.y, 0);
+            if (!notSafeToWalk(testPosition)) {
+                position.x = movePoint.x;
+                position.y = movePoint.y;
+            }
+            moveLeft -= dist;
+            movePoint.setZero();
+        } else {
+            direction.set(movePoint.cpy().sub(position.x, position.y));
+            direction.nor().scl(moveLeft);
+            testPosition.set(position);
+            testPosition.add(direction.x, direction.y, 0);
+            if (notSafeToWalk(testPosition)) {
+                movePoint.setZero();
+            } else {
+                position.set(testPosition);
+            }
+            moveLeft = 0;
+        }
+        return moveLeft;
     }
 }

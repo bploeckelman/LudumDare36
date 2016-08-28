@@ -2,12 +2,32 @@ package lando.systems.ld36.entities;
 
 import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import lando.systems.ld36.ai.*;
+import lando.systems.ld36.ai.conditions.NearScreenCondition;
+import lando.systems.ld36.ai.states.ChaseState;
+import lando.systems.ld36.ai.states.WaitState;
+import lando.systems.ld36.ai.states.WanderState;
 import lando.systems.ld36.levels.Level;
 
 public class Enemy extends GameObject {
-    enum ACTION {WANDER};
+
+    /**
+     * Simple State Machine for Enemies
+     */
+    enum ACTION {
+        /**
+         * Wander around aimlessly
+         */
+        WANDER,
+        /**
+         * Chase the player
+         */
+        CHASE,
+        /**
+         * Wait until they are just on screen
+         */
+        WAIT}
     public boolean isAttacking = false;
     public boolean isMoving = false;
     public boolean isHurt = false;
@@ -18,18 +38,37 @@ public class Enemy extends GameObject {
     public Animation walkAnimation;
     public Animation attackAnimation;
     public ACTION currentState;
-    public Vector2 movePoint;
-    public Vector2 direction;
+    public StateMachine stateMachine;
+
 
 
     public Enemy(Level level) {
         super(level);
         animationTimer = new MutableFloat(0f);
         health = 5;
-        movePoint = new Vector2();
-        direction = new Vector2();
-        currentState = ACTION.WANDER;
+
+        currentState = ACTION.CHASE;
         moveSpeed = 50;
+
+        initializeStates();
+
+    }
+
+    public void initializeStates(){
+        // States enemy can have
+        WaitState wait = new WaitState();
+        WanderState wander = new WanderState(this);
+        ChaseState chase = new ChaseState(this);
+
+        // Conditions
+        NearScreenCondition nearCond = new NearScreenCondition(level.screen.camera, this);
+
+        // Transitions
+        Array<Transition> transitions = new Array<Transition>();
+        transitions.add(new Transition(wait, nearCond, chase));
+
+        // Create State Machine
+        stateMachine = new StateMachine(wait, transitions);
     }
 
     public void update(float dt) {
@@ -49,11 +88,9 @@ public class Enemy extends GameObject {
             }
         }
 
-        switch(currentState){
-            case WANDER:
-                wander(dt);
-                break;
-        }
+        stateMachine.update(dt);
+
+        isFacingRight = direction.x > 0;
 
         position.x += bounceBack.x;
         position.y += bounceBack.y;
@@ -73,30 +110,5 @@ public class Enemy extends GameObject {
         }
     }
 
-    public void wander(float dt){
-        float moveLeft = moveSpeed * dt;
-        while (moveLeft > 0) {
-            if (movePoint.epsilonEquals(0, 0, .5f)) {
-                float x = position.x + MathUtils.random(200) - 100;
-                float y = position.y + MathUtils.random(200) - 100;
-                y = MathUtils.clamp(y, bottomPlayArea, topPlayArea);
-                x = MathUtils.clamp(x, leftEdge, level.getLevelWidth() - (width / 2));
-                movePoint.set(x, y);
-            }
-
-            float dist = Vector2.dst(movePoint.x, movePoint.y, position.x, position.y);
-            if (dist < moveLeft){
-                position.x = movePoint.x;
-                position.y = movePoint.y;
-                moveLeft -= dist;
-                movePoint.setZero();
-            } else {
-                direction.set(movePoint.cpy().sub(position.x, position.y));
-                direction.nor().scl(moveLeft);
-                position.add(direction.x, direction.y, 0);
-                moveLeft = 0;
-            }
-        }
-    }
 
 }
