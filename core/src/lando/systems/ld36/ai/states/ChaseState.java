@@ -16,8 +16,10 @@ public class ChaseState extends State {
     @Override
     public void update(float dt) {
         float moveLeft = owner.moveSpeed * dt;
-        owner.movePoint.set(owner.level.player.position.x, owner.level.player.position.y);
+        float offsetX = owner.position.x < owner.level.player.position.x ? -32 : 32;
+        owner.movePoint.set(owner.level.player.position.x + offsetX, owner.level.player.position.y);
         moveLeft = owner.updateMove(dt, moveLeft);
+        owner.direction.set(owner.level.player.position.x - owner.position.x, owner.level.player.position.y - owner.position.y);
     }
 
     @Override

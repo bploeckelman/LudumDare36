@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 
@@ -20,7 +21,11 @@ import lando.systems.ld36.utils.Assets;
  */
 public class GameObject {
 
-    public static boolean DRAW_BOUNDS = false;
+    public  final float HIT_DELTA_Y = 32;
+    public  final float HIT_DELTA_Z = 32;
+    public  float       attack_range = 24;
+
+    public static boolean DRAW_BOUNDS = true;
 
     public final float INVULERABLITIYDELAY = 3f;
     public final float GRAVITY = -200;
@@ -56,6 +61,11 @@ public class GameObject {
     public Animation attackAnimation;
     public MutableFloat animationTimer;
     public float timer = 0f;
+    public int health;
+    public int attackPower = 1;
+    public float respawnTimer;
+
+
 
     public Vector2 movePoint;
     public Vector2 direction;
@@ -91,6 +101,7 @@ public class GameObject {
         shadowMasterRectangle = new Rectangle();
         shadowDisplayRectangles = new Array<Rectangle>();
         shadowSourceRectangles = new Array<Rectangle>();
+        animationTimer = new MutableFloat(0f);
 
     }
 
@@ -139,6 +150,15 @@ public class GameObject {
         }
         else if (isMoving) {
             tex = walkAnimation.getKeyFrame(timer);
+        } else {
+            tex = walkAnimation.getKeyFrame(0);
+        }
+
+        position.x += bounceBack.x;
+        position.y += bounceBack.y;
+        bounceBack.scl(0.8f);
+        if (bounceBack.epsilonEquals(0.0f, 0.0f, 0.1f)) {
+            bounceBack.set(0f, 0f);
         }
 
         // Shadows!
@@ -166,7 +186,7 @@ public class GameObject {
     }
 
     public void render(SpriteBatch batch){
-
+        if (dead) return;
         if ( ! falling ) {
             Rectangle shadowDisplayRectangle;
             Rectangle shadowSourceRectangle;
@@ -226,7 +246,7 @@ public class GameObject {
     }
 
     public void attack(){
-        if (isAttacking) return;    // Early out if you are attacking
+        if (isAttacking || isInvulerable()) return;    // Early out if you are attacking
 
         animationTimer.setValue(0f);
         Timeline.createSequence()
@@ -256,6 +276,37 @@ public class GameObject {
         return invunerableTimer > 0;
     }
 
+
+    public int doesHit(GameObject enemy) {
+        if (enemy.position.y > (this.position.y - HIT_DELTA_Y)
+                && enemy.position.y < (this.position.y + HIT_DELTA_Y)
+                && enemy.position.z > (this.position.z - HIT_DELTA_Z)
+                && enemy.position.z < (this.position.z + HIT_DELTA_Z)) {
+            if (isFacingRight && (enemy.hitBounds.x > hitBounds.x) && (enemy.hitBounds.x < hitBounds.x + hitBounds.width + attack_range)) {
+                return 1;
+            }
+            if (!isFacingRight && (enemy.hitBounds.x + enemy.hitBounds.width < hitBounds.x + hitBounds.width)
+                    && (enemy.hitBounds.x + enemy.hitBounds.width > hitBounds.x - attack_range)) {
+                return -1;
+            }
+        }
+        return 0;
+    }
+
+    public void getHurt(int dmg, int dir) {
+        if ((health -= dmg) <= 0) {
+            if (dead) return;
+            health = 0;
+            dead = true;
+            respawnTimer = 1.1f;
+            Assets.particles.addParticle(hitBounds, Color.WHITE);
+        } else {
+            LudumDare36.game.wobbleScreen();
+            invunerableTimer = .5f;
+            invulerabilityFlashSpeed = 0.1f;
+            bounceBack.set(dir * 10f, 0f);
+        }
+    }
 
     public boolean notSafeToWalk(Vector3 pos){
         level.getGroundTiles(pos, tiles);

@@ -174,7 +174,9 @@ public class Assets {
         eightTrackWalk.setPlayMode(Animation.PlayMode.LOOP);
 
         Array<TextureAtlas.AtlasRegion> eightTrackPunchTextures = atlas.findRegions("Eight_Track_Punch");
-        eightTrackPunch = new Animation(.08f, eightTrackPunchTextures);
+        eightTrackPunchTextures.add(eightTrackPunchTextures.get(1));
+        eightTrackPunchTextures.add(eightTrackPunchTextures.get(0));
+        eightTrackPunch = new Animation(.15f, eightTrackPunchTextures);
 
 
         betamaxWalk = new Animation(.15f, atlas.findRegions("Betamax_Walk"));
@@ -196,7 +198,7 @@ public class Assets {
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(2));
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(1));
         smartPhoneKnifeTextures.add(smartPhoneKnifeTextures.get(0));
-        smartPhoneKnife = new Animation(.01f, smartPhoneKnifeTextures);
+        smartPhoneKnife = new Animation(.03f, smartPhoneKnifeTextures);
 
         smartPhoneMedium = new Animation(.15f, atlas.findRegions("Smart_Phone_Walk_Medium"));
         smartPhoneMedium.setPlayMode(Animation.PlayMode.LOOP);

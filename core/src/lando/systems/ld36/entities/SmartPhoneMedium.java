@@ -11,5 +11,6 @@ public class SmartPhoneMedium extends SmartPhoneEasy {
         attackAnimation = Assets.smartPhoneKnifeMedium;
 
         tex = walkAnimation.getKeyFrame(timer);
+        attackPower = 12;
     }
 }

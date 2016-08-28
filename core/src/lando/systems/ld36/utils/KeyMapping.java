@@ -27,4 +27,8 @@ public class KeyMapping {
         return Gdx.input.isKeyPressed(actionMap.get(action));
     }
 
+    public boolean isActionJustPressed(ACTION action){
+        return Gdx.input.isKeyJustPressed(actionMap.get(action));
+    }
+
 }

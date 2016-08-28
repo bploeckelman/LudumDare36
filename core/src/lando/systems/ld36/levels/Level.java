@@ -70,7 +70,7 @@ public class Level {
                 if (!(object instanceof Enemy)) continue;
 
                 final Enemy enemy = (Enemy) object;
-                if (!enemy.isHurt) {
+                if (!enemy.isInvulerable()) {
                     int dir = player.doesHit(enemy);
                     if (dir != 0) {
                         enemy.getHurt(player.attackPower, dir);
@@ -88,6 +88,12 @@ public class Level {
             if (!(object instanceof Enemy)) continue;
 
             final Enemy enemy = (Enemy) object;
+            if (!player.isInvulerable() && enemy.isAttacking){
+                int dir = enemy.doesHit(player);
+                if  (dir != 0){
+                    player.getHurt(enemy.attackPower, dir);
+                }
+            }
             if (enemy.dead) {
                 objects.removeIndex(i);
             }

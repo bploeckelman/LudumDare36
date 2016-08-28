@@ -11,5 +11,6 @@ public class SmartPhoneHard extends SmartPhoneMedium {
         attackAnimation = Assets.smartPhoneKnifeHard;
 
         tex = walkAnimation.getKeyFrame(timer);
+        attackPower = 15;
     }
 }

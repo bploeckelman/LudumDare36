@@ -3,6 +3,7 @@ package lando.systems.ld36.entities;
 import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.ai.StateMachine;
@@ -16,13 +17,10 @@ import lando.systems.ld36.utils.Assets;
 
 public class Enemy extends GameObject {
 
-    public boolean isAttacking = false;
     public boolean isMoving = false;
-    public boolean isHurt = false;
     public MutableFloat animationTimer;
     public float timer = 0f;
-    public float hurtCooldown = 0f;
-    public int health;
+
 
     public StateMachine stateMachine;
 
@@ -58,49 +56,22 @@ public class Enemy extends GameObject {
     public void update(float dt) {
         super.update(dt);
 
-        if (isAttacking) {
-            tex = attackAnimation.getKeyFrame(animationTimer.floatValue());
-        }
-        else if (isMoving) {
-            tex = walkAnimation.getKeyFrame(timer);
-        }
-
-        if (isHurt) {
-            if ((hurtCooldown -= dt) <= 0f) {
-                hurtCooldown = 0f;
-                isHurt = false;
-            }
-        }
-
         stateMachine.update(dt);
+        isFacingRight = direction.x > 0;
 
         tryAttack();
 
-        isFacingRight = direction.x > 0;
+        hitBounds.x = position.x + 15f;
+        hitBounds.y = position.y + position.z;
 
-        position.x += bounceBack.x;
-        position.y += bounceBack.y;
-        bounceBack.scl(0.8f);
-        if (bounceBack.epsilonEquals(0.0f, 0.0f, 0.1f)) {
-            bounceBack.set(0f, 0f);
-        }
-    }
-
-    public void getHurt(int dmg, int dir) {
-        if ((health -= dmg) <= 0) {
-            dead = true;
-            Assets.particles.addParticle(hitBounds, Color.WHITE);
-        } else {
-            LudumDare36.game.wobbleScreen();
-            isHurt = true;
-            hurtCooldown = 1f / dmg;
-            invunerableTimer = hurtCooldown;
-            invulerabilityFlashSpeed = 0.1f;
-            bounceBack.set(dir * 10f, 0f);
-        }
     }
 
     public void tryAttack(){
+        // Lets make them not always try to hit you
+        if (MathUtils.random() < .97f) return;
+        if (position.dst(level.player.position) < 100){
+            attack();
+        }
 
     }
 

@@ -17,17 +17,10 @@ import lando.systems.ld36.utils.KeyMapping;
  */
 public class Player extends GameObject {
 
-    private static final float HIT_DELTA_X = 32;
-    private static final float HIT_DELTA_Y = 32;
-    private static final float HIT_DELTA_Z = 32;
-
-
-    public int attackPower = 1;
 
     public Rectangle footBounds;
 
 
-    public int health = 100;
     public int deaths = 0;
 
     public Player(Level level) {
@@ -39,7 +32,6 @@ public class Player extends GameObject {
         this.moveSpeed = character.moveSpeed;
         this.attackPower = character.attackPower;
 
-        animationTimer = new MutableFloat(0f);
         this.walkAnimation = character.walkAnimation;
         tex = walkAnimation.getKeyFrame(timer);
 
@@ -51,13 +43,20 @@ public class Player extends GameObject {
         isFacingRight = true;
         footBounds = new Rectangle();
         hitBounds = new Rectangle(position.x + 15f, position.y + 4f, 30f, tex.getRegionHeight() - 8f);
+        health = 100;
+        attack_range = 32;
     }
 
     public void update(float dt, float leftEdge){
         super.update(dt);
         if (dead){
-            level.screen.screenShake.shake(1f);
-            respawn();
+            if (respawnTimer > 1) {
+                level.screen.screenShake.shake(1f);
+            }
+            respawnTimer -= dt;
+            if (respawnTimer < 0) {
+                respawn();
+            }
         }
 
         isMoving = false;
@@ -90,7 +89,7 @@ public class Player extends GameObject {
         }
 
 
-        if(Assets.keyMapping.isActionPressed(KeyMapping.ACTION.ATTACK)) {
+        if(Assets.keyMapping.isActionJustPressed(KeyMapping.ACTION.ATTACK)) {
             attack();
         }
 
@@ -104,21 +103,7 @@ public class Player extends GameObject {
         super.render(batch);
     }
 
-    public int doesHit(Enemy enemy) {
-        if (enemy.position.y > (this.position.y - HIT_DELTA_Y)
-         && enemy.position.y < (this.position.y + HIT_DELTA_Y)
-         && enemy.position.z > (this.position.z - HIT_DELTA_Z)
-         && enemy.position.z < (this.position.z + HIT_DELTA_Z)) {
-            if (isFacingRight && (enemy.hitBounds.x > hitBounds.x) && (enemy.hitBounds.x < hitBounds.x + hitBounds.width + HIT_DELTA_X)) {
-                return 1;
-            }
-            if (!isFacingRight && (enemy.hitBounds.x + enemy.hitBounds.width < hitBounds.x + hitBounds.width)
-                               && (enemy.hitBounds.x + enemy.hitBounds.width > hitBounds.x - HIT_DELTA_X)) {
-                return -1;
-            }
-        }
-        return 0;
-    }
+
 
     public void respawn(){
         dead = false;
@@ -126,6 +111,7 @@ public class Player extends GameObject {
         position.z = 0;
         jumpCount =0;
         verticalVelocity = 0;
+        health = 100;
         position.x = lastSafePlace.get(0).x;
         position.y = lastSafePlace.get(0).y;
         invunerableTimer = INVULERABLITIYDELAY;

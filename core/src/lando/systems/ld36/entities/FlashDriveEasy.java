@@ -37,8 +37,7 @@ public class FlashDriveEasy extends Enemy {
         super.update(dt);
         jump();
         timer += dt;
-        hitBounds.x = position.x;
-        hitBounds.y = position.y + position.z;
+
     }
 
     public void initializeStates(){

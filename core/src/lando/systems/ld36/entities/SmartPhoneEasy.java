@@ -20,13 +20,13 @@ public class SmartPhoneEasy extends Enemy {
 
         jumpVelocity = 50f;
         hitBounds = new Rectangle(position.x, position.y, 32f, tex.getRegionHeight());
+        attackPower = 8;
     }
 
     public void update(float dt) {
         super.update(dt);
         jump();
         timer += dt;
-        hitBounds.x = position.x;
-        hitBounds.y = position.y + position.z;
+
     }
 }
