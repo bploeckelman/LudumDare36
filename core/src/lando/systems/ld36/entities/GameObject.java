@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.levels.Level;
@@ -36,6 +37,10 @@ public class GameObject {
     Array<Rectangle> tiles;
     public Rectangle footBounds;
     public float leftEdge;
+    public int jumpCount;
+    public boolean dead;
+    public Vector2 lastSafePlace;
+
 
 
     public GameObject(Level level){
@@ -48,17 +53,13 @@ public class GameObject {
         hitBounds = new Rectangle(position.x, position.y, tex.getRegionWidth(), tex.getRegionHeight());
         tiles = new Array<Rectangle>();
         footBounds = new Rectangle();
+        jumpCount = 0;
+        lastSafePlace = new Vector2();
 
     }
 
     public void update(float dt){
-        // Jumping
-        if (isOnGround()){
-            verticalVelocity = 0;
-        } else {
-            verticalVelocity += GRAVITY * dt;
-        }
-        position.z += verticalVelocity * dt;
+
 
         // Keep player on play area
         position.y = MathUtils.clamp(position.y, bottomPlayArea, topPlayArea);
@@ -68,20 +69,38 @@ public class GameObject {
         footBounds.set(position.x + 10, position.y, 45, 5);
         falling = true;
         for (Rectangle tile : tiles){
-            if (footBounds.overlaps(tile) || tile.contains(footBounds)){
+            if (position.z >= 0 && footBounds.overlaps(tile) || tile.contains(footBounds)){
                 falling = false;
                 break;
             }
+        }
+
+
+
+        // Jumping
+        position.z += verticalVelocity * dt;
+        if (!falling && isOnGround()){
+            jumpCount = 0;
+            verticalVelocity = 0;
+            lastSafePlace.set(position.x, position.y);
+        } else {
+            verticalVelocity += GRAVITY * dt;
         }
 
         // Can't fall when  jumping
         if (position.z > 0){
             falling = false;
         }
+
+        if (position.y + position.z < -height){
+            dead = true;
+        }
     }
 
     public void render(SpriteBatch batch){
-        batch.draw(shadowTex, position.x, position.y - 10, 64, height);
+        if (!falling) {
+            batch.draw(shadowTex, position.x, position.y - 10, 64, height);
+        }
         if (isFacingRight) {
             batch.draw(tex, position.x, position.y + position.z, width, height);
         } else {
@@ -107,6 +126,8 @@ public class GameObject {
     }
 
     public void jump(){
+        if (jumpCount > 0) return;
+        jumpCount++;
         verticalVelocity = jumpVelocity;
         position.z += .01f;
     }

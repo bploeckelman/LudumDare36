@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
@@ -52,12 +53,15 @@ public class Player extends GameObject {
 
     public void update(float dt, float leftEdge){
         super.update(dt);
+        if (dead){
+            respawn();
+        }
 
         timer += dt;
         isMoving = false;
         this.leftEdge = leftEdge;
 
-        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.JUMP) && isOnGround()){
+        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.JUMP)){
             jump();
         }
 
@@ -81,12 +85,6 @@ public class Player extends GameObject {
         if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.DOWN)){
             position.y -= moveSpeed * dt;
             isMoving = true;
-        }
-
-
-
-        if (falling){
-            System.out.println("Falling");
         }
 
 
@@ -114,6 +112,7 @@ public class Player extends GameObject {
 
         hitBounds.x = position.x + 15f;
         hitBounds.y = position.y;
+
     }
 
     public void render(SpriteBatch batch){
@@ -128,5 +127,15 @@ public class Player extends GameObject {
                                   && (enemy.hitBounds.x + enemy.hitBounds.width > hitBounds.x - HIT_DELTA_X));
         }
         return false;
+    }
+
+    public void respawn(){
+        dead = false;
+        deaths++;
+        position.z = 0;
+        jumpCount =0;
+        verticalVelocity = 0;
+        position.x = lastSafePlace.x;
+        position.y = lastSafePlace.y;
     }
 }
