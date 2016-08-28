@@ -1,3 +1,11 @@
+body {
+    margin: 0;
+}
+
+.computer {
+    width:  100%;
+}
+
 canvas {
     cursor: default;
     outline: none;
@@ -5,6 +13,26 @@ canvas {
 
 body {
     background-color: #222222;
+}
+
+#embed-html {
+    /* border: 1px solid red; */
+
+    /* padding-top: 28%; */
+    margin-left: 28.5%;
+    margin-top: 10%;
+    position: absolute;
+    top: 0;
+
+    table {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    canvas {
+        width: 39% !important;
+
+    }
 }
 
 .superdev {
