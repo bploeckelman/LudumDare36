@@ -5,11 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.entities.Player;
+import lando.systems.ld36.entities.PlayerCharacter;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Config;
@@ -27,12 +26,12 @@ public class GameScreen extends BaseScreen {
     public Shake screenShake;
     public Vector2 cameraCenter;
 
-    public GameScreen() {
+    public GameScreen(PlayerCharacter character) {
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
         camera.update();
         screenShake = new Shake(35, 8);
         level = new Level("levels/level0.tmx", this);
-        debugPlayer = new Player(level);
+        debugPlayer = new Player(character, level);
         level.setPlayer(debugPlayer);
         cameraCenter = new Vector2(camera.position.x, camera.position.y);
     }
@@ -40,7 +39,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void update(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            LudumDare36.game.screen = new MenuScreen();
+            LudumDare36.game.screen = new CharacterSelectScreen();
         }
         debugPlayer.update(dt, cameraCenter.x - camera.viewportWidth/2);
 

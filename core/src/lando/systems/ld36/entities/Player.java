@@ -19,8 +19,7 @@ public class Player extends GameObject {
     private static final float HIT_DELTA_X = 32;
     private static final float HIT_DELTA_Y = 32;
 
-    public final float moveSpeed = 150;
-
+    public float moveSpeed;
     public boolean isMoving = false;
     public boolean isAttacking = false;
     public float timer = 0f;
@@ -33,16 +32,23 @@ public class Player extends GameObject {
     public int health = 100;
     public int deaths = 0;
 
-    public Player(Level level){
+    public Player(Level level) {
+        this(PlayerCharacter.FLOPPY, level);
+    }
+
+    public Player(PlayerCharacter character, Level level){
         super(level);
+        this.moveSpeed = character.moveSpeed;
+
         animationTimer = new MutableFloat(0f);
-        walkAnimation = Assets.floppyWalk;
+        this.walkAnimation = character.walkAnimation;
         tex = walkAnimation.getKeyFrame(timer);
+
+        this.attackAnimation = character.attackAnimation;
 
         width = tex.getRegionWidth();
         height = tex.getRegionHeight();
 
-        attackAnimation = Assets.floppyPunch;
         isFacingRight = true;
         footBounds = new Rectangle();
         hitBounds = new Rectangle(position.x + 15f, position.y + 4f, 30f, tex.getRegionHeight() - 8f);

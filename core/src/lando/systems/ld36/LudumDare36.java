@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import lando.systems.ld36.screens.BaseScreen;
+import lando.systems.ld36.screens.CharacterSelectScreen;
 import lando.systems.ld36.screens.MenuScreen;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Config;
@@ -37,7 +38,7 @@ public class LudumDare36 extends ApplicationAdapter {
             progress = Assets.update();
         } while (progress != 1f);
         game = this;
-        screen = new MenuScreen();
+        screen = new CharacterSelectScreen();
     }
 
     @Override

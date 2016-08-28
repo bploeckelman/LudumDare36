@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lando.systems.ld36.LudumDare36;
+import lando.systems.ld36.entities.Player;
+import lando.systems.ld36.entities.PlayerCharacter;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Config;
 
@@ -24,7 +26,7 @@ public class MenuScreen extends BaseScreen {
         }
 
         if (Gdx.input.justTouched()) {
-            LudumDare36.game.screen = new GameScreen();
+            LudumDare36.game.screen = new GameScreen(PlayerCharacter.FLOPPY);
         }
     }
 
