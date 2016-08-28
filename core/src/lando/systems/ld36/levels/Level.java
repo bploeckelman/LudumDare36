@@ -6,7 +6,6 @@ import com.badlogic.gdx.maps.*;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -135,7 +134,10 @@ public class Level {
         player(),
         flash_drive_easy(),
         flash_drive_medium(),
-        flash_drive_hard();
+        flash_drive_hard(),
+        smart_phone_easy(),
+        smart_phone_medium(),
+        smart_phone_hard();
     }
 
     private void loadMapObjects() {
@@ -171,6 +173,18 @@ public class Level {
 
                 case flash_drive_hard:
                     objects.add(new FlashDriveHard(this, x, y));
+                    break;
+
+                case smart_phone_easy:
+                    objects.add(new SmartPhoneEasy(this, x, y));
+                    break;
+
+                case smart_phone_medium:
+                    objects.add(new SmartPhoneMedium(this, x, y));
+                    break;
+
+                case smart_phone_hard:
+                    objects.add(new SmartPhoneHard(this, x, y));
                     break;
             }
         }
