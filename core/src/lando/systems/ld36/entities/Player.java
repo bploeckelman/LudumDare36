@@ -1,11 +1,5 @@
 package lando.systems.ld36.entities;
 
-import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Timeline;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.primitives.MutableFloat;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld36.levels.Level;
@@ -114,6 +108,7 @@ public class Player extends GameObject {
         health = 100;
         position.x = lastSafePlace.get(0).x;
         position.y = lastSafePlace.get(0).y;
-        invunerableTimer = INVULERABLITIYDELAY;
+        invulerabilityFlashSpeed = .5f;
+        invunerableTimer = RESPAWNDELAY;
     }
 }

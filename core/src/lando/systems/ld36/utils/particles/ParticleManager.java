@@ -29,6 +29,33 @@ public class ParticleManager {
         numRegionsX = regions[0].length;
     }
 
+    public void addBloodParticles(Rectangle bounds, int direction){
+        int particles = 100;
+        for (int i = 0; i < particles; i++){
+
+            Particle part = particlePool.obtain();
+
+            float speed = 50 + MathUtils.random(200f);
+            float dir = (45 + MathUtils.random(90f)) * direction;
+            float px = bounds.x + MathUtils.random(bounds.width);
+            float py = bounds.y + MathUtils.random(bounds.height);
+            float vx = MathUtils.sinDeg(dir) * speed;
+            float vy = MathUtils.cosDeg(dir) * speed;
+            float scale = MathUtils.random(1, 4f);
+            float ttl = MathUtils.random(0.5f, 2f);
+            part.init(
+                    px, py,
+                    vx, vy,
+                    -vx/2f, -200, 1,
+                    1,0,0,1,
+                    0.5f,0,0,0.5f,
+                    scale, ttl);
+
+            activeParticles.add(part);
+        }
+
+    }
+
     public void addParticle(Rectangle bounds, Color c){
         int tiles = 10;
         float boundDx = bounds.width / tiles;
@@ -47,7 +74,7 @@ public class ParticleManager {
                 part.init(
                         px, py,
                         vx, vy,
-                        -vx, -vy,
+                        -vx, -vy, .5f,
                         c.r, c.g, c.b, c.a,
                         c.r, c.g, c.b, 0f,
                         scale, ttl,

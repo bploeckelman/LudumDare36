@@ -17,6 +17,7 @@ public class Particle implements Pool.Poolable {
     Vector2 pos;
     Vector2 vel;
     Vector2 acc;
+    float acc_damping;
     Color startColor;
     Color endColor;
     MutableFloat scale;
@@ -27,6 +28,7 @@ public class Particle implements Pool.Poolable {
         pos = new Vector2();
         vel = new Vector2();
         acc = new Vector2();
+        acc_damping = 1;
         startColor = new Color();
         endColor = new Color();
         scale = new MutableFloat(.1f);
@@ -36,6 +38,7 @@ public class Particle implements Pool.Poolable {
     @Override
     public void reset() {
         timeToLive = -1;
+        acc_damping = 1;
     }
 
     public void init(Vector2 p ,Vector2 v, Vector2 a, Color iC, Color fC, float s, float t) {
@@ -43,11 +46,11 @@ public class Particle implements Pool.Poolable {
     }
 
     public void init(Vector2 p ,Vector2 v, Vector2 a, Color iC, Color fC, float s, float t, TextureRegion reg) {
-        pos = p;
-        vel = v;
-        acc = a;
-        startColor = iC;
-        endColor = fC;
+        pos.set(p);
+        vel.set(v);
+        acc.set(a);
+        startColor.set(iC);
+        endColor.set(fC);
         scale.setValue(s);
         timeToLive = t;
         totalTTL = t;
@@ -56,7 +59,16 @@ public class Particle implements Pool.Poolable {
 
     public void init(float px, float py,
                      float vx, float vy,
-                     float ax, float ay,
+                     float ax, float ay, float ad,
+                     float ir, float ig, float ib, float ia,
+                     float fr, float fg, float fb, float fa,
+                     float s,  float t){
+        init(px, py, vx, vy, ax, ay, ad, ir, ig, ib, ia, fr, fg, fb, fa, s, t, Assets.white);
+    }
+
+    public void init(float px, float py,
+                     float vx, float vy,
+                     float ax, float ay, float ad,
                      float ir, float ig, float ib, float ia,
                      float fr, float fg, float fb, float fa,
                      float s,  float t,
@@ -64,6 +76,7 @@ public class Particle implements Pool.Poolable {
         pos.set(px, py);
         vel.set(vx, vy);
         acc.set(ax, ay);
+        acc_damping = ad;
         startColor.set(ir, ig, ib, ia);
         endColor.set(fr, fg, fb, fa);
         scale.setValue(s);
@@ -78,7 +91,7 @@ public class Particle implements Pool.Poolable {
         vel.add(acc.x * dt, acc.y * dt);
         pos.add(vel.x * dt, vel.y * dt);
 
-        acc.scl(0.5f);
+        acc.scl(acc_damping);
         if (acc.epsilonEquals(0.0f, 0.0f, 0.1f)) {
             acc.set(0f, 0f);
         }

@@ -25,9 +25,9 @@ public class GameObject {
     public  final float HIT_DELTA_Z = 32;
     public  float       attack_range = 24;
 
-    public static boolean DRAW_BOUNDS = true;
+    public static boolean DRAW_BOUNDS = false;
 
-    public final float INVULERABLITIYDELAY = 3f;
+    public final float RESPAWNDELAY = 4f;
     public final float GRAVITY = -200;
     public float jumpVelocity = 200;
     public float moveSpeed;
@@ -273,7 +273,7 @@ public class GameObject {
     }
 
     public boolean isInvulerable(){
-        return invunerableTimer > 0;
+        return invunerableTimer > 0 || dead;
     }
 
 
