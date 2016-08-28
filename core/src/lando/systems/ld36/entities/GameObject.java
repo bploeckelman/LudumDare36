@@ -10,10 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
@@ -51,6 +48,7 @@ public class GameObject {
     public Array<Vector2> lastSafePlace;
     public float invunerableTimer;
     public Vector2 bounceBack;
+
     public float invulerabilityFlashSpeed = .5f;
     public boolean isMoving = false;
     public boolean isAttacking = false;
@@ -59,16 +57,23 @@ public class GameObject {
     public MutableFloat animationTimer;
     public float timer = 0f;
 
-
     public Vector2 movePoint;
     public Vector2 direction;
     public Vector3 testPosition;
 
+    public boolean isOverFloor;
 
+    private static final int SHADOW_Y_OFFSET = -10;
+    private static final int SHADOW_DRAW_WIDTH = 64;
+    private static final int SHADOW_TEXTURE_WIDTH = 32;
+    private static final int SHADOW_TEXTURE_HEIGHT = 32;
+    private Rectangle shadowMasterRectangle;
+    private Array<Rectangle> shadowDisplayRectangles;
+    private Array<Rectangle> shadowSourceRectangles;
 
     public GameObject(Level level){
         tex = new TextureRegion(Assets.debugTexture, 50, 50);
-        shadowTex = new TextureRegion(Assets.shadowTexture, 32, 32);
+        shadowTex = new TextureRegion(Assets.shadowTexture, SHADOW_TEXTURE_WIDTH, SHADOW_TEXTURE_HEIGHT);
         position = new Vector3();
         width = 50;
         height = width;
@@ -82,6 +87,11 @@ public class GameObject {
         movePoint = new Vector2();
         direction = new Vector2();
         testPosition = new Vector3();
+
+        shadowMasterRectangle = new Rectangle();
+        shadowDisplayRectangles = new Array<Rectangle>();
+        shadowSourceRectangles = new Array<Rectangle>();
+
     }
 
     public void initializeStates() {
@@ -102,7 +112,6 @@ public class GameObject {
 
         falling = notSafeToWalk(position);
 
-
         // Jumping
         position.z += verticalVelocity * dt;
         if (!falling && isOnGround()){
@@ -116,7 +125,7 @@ public class GameObject {
             verticalVelocity += GRAVITY * dt;
         }
 
-        // Can't fall when  jumping
+        // Can't fall when jumping
         if (position.z > 0){
             falling = false;
         }
@@ -131,11 +140,52 @@ public class GameObject {
         else if (isMoving) {
             tex = walkAnimation.getKeyFrame(timer);
         }
+
+        // Shadows!
+        // Master shadow position
+        shadowMasterRectangle.set(position.x, position.y + SHADOW_Y_OFFSET, SHADOW_DRAW_WIDTH, height);
+        shadowDisplayRectangles = new Array<Rectangle>();
+        shadowSourceRectangles = new Array<Rectangle>();
+        Rectangle r;
+        // Fit to each tile in the area
+        for ( Rectangle tile : tiles ) {
+            if ( shadowMasterRectangle.overlaps( tile ) ) {
+                r = new Rectangle();
+                Intersector.intersectRectangles(tile, shadowMasterRectangle, r);
+                shadowDisplayRectangles.add( r );
+                shadowSourceRectangles.add( new Rectangle(
+                        ((r.x - shadowMasterRectangle.x) / shadowMasterRectangle.width) * 32,
+                        32 - (((r.y - shadowMasterRectangle.y) / shadowMasterRectangle.height) * 32),
+                        ( r.width / shadowMasterRectangle.width ) * 32,
+                        ( r.height / shadowMasterRectangle.height ) * -32
+                ) );
+            }
+
+        }
+
     }
 
     public void render(SpriteBatch batch){
-        if (!falling) {
-            batch.draw(shadowTex, position.x, position.y - 10, 64, height);
+
+        if ( ! falling ) {
+            Rectangle shadowDisplayRectangle;
+            Rectangle shadowSourceRectangle;
+            for ( int i = 0; i < shadowDisplayRectangles.size; i++ ) {
+                shadowDisplayRectangle = shadowDisplayRectangles.get(i);
+                shadowSourceRectangle = shadowSourceRectangles.get(i);
+                batch.draw(
+                        Assets.shadowTexture,
+                        shadowDisplayRectangle.x,
+                        shadowDisplayRectangle.y,
+                        shadowDisplayRectangle.width,
+                        shadowDisplayRectangle.height,
+                        Math.round(shadowSourceRectangle.x),
+                        Math.round(shadowSourceRectangle.y),
+                        Math.round(shadowSourceRectangle.width),
+                        Math.round(shadowSourceRectangle.height),
+                        false, true
+                );
+            }
         }
 
         // Flash the thing if it is invulnerable
