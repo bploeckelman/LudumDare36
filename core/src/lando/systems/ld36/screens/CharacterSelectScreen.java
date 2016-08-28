@@ -17,7 +17,9 @@ public class CharacterSelectScreen extends BaseScreen {
     Rectangle topPanel;
     Array<Rectangle> characterPanels;
     float timer = 0f;
-    int hoverCharacter = -1;
+    int hoverCharacter;
+    Vector3 cursorPoint;
+    Vector3 lastCursorPoint;
 
     public CharacterSelectScreen() {
         super();
@@ -42,6 +44,9 @@ public class CharacterSelectScreen extends BaseScreen {
                 (camera.viewportHeight / 4) * 3 - (border * 2)
             ));
         }
+        cursorPoint = new Vector3();
+        lastCursorPoint = new Vector3();
+        hoverCharacter = 0;
     }
 
     @Override
@@ -53,18 +58,35 @@ public class CharacterSelectScreen extends BaseScreen {
         }
 
         PlayerCharacter[] characters = PlayerCharacter.values();
-        Vector3 cursorPoint = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        cursorPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         hudCamera.unproject(cursorPoint);
 
-        hoverCharacter = -1;
-        for (int i = 0; i < characterPanels.size; i++) {
-            if (characterPanels.get(i).contains(cursorPoint.x, cursorPoint.y)) {
-                hoverCharacter = i;
-                break;
+        if (!cursorPoint.epsilonEquals(lastCursorPoint, .5f)) {
+            for (int i = 0; i < characterPanels.size; i++) {
+                if (characterPanels.get(i).contains(cursorPoint.x, cursorPoint.y)) {
+                    hoverCharacter = i;
+                    break;
+                }
             }
         }
 
-        if (Gdx.input.justTouched() && hoverCharacter >= 0) {
+        lastCursorPoint.set(cursorPoint);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)){
+            hoverCharacter--;
+            if (hoverCharacter<0){
+                hoverCharacter += characterPanels.size;
+            }
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)){
+            hoverCharacter++;
+            if (hoverCharacter >= characterPanels.size){
+                hoverCharacter -= characterPanels.size;
+            }
+        }
+
+        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) && hoverCharacter >= 0) {
             LudumDare36.game.setScreen(new GameScreen(characters[hoverCharacter]));
         }
 
