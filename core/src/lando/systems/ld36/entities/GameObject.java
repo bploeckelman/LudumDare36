@@ -74,7 +74,7 @@ public class GameObject {
             }
         }
 
-        // Can't fall when when jumping
+        // Can't fall when  jumping
         if (position.z > 0){
             falling = false;
         }

@@ -40,8 +40,8 @@ public class GameScreen extends BaseScreen {
         debugPlayer.update(dt, camera.position.x - camera.viewportWidth/2);
 
         // have camera follow player
-        if (debugPlayer.position.x > camera.position.x - debugPlayer.width){
-            float screenXDif = debugPlayer.position.x - camera.position.x + debugPlayer.width;
+        if (debugPlayer.position.x > camera.position.x + camera.viewportWidth /5){
+            float screenXDif = debugPlayer.position.x - camera.position.x - camera.viewportWidth /5;
             camera.position.x += screenXDif * .05f;
         }
 
