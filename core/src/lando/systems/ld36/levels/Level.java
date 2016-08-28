@@ -73,7 +73,7 @@ public class Level {
                     enemy.getHurt(1);
                 }
 
-                if (enemy.isDead) {
+                if (enemy.dead) {
                     // TODO: spawn cool explosion thing
                     objects.removeIndex(i);
                 }

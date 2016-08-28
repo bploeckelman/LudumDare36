@@ -8,7 +8,6 @@ public class Enemy extends GameObject {
     public boolean isAttacking = false;
     public boolean isMoving = false;
     public boolean isHurt = false;
-    public boolean isDead = false;
     public MutableFloat animationTimer;
     public float timer = 0f;
     public float hurtCooldown = 0f;
@@ -42,7 +41,7 @@ public class Enemy extends GameObject {
 
     public void getHurt(int dmg) {
         if ((health -= dmg) <= 0) {
-            isDead = true;
+            dead = true;
         } else {
             isHurt = true;
             hurtCooldown = 1f;

@@ -42,7 +42,8 @@ public class LudumDare36 extends ApplicationAdapter {
 
     @Override
     public void resume() {
-        Assets.load();
+        // May not want this here.
+//        Assets.load();
         game = this;
     }
 

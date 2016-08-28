@@ -73,10 +73,10 @@ public class Assets {
         }
 
         glyphLayout = new GlyphLayout();
-        font = new BitmapFont();
-        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        font.getData().setScale(2f);
-        font.getData().markupEnabled = true;
+//        font = new BitmapFont();
+//        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        font.getData().setScale(2f);
+//        font.getData().markupEnabled = true;
 
         final TextureLoader.TextureParameter params = new TextureLoader.TextureParameter();
         params.minFilter = Texture.TextureFilter.Linear;
