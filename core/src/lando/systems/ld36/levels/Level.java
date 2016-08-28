@@ -2,10 +2,7 @@ package lando.systems.ld36.levels;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.*;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,6 +16,8 @@ import lando.systems.ld36.screens.GameScreen;
 import lando.systems.ld36.utils.Assets;
 
 import java.util.Comparator;
+
+import static lando.systems.ld36.levels.Level.MapObjectType.*;
 
 /**
  * Created by Brian on 8/27/2016.
@@ -132,6 +131,13 @@ public class Level {
         }
     }
 
+    enum MapObjectType {
+        player(),
+        flash_drive_easy(),
+        flash_drive_medium(),
+        flash_drive_hard();
+    }
+
     private void loadMapObjects() {
         if (map == null) return;
 
@@ -147,37 +153,26 @@ public class Level {
             float y = (Float) props.get("y");
             String type = (String) props.get("type");
 
-            // Instantiate based on type
-            if (type.equals("player")) {
-                Player p = new Player(this);
-                p.position.x = x;
-                p.position.y = y;
-                objects.add(p);
+            switch (valueOf(type)) {
+                case player:
+                    Player p = new Player(this);
+                    p.position.x = x;
+                    p.position.y = y;
+                    objects.add(p);
+                    break;
+
+                case flash_drive_easy:
+                    objects.add(new FlashDriveEasy(this, x, y));
+                    break;
+
+                case flash_drive_medium:
+                    objects.add(new FlashDriveMedium(this, x, y));
+                    break;
+
+                case flash_drive_hard:
+                    objects.add(new FlashDriveHard(this, x, y));
+                    break;
             }
-            else if (type.equals("flashdrive")) {
-                FlashDrive f = new FlashDrive(this);
-                f.position.x = x;
-                f.position.y = y;
-                f.isMoving = true;
-                objects.add(f);
-            }
-            else if (type.equals("eighttrack")) {
-                EightTrack t = new EightTrack(this);
-                t.position.x = x;
-                t.position.y = y;
-                t.isMoving = true;
-                objects.add(t);
-            }
-            else if (type.equals("betamax")) {
-                Betamax b = new Betamax(this);
-                b.position.x = x;
-                b.position.y = y;
-                b.isMoving = true;
-                objects.add(b);
-            }
-//            else if (type.equals("...")) {
-//                new GameObject(this, x / 16, (y / 16) + 1, false);
-//            }
         }
     }
 
