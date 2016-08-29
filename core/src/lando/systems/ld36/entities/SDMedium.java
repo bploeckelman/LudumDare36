@@ -12,6 +12,7 @@ public class SDMedium extends SDEasy {
 
         tex = walkAnimation.getKeyFrame(timer);
 
+        health = 5;
         attackPower = 20;
     }
 }

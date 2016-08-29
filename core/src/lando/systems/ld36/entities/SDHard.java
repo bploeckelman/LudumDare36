@@ -12,6 +12,7 @@ public class SDHard extends SDMedium {
 
         tex = walkAnimation.getKeyFrame(timer);
 
+        health = 10;
         attackPower = 30;
     }
 }
