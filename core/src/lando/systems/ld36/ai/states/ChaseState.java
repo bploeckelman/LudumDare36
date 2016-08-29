@@ -7,10 +7,9 @@ import lando.systems.ld36.entities.GameObject;
  * Created by dsgraham on 8/28/16.
  */
 public class ChaseState extends State {
-    GameObject owner;
 
     public ChaseState(GameObject owner){
-        this.owner = owner;
+        super(owner);
     }
 
     @Override

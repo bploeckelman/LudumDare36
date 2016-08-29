@@ -91,7 +91,7 @@ public class Level {
             if (!player.isInvulerable() && enemy.isAttacking){
                 int dir = enemy.doesHit(player);
                 if  (dir != 0){
-                    Assets.particles.addBloodParticles(player.hitBounds, dir);
+                    Assets.particles.addBloodParticles(player.hitBounds, dir, enemy.attackPower);
                     player.getHurt(enemy.attackPower, dir);
                 }
             }

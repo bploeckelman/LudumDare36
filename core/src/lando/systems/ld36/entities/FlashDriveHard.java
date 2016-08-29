@@ -29,7 +29,7 @@ public class FlashDriveHard extends FlashDriveMedium {
 
     public void initializeStates(){
         // States enemy can have
-        WaitState wait = new WaitState();
+        WaitState wait = new WaitState(this);
         ChaseState chase = new ChaseState(this);
 
         // Conditions

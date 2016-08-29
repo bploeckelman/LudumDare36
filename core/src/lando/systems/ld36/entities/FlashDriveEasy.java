@@ -43,7 +43,7 @@ public class FlashDriveEasy extends Enemy {
 
     public void initializeStates(){
         // States enemy can have
-        WaitState wait = new WaitState();
+        WaitState wait = new WaitState(this);
         WanderState wander = new WanderState(this);
         ChaseState chase = new ChaseState(this);
 

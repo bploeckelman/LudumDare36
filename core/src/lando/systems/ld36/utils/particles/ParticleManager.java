@@ -29,8 +29,8 @@ public class ParticleManager {
         numRegionsX = regions[0].length;
     }
 
-    public void addBloodParticles(Rectangle bounds, int direction){
-        int particles = 100;
+    public void addBloodParticles(Rectangle bounds, int direction, int damage){
+        int particles = 50 + damage * 30;
         for (int i = 0; i < particles; i++){
 
             Particle part = particlePool.obtain();
