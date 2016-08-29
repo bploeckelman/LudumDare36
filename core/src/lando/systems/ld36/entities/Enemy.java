@@ -78,25 +78,26 @@ public class Enemy extends GameObject {
         super.render(batch);
 
         // healthbar
-        // Draw Player Health bar
-        batch.setColor(Color.BLACK);
-        batch.draw(
-                Assets.white,
-                position.x,
-                position.y + height + position.z,
-                characterSpriteWidth, // Full health
-                5
-        );
-        float n = health / (float) maxHealth;
-        healthColor = Utils.hsvToRgb(((n * 120f) - 20) / 365f, 1.0f, 1.0f, healthColor);
-        batch.setColor(healthColor);
-        batch.draw(
-                Assets.white,
-                position.x,
-                position.y + height + position.z,
-                ((float)health/maxHealth) * characterSpriteWidth, // Full health
-                5
-        );
+        if (showHealthBar) {
+            batch.setColor(Color.BLACK);
+            batch.draw(
+                    Assets.white,
+                    position.x,
+                    position.y + height.floatValue() + position.z,
+                    characterSpriteWidth, // Full health
+                    5
+            );
+            float n = health / (float) maxHealth;
+            healthColor = Utils.hsvToRgb(((n * 120f) - 20) / 365f, 1.0f, 1.0f, healthColor);
+            batch.setColor(healthColor);
+            batch.draw(
+                    Assets.white,
+                    position.x,
+                    position.y + height.floatValue() + position.z,
+                    ((float) health / maxHealth) * characterSpriteWidth, // Full health
+                    5
+            );
+        }
         batch.setColor(Color.WHITE);
     }
 

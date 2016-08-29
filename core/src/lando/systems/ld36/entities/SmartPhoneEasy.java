@@ -1,5 +1,6 @@
 package lando.systems.ld36.entities;
 
+import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
@@ -13,7 +14,7 @@ public class SmartPhoneEasy extends Enemy {
         tex = walkAnimation.getKeyFrame(timer);
 
         width = tex.getRegionWidth();
-        height = tex.getRegionHeight();
+        height = new MutableFloat(tex.getRegionHeight());
 
         position.x = x;
         position.y = y;

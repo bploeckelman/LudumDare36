@@ -1,5 +1,6 @@
 package lando.systems.ld36.entities;
 
+import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.ai.StateMachine;
@@ -20,7 +21,7 @@ public class FlashDriveEasy extends Enemy {
         tex = walkAnimation.getKeyFrame(timer);
 
         width = tex.getRegionWidth();
-        height = tex.getRegionHeight();
+        height = new MutableFloat(tex.getRegionHeight());
 
         jumpVelocity = 50f;
         hitBounds = new Rectangle(position.x, position.y, 32f, tex.getRegionHeight());

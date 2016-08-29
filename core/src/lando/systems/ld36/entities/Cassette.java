@@ -1,5 +1,6 @@
 package lando.systems.ld36.entities;
 
+import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.ai.StateMachine;
 import lando.systems.ld36.ai.Transition;
@@ -24,7 +25,7 @@ public class Cassette extends GameObject {
         tex = walkAnimation.getKeyFrame(timer);
 
         width = tex.getRegionWidth();
-        height = tex.getRegionHeight();
+        height = new MutableFloat(tex.getRegionHeight());
 
         jumpVelocity = 50f;
         position.x = x;

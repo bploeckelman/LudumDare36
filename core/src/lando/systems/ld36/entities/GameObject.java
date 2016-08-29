@@ -46,7 +46,7 @@ public class GameObject {
     public TextureRegion shadowTex;
     public boolean isFacingRight = true;
     public float width;
-    public float height;
+    public MutableFloat height;
     public boolean falling;
     public Level level;
     Array<Rectangle> tiles;
@@ -92,6 +92,8 @@ public class GameObject {
     public int shadowDrawWidth = 64;
     public int shadowYOffset = -10;
     public boolean activated;
+    public boolean canWalkOnWall;
+    public boolean showHealthBar;
 
     public Color tintColor;
 
@@ -104,7 +106,7 @@ public class GameObject {
         shadowTex = new TextureRegion(Assets.shadowTexture, SHADOW_TEXTURE_WIDTH, SHADOW_TEXTURE_HEIGHT);
         position = new Vector3();
         width = 50;
-        height = width;
+        height = new MutableFloat(width);
         this.level = level;
         hitBounds = new Rectangle(position.x, position.y, tex.getRegionWidth(), tex.getRegionHeight());
         tiles = new Array<Rectangle>();
@@ -126,7 +128,8 @@ public class GameObject {
         taunt = "Taunt is Unset";
         tintColor = Color.WHITE;
         floating = false;
-
+        canWalkOnWall = false;
+        showHealthBar = true;
     }
 
     public void initializeStates() {
@@ -142,9 +145,12 @@ public class GameObject {
                 invunerableTimer = 0;
             }
         }
-        speechBubbleTimer -= dt;
-        if (speechBubbleTimer < 0){
-            speechBubbleTimer = 0;
+
+        if (showHealthBar) {
+            speechBubbleTimer -= dt;
+            if (speechBubbleTimer < 0) {
+                speechBubbleTimer = 0;
+            }
         }
 
         if (attackCooldown > 0){
@@ -154,7 +160,9 @@ public class GameObject {
             }
         }
         // Keep player on play area
-        position.y = MathUtils.clamp(position.y, bottomPlayArea, topPlayArea);
+        if (!canWalkOnWall) {
+            position.y = MathUtils.clamp(position.y, bottomPlayArea, topPlayArea);
+        }
         position.x = MathUtils.clamp(position.x, leftEdge, rightEdge) ;
 
         falling = notSafeToWalk(position);
@@ -177,7 +185,7 @@ public class GameObject {
             falling = false;
         }
 
-        if (position.y + position.z < -height){
+        if (position.y + position.z < -height.floatValue()){
             health = -1;
         }
 
@@ -198,7 +206,7 @@ public class GameObject {
 
         // Shadows!
         // Master shadow position
-        shadowMasterRectangle.set(position.x, position.y + shadowYOffset, shadowDrawWidth, height);
+        shadowMasterRectangle.set(position.x, position.y + shadowYOffset, shadowDrawWidth, height.floatValue());
         shadowDisplayRectangles = new Array<Rectangle>();
         shadowSourceRectangles = new Array<Rectangle>();
         Rectangle r;
@@ -250,33 +258,33 @@ public class GameObject {
         }
         batch.setColor(tintColor.r,tintColor.g,tintColor.b,alpha);
         if (isFacingRight) {
-            batch.draw(tex, position.x, position.y + position.z, width, height);
+            batch.draw(tex, position.x, position.y + position.z, width, height.floatValue());
         } else {
-            batch.draw(tex, position.x + (width/1.5f), position.y + position.z, -width, height);
+            batch.draw(tex, position.x + (width/1.5f), position.y + position.z, -width, height.floatValue());
         }
         batch.setColor(Color.WHITE);
 
-        if (speechBubbleTimer > 0 && speechText != null){
+        if (showHealthBar && speechBubbleTimer > 0 && speechText != null){
             Assets.emuLogicFont.getData().setScale(.7f);
             float maxSpeechWidth = 150;
             Assets.glyphLayout.setText(Assets.emuLogicFont, speechText, Color.BLACK, maxSpeechWidth, Align.left, true);
 
             if (position.x > level.screen.cameraCenter.x){
                 Assets.speechBubble.draw(batch, position.x,
-                        position.y + position.z + height + 10,
+                        position.y + position.z + height.floatValue() + 10,
                         Assets.glyphLayout.width + 20,
                         Assets.glyphLayout.height + 20);
                 Assets.emuLogicFont.draw(batch, Assets.glyphLayout,
                         position.x + 10,
-                        position.y + position.z + height + 20 + Assets.glyphLayout.height);
+                        position.y + position.z + height.floatValue() + 20 + Assets.glyphLayout.height);
             } else {
                 Assets.speechBubble.draw(batch, position.x - Assets.glyphLayout.width - 20,
-                                         position.y + position.z + height + 10,
+                                         position.y + position.z + height.floatValue() + 10,
                                          Assets.glyphLayout.width + 20,
                                          Assets.glyphLayout.height + 20);
                 Assets.emuLogicFont.draw(batch, Assets.glyphLayout,
                                          position.x - Assets.glyphLayout.width - 10,
-                                         position.y + position.z + height + 20 + Assets.glyphLayout.height);
+                                         position.y + position.z + height.floatValue() + 20 + Assets.glyphLayout.height);
             }
 
         }

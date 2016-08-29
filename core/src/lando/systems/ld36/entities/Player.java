@@ -1,5 +1,6 @@
 package lando.systems.ld36.entities;
 
+import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld36.levels.Level;
@@ -31,7 +32,7 @@ public class Player extends GameObject {
         this.attackAnimation = character.attackAnimation;
 
         width = tex.getRegionWidth();
-        height = tex.getRegionHeight();
+        height = new MutableFloat(tex.getRegionHeight());
 
         isFacingRight = true;
         footBounds = new Rectangle();
