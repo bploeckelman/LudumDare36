@@ -76,6 +76,8 @@ public class Assets {
     public static Animation smartPhoneHard;
     public static Animation smartPhoneKnifeHard;
 
+    public static Animation cassetteWalking;
+
     public static Animation keepGoing;
 
     public static Animation cloud;
@@ -274,6 +276,9 @@ public class Assets {
 
         cloud = new Animation(.1f, atlas.findRegions("The_Cloud"));
         cloud.setPlayMode(Animation.PlayMode.LOOP);
+
+        cassetteWalking = new Animation(.1f, atlas.findRegions("Cassette_Walking"));
+        cassetteWalking.setPlayMode(Animation.PlayMode.LOOP);
 
         hudPatch = new NinePatch(atlas.findRegion("ninepatch-hud"), 24, 24, 24, 24);
 

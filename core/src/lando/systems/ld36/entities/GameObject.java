@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.LudumDare36;
+import lando.systems.ld36.ai.StateMachine;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 
@@ -72,6 +73,7 @@ public class GameObject {
     public float characterSpriteWidth;
     public String name;
 
+    public StateMachine stateMachine;
 
 
 

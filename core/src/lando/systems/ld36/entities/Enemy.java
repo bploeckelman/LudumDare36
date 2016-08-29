@@ -25,7 +25,6 @@ public class Enemy extends GameObject {
     public Color healthColor;
 
 
-    public StateMachine stateMachine;
 
 
 

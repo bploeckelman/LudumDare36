@@ -19,8 +19,6 @@ public enum PlayerCharacter {
     public float moveSpeed;
     public int attackPower;
 
-    // TODO: Add attack power?
-
     PlayerCharacter(String name, Animation walkAnimation, Animation attackAnimation, float moveSpeed, int attackPower) {
         this.name = name;
         this.walkAnimation = walkAnimation;

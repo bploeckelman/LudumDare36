@@ -84,7 +84,6 @@ public class Level {
                 }
 
                 if (enemy.dead) {
-                    // TODO: spawn cool explosion thing
                 }
             }
         }

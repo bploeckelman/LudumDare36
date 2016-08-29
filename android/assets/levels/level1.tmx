@@ -23,7 +23,7 @@
   <object id="14" type="flash_drive_easy" gid="949" x="2144" y="416" width="32" height="32"/>
   <object id="15" type="flash_drive_easy" gid="949" x="2080" y="384" width="32" height="32"/>
   <object id="16" type="flash_drive_easy" gid="949" x="2080" y="448" width="32" height="32"/>
-  <object id="17" type="smart_phone_easy" gid="949" x="3136" y="352" width="32" height="32">
+  <object id="17" type="cloud" gid="949" x="3036" y="352" width="32" height="32">
    <properties>
     <property name="boss" type="bool" value="true"/>
    </properties>
