@@ -358,28 +358,33 @@ public class GameObject {
             direction.nor().scl(moveLeft);
             testPosition.set(position);
             testPosition.add(direction.x, direction.y, 0);
+            if (!setPosition(testPosition))
             if (notSafeToWalk(testPosition)) {
                 movePoint.setZero();
             } else {
-                setPosition(testPosition);
+                if (!setPosition(testPosition)){
+                    movePoint.setZero();
+                }
             }
             moveLeft = 0;
         }
         return moveLeft;
     }
 
-    public void setPosition(Vector3 newPos){
-        setPosition(newPos.x, newPos.y, newPos.z);
+    public boolean setPosition(Vector3 newPos){
+        return setPosition(newPos.x, newPos.y, newPos.z);
     }
 
-    public void setPosition(float x, float y){
-        setPosition(x, y, position.z);
+    public boolean setPosition(float x, float y){
+        return setPosition(x, y, position.z);
     }
-    public void setPosition(float x, float y, float z){
+    public boolean setPosition(float x, float y, float z){
         float leftY = level.getTopBound(x);
         float rightY = level.getTopBound(x+characterSpriteWidth);
         if (y < leftY && y < rightY){
             position.set(x, y, z);
+            return true;
         }
+        return false;
     }
 }
