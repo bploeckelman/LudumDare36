@@ -42,6 +42,7 @@ public class Cloud extends Enemy {
         if (isBoss) level.boss = this;
         projectiles = new Array<CloudProjectile>();
         name = "\"The Cloud\"";
+        taunt = "Boss Battle Time!!";
         canWalkOnWall = true;
         showHealthBar = false;
     }
@@ -86,7 +87,8 @@ public class Cloud extends Enemy {
         HeightCondition heightCond = new HeightCondition(this, tex.getRegionHeight());
         HealthAtOrBelowCondition healthBelow75 = new HealthAtOrBelowCondition(this, 75);
         HealthAtOrBelowCondition healthBelow50 = new HealthAtOrBelowCondition(this, 50);
-        HealthAtOrBelowCondition healthBelow25 = new HealthAtOrBelowCondition(this, 25);
+        HealthAtOrBelowCondition healthBelow15 = new HealthAtOrBelowCondition(this, 15);
+        HealthAtOrBelowCondition healthBelow0 = new HealthAtOrBelowCondition(this, 0);
         FloatingCondition floatingCondition = new FloatingCondition(this);
 
 
@@ -98,7 +100,7 @@ public class Cloud extends Enemy {
         transitions.add(new Transition(chase, healthBelow75, floatUp));
         transitions.add(new Transition(floatUp, floatingCondition, stage1));
         transitions.add(new Transition(stage1, healthBelow50, stage2));
-        transitions.add(new Transition(stage2, healthBelow25, stage3));
+        transitions.add(new Transition(stage2, healthBelow15, stage3));
 
         // Create State Machine
         stateMachine = new StateMachine(wait, transitions);

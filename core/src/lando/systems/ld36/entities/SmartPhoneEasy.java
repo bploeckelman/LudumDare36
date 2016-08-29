@@ -26,6 +26,7 @@ public class SmartPhoneEasy extends Enemy {
 
         if (isBoss) level.boss = this;
         name = "Shutters";
+        taunt = "Shutters phones are great for business";
     }
 
     public void update(float dt) {

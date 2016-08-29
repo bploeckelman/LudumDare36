@@ -2,6 +2,7 @@ package lando.systems.ld36.ai.states;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.equations.Sine;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -36,6 +37,13 @@ public class CloudStage3State extends State {
     public void update(float dt) {
         float oldDelay = delay;
         delay -= dt;
+
+        if (delay > 2.5f && delay < 2.8f && delay % .1f > .05f) {
+            cloud.tintColor = Color.RED;
+        } else {
+            cloud.tintColor = Color.WHITE;
+        }
+
         if (oldDelay > 2 && delay <= 2){
             int randomRot = MathUtils.random(180);
             for (int i = 0; i < 12; i++){

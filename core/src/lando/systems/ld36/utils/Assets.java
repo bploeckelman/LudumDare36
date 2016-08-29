@@ -81,6 +81,7 @@ public class Assets {
     public static Animation keepGoing;
 
     public static Animation cloud;
+    public static Animation energy_ball;
 
     public static NinePatch hudPatch;
 
@@ -278,6 +279,9 @@ public class Assets {
 
         cloud = new Animation(.1f, atlas.findRegions("The_Cloud"));
         cloud.setPlayMode(Animation.PlayMode.LOOP);
+
+        energy_ball = new Animation(.1f, atlas.findRegions("ball"));
+        energy_ball.setPlayMode(Animation.PlayMode.LOOP);
 
         cassetteWalking = new Animation(.1f, atlas.findRegions("Cassette_Walking"));
         cassetteWalking.setPlayMode(Animation.PlayMode.LOOP);
