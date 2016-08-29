@@ -27,7 +27,7 @@ import lando.systems.ld36.utils.*;
 public class GameScreen extends BaseScreen {
 
     final float NAG_DELAY = 5f;
-    Player debugPlayer;
+    Player player;
     Level level;
     float hudHeight = 100;
     float hudBorderWidth = 4;
@@ -43,9 +43,8 @@ public class GameScreen extends BaseScreen {
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
         camera.update();
         screenShake = new Shake(35, 8);
-        level = new Level(Script.getLevelFileName(), this);
-        debugPlayer = new Player(character, level);
-        level.setPlayer(debugPlayer);
+        level = new Level(Script.getLevelFileName(), character, this);
+        player = level.player;
         level.initilizeStates();
         cameraCenter = new Vector2(camera.position.x, camera.position.y);
         nagSize = new MutableFloat(0);
@@ -60,13 +59,13 @@ public class GameScreen extends BaseScreen {
         cameraDelay -= dt;
         if (cameraDelay < 0) cameraDelay = 0;
 
-        debugPlayer.update(dt, cameraCenter.x - camera.viewportWidth/2, cameraCenter.x + camera.viewportWidth/2 - 64);
+        player.update(dt, cameraCenter.x - camera.viewportWidth/2, cameraCenter.x + camera.viewportWidth/2 - 64);
 
         Boundary boundary = level.getActiveBoundry();
 
 
 
-        float screenYDif = (debugPlayer.position.y - cameraCenter.y + 50) * .1f;
+        float screenYDif = (player.position.y - cameraCenter.y + 50) * .1f;
         if (MathUtils.isEqual(screenYDif, 0, .5f)){
             screenYDif = 0;
         }
@@ -77,8 +76,8 @@ public class GameScreen extends BaseScreen {
 
         if (boundary == null && cameraDelay <= 0) {
             // have camera follow player
-            if (debugPlayer.position.x > cameraCenter.x) {
-                float screenXDif = (debugPlayer.position.x - cameraCenter.x) * dt * 3f;
+            if (player.position.x > cameraCenter.x) {
+                float screenXDif = (player.position.x - cameraCenter.x) * dt * 3f;
                 if (MathUtils.isEqual(screenXDif, 0, .5f)){
                     screenXDif = 0;
                 }
@@ -225,18 +224,18 @@ public class GameScreen extends BaseScreen {
             Assets.white,
             hudBorderWidth + Assets.hudPatch.getPadLeft(),
             hudCamera.viewportHeight - 75,
-            debugPlayer.maxHealth, // Full health
+            player.maxHealth, // Full health
             15
         );
 
-        float n = debugPlayer.health / (float) debugPlayer.maxHealth;
+        float n = player.health / (float) player.maxHealth;
         healthColor = Utils.hsvToRgb(((n * 120f) - 20) / 365f, 1.0f, 1.0f, healthColor);
         batch.setColor(healthColor);
         batch.draw(
             Assets.white,
             hudBorderWidth + Assets.hudPatch.getPadLeft(),
             hudCamera.viewportHeight - 75,
-            debugPlayer.health,
+            player.health,
             15
         );
         batch.setColor(Color.WHITE);

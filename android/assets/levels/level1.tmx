@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="32" tileheight="32" nextobjectid="18">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="32" tileheight="32" nextobjectid="19">
  <tileset firstgid="1" name="maptiles" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
   <image source="../images/map-tiles.png" width="1024" height="1024"/>
  </tileset>
@@ -28,5 +28,6 @@
     <property name="boss" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="18" type="player" gid="949" x="32" y="352" width="32" height="32"/>
  </objectgroup>
 </map>

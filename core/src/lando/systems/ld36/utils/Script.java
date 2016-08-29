@@ -1,7 +1,5 @@
 package lando.systems.ld36.utils;
 
-import com.badlogic.gdx.utils.*;
-
 /**
  * Created by dsgraham on 8/29/16.
  */
@@ -12,7 +10,7 @@ public class Script {
                 return new com.badlogic.gdx.utils.StringBuilder()
                         .append("The mighty technologies of yesteryear have fallen into the heap ")
                         .append("in humanities wake.  The evil internet is poised to destroy another ")
-                        .append("of COUNCIL OF OBSOLETE TECHNOLOGIES.  We must save Tapetress... or ")
+                        .append("of COUNCIL OF OBSOLETE TECHNOLOGIES.  We must save Cas-ette... or ")
                         .append("she will be lost to history.")
                         .toString();
         }
@@ -21,14 +19,11 @@ public class Script {
 
     public static String getLevelFileName(){
         switch (Statistics.currentLevel){
-            case 1:
-                return "levels/level1.tmx";
-            case 2:
-                return "levels/level2.tmx";
-            case 3:
-                return "levels/level0.tmx";
+            case 1: return "levels/level1.tmx";
+            case 2: return "levels/level2.tmx";
+            case 3: return "levels/level3.tmx";
+            case 4: return "levels/level0.tmx";
+            default: return null;
         }
-
-        return null;
     }
 }

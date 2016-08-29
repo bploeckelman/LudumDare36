@@ -52,9 +52,9 @@ public class Level {
         }
     };
 
-    public Level(String name, GameScreen screen) {
+    public Level(String name, PlayerCharacter character, GameScreen screen) {
         this.screen = screen;
-        load(name, Assets.batch);
+        load(name, character, Assets.batch);
         completed = false;
     }
 
@@ -140,11 +140,11 @@ public class Level {
         }
     }
 
-    private void load(String mapName, SpriteBatch batch){
+    private void load(String mapName, PlayerCharacter character, SpriteBatch batch){
         final TmxMapLoader mapLoader = new TmxMapLoader();
 
         map = mapLoader.load(mapName);
-        loadMapObjects();
+        loadMapObjects(character);
 
         renderer = new OrthogonalTiledMapRenderer(map, 1f, batch);
 
@@ -185,7 +185,7 @@ public class Level {
         sd_hard();
     }
 
-    private void loadMapObjects() {
+    private void loadMapObjects(PlayerCharacter character) {
         if (map == null) return;
 
         objects = new Array<GameObject>();
@@ -208,10 +208,10 @@ public class Level {
                     break;
 
                 case player:
-                    Player p = new Player(this);
-                    p.position.x = x;
-                    p.position.y = y;
-                    objects.add(p);
+                    player = new Player(character, this);
+                    player.position.x = x;
+                    player.position.y = y;
+                    objects.add(player);
                     break;
 
                 case flash_drive_easy:
@@ -292,7 +292,7 @@ public class Level {
         int startX = (int)(position / groundLayer.getTileWidth());
         int startY = 0;
         int endX = startX;
-        int endY = 20; // something higher than the upper bound
+        int endY = 40; // something higher than the upper bound
 
         float topBound = 0;
         for (int x = startX; x <= endX; x++) {

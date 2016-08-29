@@ -57,6 +57,7 @@ public class Enemy extends GameObject {
 
         // Create State Machine
         stateMachine = new StateMachine(wait, transitions);
+        addDieState();
     }
 
     public void update(float dt) {
@@ -121,7 +122,6 @@ public class Enemy extends GameObject {
         DieState die = new DieState(this);
         HealthAtOrBelowCondition zeroHealth = new HealthAtOrBelowCondition(this, 0);
         stateMachine.addTransition(new Transition(null, zeroHealth, die));
-
     }
 
 
