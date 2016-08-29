@@ -129,7 +129,7 @@ public class GameScreen extends BaseScreen {
 
         level.update(dt);
 
-        if (level.boss.dead && cameraDelay <= 0){
+        if (level.completed && cameraDelay <= 0){
             Statistics.currentLevel++;
             LudumDare36.game.setScreen(new TextScreen(Script.getScript(Statistics.currentLevel), new CharacterSelectScreen()));
         }

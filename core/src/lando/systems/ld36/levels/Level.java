@@ -34,6 +34,7 @@ public class Level {
     public GameScreen screen;
     public Player player;
     public GameObject boss;
+    public boolean completed;
 
     private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
@@ -54,6 +55,7 @@ public class Level {
     public Level(String name, GameScreen screen) {
         this.screen = screen;
         load(name, Assets.batch);
+        completed = false;
     }
 
     public void setPlayer(Player player) {
@@ -104,9 +106,6 @@ public class Level {
                 aliveActiveEnemiesCount++;
             }
             if (enemy.dead) {
-                if (boss == enemy){
-                    screen.cameraDelay += 3f;
-                }
                 objects.removeIndex(i);
             }
         }
@@ -115,6 +114,11 @@ public class Level {
             screen.lagdelay = 10;
             screen.cameraDelay += 1.5f;
             b.disable();
+        }
+
+        if (!completed && boss.dead && aliveActiveEnemiesCount <= 0){
+            completed = true;
+            screen.cameraDelay += 3f;
         }
 
 
