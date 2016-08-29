@@ -2,6 +2,7 @@ package lando.systems.ld36.ai.states;
 
 import com.badlogic.gdx.Gdx;
 import lando.systems.ld36.entities.GameObject;
+import lando.systems.ld36.utils.Sounds;
 
 /**
  * Created by dsgraham on 8/28/16.
@@ -27,6 +28,7 @@ public class WaitState extends State {
         owner.activated = true;
         if (owner.level.boss == owner){
             owner.say(owner.taunt);
+            Sounds.play(Sounds.Effect.bossSpawn);
         }
     }
 }

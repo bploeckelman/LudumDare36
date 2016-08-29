@@ -8,10 +8,15 @@ public class Script {
         switch (level){
             case 1:
                 return new com.badlogic.gdx.utils.StringBuilder()
-                        .append("The mighty technologies of yesteryear have fallen into the heap ")
-                        .append("in humanities wake.  The evil internet is poised to destroy another ")
-                        .append("of COUNCIL OF OBSOLETE TECHNOLOGIES.  We must save Cas-ette... or ")
-                        .append("she will be lost to history.")
+                        .append("* ASDW / Arrows to move\n")
+                        .append("* ENTER to punch")
+                        .append("\n\n\n")
+                        .append("The mighty technologies of yester-year have fallen into the heap ")
+                        .append("in humanities wake.")
+                        .append("\n\n\nThe evil internet is poised to destroy another ")
+                        .append("member of the COUNCIL OF OBSOLETE TECHNOLOGIES.")
+                        .append("\n\n\nWe must save Cass-ette...\n")
+                        .append("or she will be lost to history.")
                         .toString();
         }
         return "You didn't write a script yet... ";

@@ -12,6 +12,18 @@ public class Sounds {
     public enum Effect {
         playerSwitch,
         playerSelect,
+        playerDeath,
+        playerHitEnemy,
+        playerJump,
+        playerMissedPunch,
+        playerHurt,
+        enemyDead,
+        levelEnd,
+        cloudSpawn1,
+        cloudSpawn2,
+        bossSpawn,
+        bossDead,
+        cloudDead,
     }
 
     private static HashMap<Effect, Sound> soundMap = new HashMap<Effect, Sound>();
@@ -20,8 +32,20 @@ public class Sounds {
     public static MutableFloat musicVolume;
 
     public static void load() {
-        soundMap.put(Effect.playerSwitch, Gdx.audio.newSound(Gdx.files.internal("sounds/switching_menu.mp3")));
-        soundMap.put(Effect.playerSelect, Gdx.audio.newSound(Gdx.files.internal("sounds/select_tone.mp3")));
+        soundMap.put(Effect.playerSwitch,      Gdx.audio.newSound(Gdx.files.internal("sounds/switching_menu.mp3")));
+        soundMap.put(Effect.playerSelect,      Gdx.audio.newSound(Gdx.files.internal("sounds/select_tone.mp3")));
+        soundMap.put(Effect.playerDeath,       Gdx.audio.newSound(Gdx.files.internal("sounds/oh_no.mp3")));
+        soundMap.put(Effect.playerMissedPunch, Gdx.audio.newSound(Gdx.files.internal("sounds/missed_punch.mp3")));
+        soundMap.put(Effect.playerHitEnemy,    Gdx.audio.newSound(Gdx.files.internal("sounds/punching_enemy_sound.mp3")));
+        soundMap.put(Effect.playerJump,        Gdx.audio.newSound(Gdx.files.internal("sounds/landing_character.mp3")));
+        soundMap.put(Effect.playerHurt,        Gdx.audio.newSound(Gdx.files.internal("sounds/punching_a_solid_object.mp3")));
+        soundMap.put(Effect.enemyDead,         Gdx.audio.newSound(Gdx.files.internal("sounds/enemy_death.mp3")));
+        soundMap.put(Effect.levelEnd,          Gdx.audio.newSound(Gdx.files.internal("sounds/item_pickup.mp3")));
+        soundMap.put(Effect.bossSpawn,         Gdx.audio.newSound(Gdx.files.internal("sounds/whaaa.mp3")));
+        soundMap.put(Effect.bossDead,          Gdx.audio.newSound(Gdx.files.internal("sounds/breaking_glass.mp3")));
+        soundMap.put(Effect.cloudSpawn1,       Gdx.audio.newSound(Gdx.files.internal("sounds/ominous.mp3")));
+        soundMap.put(Effect.cloudSpawn2,       Gdx.audio.newSound(Gdx.files.internal("sounds/evil_laugh.mp3")));
+        soundMap.put(Effect.cloudDead,         Gdx.audio.newSound(Gdx.files.internal("sounds/evil_laugh.mp3")));
 
         if (gameMusic == null) {
             musicVolume = new MutableFloat(0);
@@ -40,7 +64,7 @@ public class Sounds {
     }
 
     public static long play(Effect soundEffect) {
-        return soundMap.get(soundEffect).play(0.3f);
+        return soundMap.get(soundEffect).play(0.2f);
     }
 
     public static void stop(Effect soundEffect) {

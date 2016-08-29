@@ -14,6 +14,7 @@ import lando.systems.ld36.ai.states.WaitState;
 import lando.systems.ld36.entities.*;
 import lando.systems.ld36.screens.GameScreen;
 import lando.systems.ld36.utils.Assets;
+import lando.systems.ld36.utils.Sounds;
 
 import java.util.Comparator;
 
@@ -71,6 +72,7 @@ public class Level {
         Sort.instance().sort(objects, gameObjectYPosComparator);
 
         if (player.isAttacking) {
+            boolean didHit = false;
             for (int i = objects.size - 1; i >= 0; --i) {
                 GameObject object = objects.get(i);
                 if (!(object instanceof Enemy)) continue;
@@ -80,11 +82,16 @@ public class Level {
                     int dir = player.doesHit(enemy);
                     if (dir != 0) {
                         enemy.getHurt(player.attackPower, dir);
+                        didHit = true;
                     }
                 }
 
                 if (enemy.dead) {
+                    Sounds.play(Sounds.Effect.enemyDead);
                 }
+            }
+            if (!didHit) {
+                Sounds.play(Sounds.Effect.playerMissedPunch);
             }
         }
 

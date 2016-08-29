@@ -59,9 +59,9 @@ public class CharacterSelectScreen extends BaseScreen {
         bouncer += 500f * dt;
         if (bouncer > 360f) bouncer -= 360f;
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            LudumDare36.game.setScreen( new MenuScreen());
-        }
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+//            LudumDare36.game.setScreen( new MenuScreen());
+//        }
 
         boolean playerSelectChanged = false;
 

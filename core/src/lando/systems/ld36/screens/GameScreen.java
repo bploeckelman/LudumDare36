@@ -53,6 +53,7 @@ public class GameScreen extends BaseScreen {
         cameraCenter = new Vector2(camera.position.x, camera.position.y);
         nagSize = new MutableFloat(0);
         timeAccumulator = 0;
+        Sounds.play(Sounds.Effect.levelEnd);
     }
 
     @Override

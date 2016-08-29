@@ -14,6 +14,7 @@ import lando.systems.ld36.ai.conditions.NearScreenCondition;
 import lando.systems.ld36.ai.states.*;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
+import lando.systems.ld36.utils.Sounds;
 import lando.systems.ld36.utils.Utils;
 import lando.systems.ld36.utils.Statistics;
 
@@ -115,6 +116,8 @@ public class Enemy extends GameObject {
         super.getHurt(dmg, dir);
         if (dead) {
             Statistics.enemiesKilled++;
+        } else {
+            Sounds.play(Sounds.Effect.playerHitEnemy);
         }
     }
 

@@ -17,6 +17,7 @@ import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.ai.StateMachine;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
+import lando.systems.ld36.utils.Sounds;
 
 /**
  * Created by dsgraham on 8/27/16.
@@ -309,6 +310,10 @@ public class GameObject {
 
     public void jump(){
         if (jumpCount > 0) return;
+        // Fuck it, its ludum dare
+        if (this instanceof Player) {
+            Sounds.play(Sounds.Effect.playerJump);
+        }
         jumpCount++;
         verticalVelocity = jumpVelocity;
         position.z += .01f;
@@ -349,14 +354,14 @@ public class GameObject {
 
     public int doesHit(GameObject enemy) {
         if (enemy.position.y > (this.position.y - HIT_DELTA_Y)
-                && enemy.position.y < (this.position.y + HIT_DELTA_Y)
-                && enemy.position.z > (this.position.z - HIT_DELTA_Z)
-                && enemy.position.z < (this.position.z + HIT_DELTA_Z)) {
+         && enemy.position.y < (this.position.y + HIT_DELTA_Y)
+         && enemy.position.z > (this.position.z - HIT_DELTA_Z)
+         && enemy.position.z < (this.position.z + HIT_DELTA_Z)) {
             if (isFacingRight && (enemy.hitBounds.x > hitBounds.x) && (enemy.hitBounds.x < hitBounds.x + hitBounds.width + attack_range)) {
                 return 1;
             }
             if (!isFacingRight && (enemy.hitBounds.x + enemy.hitBounds.width < hitBounds.x + hitBounds.width)
-                    && (enemy.hitBounds.x + enemy.hitBounds.width > hitBounds.x - attack_range)) {
+                               && (enemy.hitBounds.x + enemy.hitBounds.width > hitBounds.x - attack_range)) {
                 return -1;
             }
         }

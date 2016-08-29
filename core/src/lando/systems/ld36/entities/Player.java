@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.KeyMapping;
+import lando.systems.ld36.utils.Sounds;
 import lando.systems.ld36.utils.Statistics;
 
 /**
@@ -44,7 +45,10 @@ public class Player extends GameObject {
 
     public void update(float dt, float leftEdge, float rightEdge){
         super.update(dt);
-        if (health <= 0) dead = true;
+        if (health <= 0 && !dead) {
+            Sounds.play(Sounds.Effect.playerDeath);
+            dead = true;
+        }
         if (dead){
             if (respawnTimer > 1) {
                 level.screen.screenShake.shake(1f);
@@ -124,5 +128,6 @@ public class Player extends GameObject {
     public void getHurt(int dmg, int dir) {
         Statistics.damageTaken += dmg;
         super.getHurt(dmg, dir);
+        Sounds.play(Sounds.Effect.playerHurt);
     }
 }
