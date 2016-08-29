@@ -72,6 +72,8 @@ public class Assets {
     public static Animation smartPhoneHard;
     public static Animation smartPhoneKnifeHard;
 
+    public static Animation cloud;
+
     public static NinePatch hudPatch;
 
     public static TextureRegion white;
@@ -239,6 +241,9 @@ public class Assets {
         smartPhoneKnifeTexturesHard.add(smartPhoneKnifeTexturesHard.get(1));
         smartPhoneKnifeTexturesHard.add(smartPhoneKnifeTexturesHard.get(0));
         smartPhoneKnifeHard = new Animation(.01f, smartPhoneKnifeTexturesHard);
+
+        cloud = new Animation(.1f, atlas.findRegions("The_Cloud"));
+        cloud.setPlayMode(Animation.PlayMode.LOOP);
 
         hudPatch = new NinePatch(atlas.findRegion("ninepatch-hud"), 24, 24, 24, 24);
 

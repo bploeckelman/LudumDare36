@@ -155,7 +155,8 @@ public class Level {
         flash_drive_hard(),
         smart_phone_easy(),
         smart_phone_medium(),
-        smart_phone_hard();
+        smart_phone_hard(),
+        cloud();
     }
 
     private void loadMapObjects() {
@@ -203,6 +204,10 @@ public class Level {
 
                 case smart_phone_hard:
                     objects.add(new SmartPhoneHard(this, x, y));
+                    break;
+
+                case cloud:
+                    objects.add(new Cloud(this, x, y));
                     break;
             }
         }
