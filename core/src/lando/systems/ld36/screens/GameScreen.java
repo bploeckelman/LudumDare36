@@ -19,11 +19,7 @@ import lando.systems.ld36.entities.Boundary;
 import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.entities.PlayerCharacter;
 import lando.systems.ld36.levels.Level;
-import lando.systems.ld36.utils.Assets;
-import lando.systems.ld36.utils.Config;
-import lando.systems.ld36.utils.Shake;
-import lando.systems.ld36.utils.Utils;
-import lando.systems.ld36.utils.Statistics;
+import lando.systems.ld36.utils.*;
 
 /**
  * Created by Brian on 8/27/2016.
@@ -47,7 +43,7 @@ public class GameScreen extends BaseScreen {
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
         camera.update();
         screenShake = new Shake(35, 8);
-        level = new Level("levels/level1.tmx", this);
+        level = new Level(Script.getLevelFileName(), this);
         debugPlayer = new Player(character, level);
         level.setPlayer(debugPlayer);
         level.initilizeStates();
@@ -120,6 +116,11 @@ public class GameScreen extends BaseScreen {
         screenShake.update(dt, camera, cameraCenter);
 
         level.update(dt);
+
+        if (level.boss.dead && cameraDelay <= 0){
+            Statistics.currentLevel++;
+            LudumDare36.game.setScreen(new TextScreen(Script.getScript(Statistics.currentLevel), new CharacterSelectScreen()));
+        }
     }
 
     @Override

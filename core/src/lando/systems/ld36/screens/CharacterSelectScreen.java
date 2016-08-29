@@ -12,6 +12,7 @@ import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.entities.PlayerCharacter;
 import lando.systems.ld36.utils.Assets;
+import lando.systems.ld36.utils.Statistics;
 
 public class CharacterSelectScreen extends BaseScreen {
     float border = 4f;

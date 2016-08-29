@@ -104,13 +104,16 @@ public class Level {
                 aliveActiveEnemiesCount++;
             }
             if (enemy.dead) {
+                if (boss == enemy){
+                    screen.cameraDelay += 5f;
+                }
                 objects.removeIndex(i);
             }
         }
         Boundary b = getActiveBoundry();
         if (b != null && aliveActiveEnemiesCount <= 0){
             screen.lagdelay = 10;
-            screen.cameraDelay = 1.5f;
+            screen.cameraDelay += 1.5f;
             b.disable();
         }
 

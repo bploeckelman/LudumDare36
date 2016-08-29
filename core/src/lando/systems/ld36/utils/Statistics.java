@@ -9,6 +9,7 @@ public class Statistics {
     public static int damageTaken = 0;
     public static int deaths = 0;
     public static int enemiesKilled = 0;
+    public static int currentLevel = 1;
 
     public static TextScreen getStatisticsScreen() {
         return new TextScreen(new StringBuilder()
@@ -26,7 +27,7 @@ public class Statistics {
             .append("Alex Harding\n")
             .append("Luke Bain\n")
             .append("Troy Sullivan")
-            .toString()
+            .toString(), null
         );
     }
 }

@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.CharArray;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.utils.Assets;
+import lando.systems.ld36.utils.Script;
+import lando.systems.ld36.utils.Statistics;
 
 public class TextScreen extends BaseScreen {
 
@@ -19,14 +21,15 @@ public class TextScreen extends BaseScreen {
     float typingRate;
     Rectangle panel;
     Rectangle textBounds;
+    BaseScreen nextScreen;
 
-    public TextScreen(String text) {
-        this(text, .07f);
+    public TextScreen(String text, BaseScreen screen) {
+        this(text, .07f, screen);
     }
 
-    public TextScreen(String text, float typingRate) {
+    public TextScreen(String text, float typingRate, BaseScreen screen) {
         super();
-
+        nextScreen = screen;
         this.text = CharArray.with(text.toCharArray());
         this.text.reverse();
         panel = new Rectangle(border, border, camera.viewportWidth - (border * 2), camera.viewportHeight - (border * 2));
@@ -44,8 +47,12 @@ public class TextScreen extends BaseScreen {
     public void update(float dt) {
         timer += dt;
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && text.size == 0) {
-            LudumDare36.game.setScreen(new CharacterSelectScreen());
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && text.size == 0 && nextScreen != null) {
+            if (Script.getLevelFileName() == null){
+                LudumDare36.game.setScreen(Statistics.getStatisticsScreen());
+            } else {
+                LudumDare36.game.setScreen(nextScreen);
+            }
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && text.size > 0) {
             while (text.size > 0) {
                 textToRender += text.pop();
