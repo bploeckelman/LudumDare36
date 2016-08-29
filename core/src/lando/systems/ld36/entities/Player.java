@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.KeyMapping;
+import lando.systems.ld36.utils.Statistics;
 
 /**
  * Created by dsgraham on 8/27/16.
@@ -14,8 +15,6 @@ public class Player extends GameObject {
 
     public Rectangle footBounds;
 
-
-    public int deaths = 0;
 
     public Player(Level level) {
         this(PlayerCharacter.FLOPPY, level);
@@ -102,7 +101,7 @@ public class Player extends GameObject {
 
     public void respawn(){
         dead = false;
-        deaths++;
+        Statistics.deaths++;
         position.z = 0;
         jumpCount =0;
         verticalVelocity = 0;
@@ -111,5 +110,16 @@ public class Player extends GameObject {
         position.y = lastSafePlace.get(0).y;
         invulerabilityFlashSpeed = .5f;
         invunerableTimer = RESPAWNDELAY;
+    }
+
+    public void attack() {
+        if (isAttacking || isInvulerable()) return;
+        Statistics.punchesThrown++;
+        super.attack();
+    }
+
+    public void getHurt(int dmg, int dir) {
+        Statistics.damageTaken += dmg;
+        super.getHurt(dmg, dir);
     }
 }

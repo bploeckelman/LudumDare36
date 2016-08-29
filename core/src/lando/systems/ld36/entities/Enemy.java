@@ -15,6 +15,7 @@ import lando.systems.ld36.ai.states.WaitState;
 import lando.systems.ld36.ai.states.WanderState;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
+import lando.systems.ld36.utils.Statistics;
 
 public class Enemy extends GameObject {
 
@@ -75,6 +76,14 @@ public class Enemy extends GameObject {
             attack();
         }
 
+    }
+
+    public void getHurt(int dmg, int dir) {
+        Statistics.damageDealt += dmg;
+        super.getHurt(dmg, dir);
+        if (dead) {
+            Statistics.enemiesKilled++;
+        }
     }
 
 

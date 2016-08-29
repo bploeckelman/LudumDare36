@@ -13,6 +13,7 @@ import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Config;
 import lando.systems.ld36.utils.Shake;
+import lando.systems.ld36.utils.Statistics;
 
 /**
  * Created by Brian on 8/27/2016.
@@ -40,7 +41,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void update(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            LudumDare36.game.setScreen(new CharacterSelectScreen());
+            LudumDare36.game.setScreen(Statistics.getStatisticsScreen());
         }
         debugPlayer.update(dt, cameraCenter.x - camera.viewportWidth/2);
 
@@ -93,7 +94,7 @@ public class GameScreen extends BaseScreen {
         );
         Assets.drawString(
             batch,
-            Integer.toString(debugPlayer.deaths),
+            Integer.toString(Statistics.deaths),
             hudBorderWidth + Assets.hudPatch.getPadLeft() + 150,
             hudCamera.viewportHeight - (Assets.hudPatch.getPadTop() + 30),
             Color.WHITE,
