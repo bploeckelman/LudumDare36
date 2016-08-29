@@ -4,8 +4,8 @@ import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 
 public class SmartPhoneMedium extends SmartPhoneEasy {
-    public SmartPhoneMedium(Level level, float x, float y) {
-        super(level, x, y);
+    public SmartPhoneMedium(Level level, float x, float y, boolean isBoss) {
+        super(level, x, y, isBoss);
 
         walkAnimation = Assets.smartPhoneMedium;
         attackAnimation = Assets.smartPhoneKnifeMedium;

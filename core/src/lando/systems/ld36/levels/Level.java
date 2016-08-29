@@ -33,6 +33,7 @@ public class Level {
     Array<TiledMapTileLayer> backgroundLayers;
     public GameScreen screen;
     public Player player;
+    public GameObject boss;
 
     private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
@@ -185,6 +186,7 @@ public class Level {
         MapLayer objectLayer = map.getLayers().get("objects");
         for (MapObject object : objectLayer.getObjects()) {
             props = object.getProperties();
+            boolean isBoss = (props.get("boss") != null);
             float w = (Float) props.get("width");
             float h = (Float) props.get("height");
             float x = (Float) props.get("x");
@@ -216,19 +218,19 @@ public class Level {
                     break;
 
                 case smart_phone_easy:
-                    objects.add(new SmartPhoneEasy(this, x, y));
+                    objects.add(new SmartPhoneEasy(this, x, y, isBoss));
                     break;
 
                 case smart_phone_medium:
-                    objects.add(new SmartPhoneMedium(this, x, y));
+                    objects.add(new SmartPhoneMedium(this, x, y, isBoss));
                     break;
 
                 case smart_phone_hard:
-                    objects.add(new SmartPhoneHard(this, x, y));
+                    objects.add(new SmartPhoneHard(this, x, y, isBoss));
                     break;
 
                 case cloud:
-                    objects.add(new Cloud(this, x, y));
+                    objects.add(new Cloud(this, x, y, isBoss));
                     break;
 
                 case sd_easy:

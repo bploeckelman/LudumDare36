@@ -5,7 +5,7 @@ import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 
 public class SmartPhoneEasy extends Enemy {
-    public SmartPhoneEasy(Level level, float x, float y) {
+    public SmartPhoneEasy(Level level, float x, float y, boolean isBoss) {
         super(level);
         walkAnimation = Assets.smartPhone;
         attackAnimation = Assets.smartPhoneKnife;
@@ -22,6 +22,8 @@ public class SmartPhoneEasy extends Enemy {
         hitBounds = new Rectangle(position.x, position.y, 32f, tex.getRegionHeight());
         attackPower = 8;
         moveSpeed = 75;
+
+        if (isBoss) level.boss = this;
     }
 
     public void update(float dt) {

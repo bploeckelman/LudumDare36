@@ -5,7 +5,7 @@ import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 
 public class Cloud extends Enemy {
-    public Cloud(Level level, float x, float y) {
+    public Cloud(Level level, float x, float y, boolean isBoss) {
         super(level);
 
         position.x = x;
@@ -17,13 +17,14 @@ public class Cloud extends Enemy {
         tex = walkAnimation.getKeyFrame(timer);
         hitBounds = new Rectangle(position.x, position.y, 128f, tex.getRegionHeight());
 
-
         width = 128;
 
         isMoving = true;
         characterSpriteWidth = 128;
         shadowDrawWidth = 128;
         shadowYOffset = -15;
+
+        if (isBoss) level.boss = this;
     }
 
     public void update(float dt) {
