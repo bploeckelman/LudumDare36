@@ -24,6 +24,7 @@ public class SmartPhoneEasy extends Enemy {
         moveSpeed = 75;
 
         if (isBoss) level.boss = this;
+        name = "Shutters";
     }
 
     public void update(float dt) {

@@ -17,6 +17,6 @@ public class NearScreenCondition extends Condition {
 
     @Override
     public boolean isTrue() {
-        return camera.position.x + (camera.viewportWidth/2) > owner.position.x;
+        return camera.position.x + (camera.viewportWidth/2) > owner.position.x + owner.characterSpriteWidth;
     }
 }

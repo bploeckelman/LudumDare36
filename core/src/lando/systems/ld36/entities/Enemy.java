@@ -39,6 +39,7 @@ public class Enemy extends GameObject {
 
         moveSpeed = 50;
         activated = false;
+        name = "Unset";
 
 
     }

@@ -69,6 +69,8 @@ public class GameObject {
     public float respawnTimer;
     public float attackCooldown;
     public float characterSpriteWidth;
+    public String name;
+
 
 
 
@@ -113,6 +115,7 @@ public class GameObject {
         animationTimer = new MutableFloat(0f);
         attackCooldown = 0;
         characterSpriteWidth = 45;
+        name = "Unset";
 
     }
 

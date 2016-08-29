@@ -78,7 +78,7 @@ public class GameScreen extends BaseScreen {
                 cameraCenter.x += screenXDif;
             }
             boolean atRightEdge = false;
-            if (cameraCenter.x > level.getLevelWidth() - (camera.viewportWidth / 2)) {
+            if (cameraCenter.x >= level.getLevelWidth() - (camera.viewportWidth / 2)) {
                 atRightEdge = true;
                 cameraCenter.x = level.getLevelWidth() - (camera.viewportWidth / 2);
             }
@@ -171,15 +171,39 @@ public class GameScreen extends BaseScreen {
             .4f
         );
 
-        // TODO: only show this when boss is active
-        Assets.drawString(
-            batch,
-            "Boss",
-            hudCamera.viewportWidth - 100 - hudBorderWidth - Assets.hudPatch.getPadRight(),
-            hudCamera.viewportHeight - Assets.hudPatch.getPadTop(),
-            Color.WHITE,
-            .4f
-        );
+        if (level.boss.activated && !level.boss.dead) {
+            Assets.font.getData().setScale(.4f);
+            Assets.glyphLayout.setText(Assets.font, level.boss.name);
+            Assets.drawString(
+                    batch,
+                    level.boss.name,
+                    hudCamera.viewportWidth - 100 - hudBorderWidth + Assets.hudPatch.getPadLeft() - Assets.glyphLayout.width,
+                    hudCamera.viewportHeight - Assets.hudPatch.getPadTop(),
+                    Color.WHITE,
+                    .4f
+            );
+
+            batch.setColor(Color.BLACK);
+            batch.draw(
+                    Assets.white,
+                    hudCamera.viewportWidth - 200 - hudBorderWidth + Assets.hudPatch.getPadLeft(),
+                    hudCamera.viewportHeight - 75,
+                    100, // Full health
+                    15
+            );
+
+            float n = level.boss.health / (float) level.boss.maxHealth;
+            healthColor = Utils.hsvToRgb(((n * 120f) - 20) / 365f, 1.0f, 1.0f, healthColor);
+            batch.setColor(healthColor);
+            batch.draw(
+                    Assets.white,
+                    hudCamera.viewportWidth - 200 - hudBorderWidth + Assets.hudPatch.getPadLeft(),
+                    hudCamera.viewportHeight - 75,
+                    (float)level.boss.health/ level.boss.maxHealth * 100f,
+                    15
+            );
+            batch.setColor(Color.WHITE);
+        }
 
         // Draw Player Health bar
         batch.setColor(Color.BLACK);
