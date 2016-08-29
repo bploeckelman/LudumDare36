@@ -20,7 +20,7 @@ public class KeyMapping {
         actionMap.put(ACTION.RIGHT, Input.Keys.D);
         actionMap.put(ACTION.UP, Input.Keys.W);
         actionMap.put(ACTION.DOWN, Input.Keys.S);
-        actionMap.put(ACTION.ATTACK, Input.Keys.H);
+        actionMap.put(ACTION.ATTACK, Input.Keys.ENTER);
     }
 
     public boolean isActionPressed(ACTION action){
