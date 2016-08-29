@@ -63,12 +63,12 @@ public class Player extends GameObject {
         if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) &&
                 Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)){
             // Do nothing
-        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT)){
-            position.x += moveSpeed * dt;
+        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT)) {
+            position.x += moveSpeed * dt * (falling ? 0.5f : 1f);
             isMoving = true;
             isFacingRight = true;
-        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)){
-            position.x -= moveSpeed * dt;
+        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)) {
+            position.x -= moveSpeed * dt * (falling ? 0.5f : 1f);
             isMoving = true;
             isFacingRight = false;
         }
