@@ -284,6 +284,26 @@ public class Level {
         }
     }
 
+    public float getTopBound(Vector3 position){
+        int startX = (int)(position.x / groundLayer.getTileWidth()) -1;
+        int startY = 0;
+        int endX = startX + 2;
+        int endY = 20; // something higher than the upper bound
+
+        float topBound = 0;
+        for (int x = startX; x <= endX; x++) {
+            float topBoundInX = 0;
+            for (int y = startY; y <= endY; y++) {
+                TiledMapTileLayer.Cell cell = groundLayer.getCell(x, y);
+                if (cell != null) {
+                    topBoundInX = Math.max(topBoundInX, y * 32 + 32);
+                }
+            }
+            topBound = Math.max(topBound, topBoundInX);
+        }
+        return topBound;
+    }
+
     public Boundary getActiveBoundry(){
         float cameraRightEdge = screen.cameraCenter.x + screen.camera.viewportHeight / 2f;
         for (Boundary b : boundaries){

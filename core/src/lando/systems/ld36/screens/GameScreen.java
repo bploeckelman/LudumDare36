@@ -64,6 +64,17 @@ public class GameScreen extends BaseScreen {
 
         Boundary boundary = level.getActiveBoundry();
 
+
+
+        float screenYDif = (debugPlayer.position.y - cameraCenter.y + 50) * .1f;
+        if (MathUtils.isEqual(screenYDif, 0, .5f)){
+            screenYDif = 0;
+        }
+        cameraCenter.y += screenYDif;
+
+
+        cameraCenter.y = Math.max(cameraCenter.y, camera.viewportHeight/2);
+
         if (boundary == null && cameraDelay <= 0) {
             // have camera follow player
             if (debugPlayer.position.x > cameraCenter.x) {
@@ -73,6 +84,7 @@ public class GameScreen extends BaseScreen {
                 }
                 cameraCenter.x += screenXDif;
             }
+
             boolean atRightEdge = false;
             if (cameraCenter.x >= level.getLevelWidth() - (camera.viewportWidth / 2)) {
                 atRightEdge = true;

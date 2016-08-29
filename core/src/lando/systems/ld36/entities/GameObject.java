@@ -35,7 +35,7 @@ public class GameObject {
 
 
     public final float bottomPlayArea = 0;
-    public final float topPlayArea = 5.5f * 32;
+    public float topPlayArea;
     public Vector3 position;
     public Rectangle hitBounds;
     public float verticalVelocity;
@@ -124,6 +124,7 @@ public class GameObject {
 
     public void update(float dt){
         timer += dt;
+        topPlayArea = level.getTopBound(position) - 16f;
 
         if (invunerableTimer > 0){
             invunerableTimer -= dt;
