@@ -34,13 +34,13 @@
   <object id="25" type="flash_drive_easy" gid="949" x="2368" y="800" width="32" height="32"/>
   <object id="26" type="flash_drive_easy" gid="949" x="2272" y="704" width="32" height="32"/>
   <object id="27" type="flash_drive_easy" gid="949" x="2464" y="832" width="32" height="32"/>
-  <object id="28" type="boundary" gid="949" x="2632" y="704" width="32" height="32"/>
-  <object id="29" type="boundary" gid="949" x="1760" y="704" width="32" height="32"/>
+  <object id="28" type="boundary" gid="949" x="2528" y="704" width="32" height="32"/>
+  <object id="29" type="boundary" gid="949" x="1696" y="704" width="32" height="32"/>
   <object id="30" type="boundary" gid="949" x="664" y="768" width="32" height="32"/>
   <object id="31" type="flash_drive_easy" gid="949" x="1600" y="576" width="32" height="32"/>
   <object id="32" type="flash_drive_easy" gid="949" x="1448" y="800" width="32" height="32"/>
   <object id="33" type="flash_drive_easy" gid="949" x="1584" y="840" width="32" height="32"/>
-  <object id="34" type="flash_drive_medium" gid="949" x="1600" y="704" width="32" height="32"/>
+  <object id="34" type="flash_drive_medium" gid="949" x="1648" y="704" width="32" height="32"/>
   <object id="35" type="flash_drive_medium" gid="949" x="504" y="832" width="32" height="32"/>
   <object id="36" type="flash_drive_medium" gid="949" x="504" y="904" width="32" height="32"/>
   <object id="37" type="flash_drive_easy" gid="949" x="408" y="864" width="32" height="32"/>
