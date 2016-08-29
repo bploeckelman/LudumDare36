@@ -57,7 +57,7 @@ public class Player extends GameObject {
         this.leftEdge = leftEdge;
         this.rightEdge = rightEdge;
 
-        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.JUMP)){
+        if (Assets.keyMapping.isActionJustPressed(KeyMapping.ACTION.JUMP)){
             jump();
         }
 
