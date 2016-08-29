@@ -22,7 +22,7 @@ public class Script {
             case 1: return "levels/level1.tmx";
             case 2: return "levels/level2.tmx";
             case 3: return "levels/level3.tmx";
-            case 4: return "levels/level0.tmx";
+            case 4: return "levels/level4.tmx";
             default: return null;
         }
     }
