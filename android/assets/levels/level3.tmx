@@ -76,6 +76,6 @@
   <object id="56" type="smart_phone_easy" gid="949" x="2816" y="800" width="32" height="32"/>
   <object id="57" type="smart_phone_medium" gid="949" x="2304" y="544" width="32" height="32"/>
   <object id="58" type="smart_phone_easy" gid="949" x="1760" y="352" width="32" height="32"/>
-  <object id="59" type="player" gid="949" x="32" y="224" width="32" height="32"/>
+  <object id="59" type="player" gid="949" x="64" y="224" width="32" height="32"/>
  </objectgroup>
 </map>

@@ -44,6 +44,6 @@
   <object id="35" type="flash_drive_medium" gid="949" x="504" y="832" width="32" height="32"/>
   <object id="36" type="flash_drive_medium" gid="949" x="504" y="904" width="32" height="32"/>
   <object id="37" type="flash_drive_easy" gid="949" x="408" y="864" width="32" height="32"/>
-  <object id="38" type="player" gid="949" x="32" y="832" width="32" height="32"/>
+  <object id="38" type="player" gid="949" x="64" y="832" width="32" height="32"/>
  </objectgroup>
 </map>
