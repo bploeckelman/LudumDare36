@@ -62,6 +62,9 @@ public class Assets {
     public static Animation betamaxWalk;
     public static Animation betamaxPunch;
 
+    public static Animation sdWalk;
+    public static Animation sdAttack;
+
     public static Animation smartPhone;
     public static Animation smartPhoneKnife;
     public static Animation smartPhoneMedium;
@@ -195,6 +198,14 @@ public class Assets {
         betamaxPunchTextures.add(betamaxPunchTextures.get(0));
         betamaxPunch = new Animation(.03f, betamaxPunchTextures);
 
+
+        sdWalk = new Animation(.15f, atlas.findRegions("SD_Walk"));
+        sdWalk.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        Array<TextureAtlas.AtlasRegion> sdAttackTextures = atlas.findRegions("SD_Attack");
+        sdAttackTextures.add(sdAttackTextures.get(2));
+        sdAttackTextures.add(sdAttackTextures.get(1));
+        sdAttackTextures.add(sdAttackTextures.get(0));
+        sdAttack = new Animation(.05f, sdAttackTextures);
 
         smartPhone = new Animation(.15f, atlas.findRegions("Smart_Phone_Walk"));
         smartPhone.setPlayMode(Animation.PlayMode.LOOP);
