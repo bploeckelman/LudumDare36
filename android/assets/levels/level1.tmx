@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="32" tileheight="32" nextobjectid="19">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="32" tileheight="32" nextobjectid="26">
  <tileset firstgid="1" name="maptiles" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
   <image source="../images/map-tiles.png" width="1024" height="1024"/>
  </tileset>
@@ -29,5 +29,12 @@
    </properties>
   </object>
   <object id="18" type="player" gid="949" x="64" y="352" width="32" height="32"/>
+  <object id="19" type="sd_easy" gid="949" x="864" y="448" width="32" height="32"/>
+  <object id="20" type="sd_easy" gid="949" x="448" y="416" width="32" height="32"/>
+  <object id="21" type="sd_easy" gid="949" x="864" y="352" width="32" height="32"/>
+  <object id="22" type="boundary" gid="949" x="928" y="288" width="32" height="32"/>
+  <object id="23" type="sd_easy" gid="949" x="1216" y="328" width="32" height="32"/>
+  <object id="24" type="sd_easy" gid="949" x="1920" y="320" width="32" height="32"/>
+  <object id="25" type="sd_easy" gid="949" x="1920" y="416" width="32" height="32"/>
  </objectgroup>
 </map>
