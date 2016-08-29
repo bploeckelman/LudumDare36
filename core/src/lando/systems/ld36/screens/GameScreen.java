@@ -1,11 +1,18 @@
 package lando.systems.ld36.screens;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.equations.Back;
+import aurelienribon.tweenengine.equations.Elastic;
+import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.entities.Boundary;
@@ -33,6 +40,8 @@ public class GameScreen extends BaseScreen {
     public float lastCameraX;
     public float lagdelay = 0;
     public Color healthColor;
+    public MutableFloat nagSize;
+    public float cameraDelay;
 
     public GameScreen(PlayerCharacter character) {
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
@@ -43,6 +52,7 @@ public class GameScreen extends BaseScreen {
         level.setPlayer(debugPlayer);
         level.initilizeStates();
         cameraCenter = new Vector2(camera.position.x, camera.position.y);
+        nagSize = new MutableFloat(0);
     }
 
     @Override
@@ -50,15 +60,22 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             LudumDare36.game.setScreen(Statistics.getStatisticsScreen());
         }
+
+        cameraDelay -= dt;
+        if (cameraDelay < 0) cameraDelay = 0;
+
         debugPlayer.update(dt, cameraCenter.x - camera.viewportWidth/2, cameraCenter.x + camera.viewportWidth/2 - 64);
 
         Boundary boundary = level.getActiveBoundry();
 
-        if (boundary == null) {
+        if (boundary == null && cameraDelay <= 0) {
             // have camera follow player
             if (debugPlayer.position.x > cameraCenter.x) {
-                float screenXDif = debugPlayer.position.x - cameraCenter.x;
-                cameraCenter.x += screenXDif * .05f;
+                float screenXDif = (debugPlayer.position.x - cameraCenter.x) * .05f;
+                if (MathUtils.isEqual(screenXDif, 0, .5f)){
+                    screenXDif = 0;
+                }
+                cameraCenter.x += screenXDif;
             }
             boolean atRightEdge = false;
             if (cameraCenter.x > level.getLevelWidth() - (camera.viewportWidth / 2)) {
@@ -67,12 +84,36 @@ public class GameScreen extends BaseScreen {
             }
 
             if (cameraCenter.x == lastCameraX &&
-                    (level.activeBoundries() > 0 || !atRightEdge)){
+               (level.activeBoundries() > 0 || !atRightEdge)){
                 lagdelay += dt;
             } else {
                 lagdelay = 0;
+                if (nagSize.floatValue() == 1)
+                Tween.to(nagSize, -1, 1f)
+                        .target(.25f)
+                        .ease(Back.IN)
+                        .setCallback(new TweenCallback() {
+                            @Override
+                            public void onEvent(int i, BaseTween<?> baseTween) {
+                                nagSize.setValue(0);
+                            }
+                        })
+                        .start(Assets.tween);
             }
+
+
             lastCameraX = cameraCenter.x;
+        }
+
+        if (lagdelay > NAG_DELAY){
+            if (nagSize.floatValue() == 0){
+                nagSize.setValue(.5f);
+                Tween.to(nagSize, -1, 1f)
+                        .target(1f)
+                        .ease(Elastic.OUT)
+                        .start(Assets.tween);
+
+            }
         }
 
 //        camera.update();
@@ -97,14 +138,14 @@ public class GameScreen extends BaseScreen {
         batch.begin();
         batch.setProjectionMatrix(hudCamera.combined);
         // Draw HUD stuff
-        if (lagdelay > NAG_DELAY){
-            TextureRegion keepGoing = Assets.keepGoing.getKeyFrame(lagdelay);
-            batch.draw(keepGoing,
-                    hudCamera.viewportWidth - (keepGoing.getRegionWidth() + 20),
-                    200,
-                    keepGoing.getRegionWidth(),
-                    keepGoing.getRegionHeight());
-        }
+
+        TextureRegion keepGoing = Assets.keepGoing.getKeyFrame(lagdelay);
+        batch.draw(keepGoing,
+                hudCamera.viewportWidth - ((keepGoing.getRegionWidth()*nagSize.floatValue()) + 20),
+                200,
+                keepGoing.getRegionWidth() * nagSize.floatValue(),
+                keepGoing.getRegionHeight() * nagSize.floatValue());
+
 
         Assets.hudPatch.draw(
             batch,
