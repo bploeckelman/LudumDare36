@@ -85,6 +85,7 @@ public class Assets {
     public static NinePatch hudPatch;
 
     public static TextureRegion white;
+    public static NinePatch speechBubble;
 
 
     public static void load() {
@@ -281,6 +282,7 @@ public class Assets {
         cassetteWalking.setPlayMode(Animation.PlayMode.LOOP);
 
         hudPatch = new NinePatch(atlas.findRegion("ninepatch-hud"), 24, 24, 24, 24);
+        speechBubble = new NinePatch(atlas.findRegion("speech"), 10, 10, 10, 10);
 
         white = atlas.findRegion("white");
 

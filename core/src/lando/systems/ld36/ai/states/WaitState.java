@@ -25,5 +25,8 @@ public class WaitState extends State {
     @Override
     public void onExit() {
         owner.activated = true;
+        if (owner.level.boss == owner){
+            owner.say(owner.taunt);
+        }
     }
 }

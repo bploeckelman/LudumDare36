@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.ai.StateMachine;
@@ -75,6 +76,9 @@ public class GameObject {
 
     public StateMachine stateMachine;
 
+    public String taunt;
+    public float speechBubbleTimer;
+    public String speechText;
 
 
     public Vector2 movePoint;
@@ -118,7 +122,8 @@ public class GameObject {
         animationTimer = new MutableFloat(0f);
         attackCooldown = 0;
         characterSpriteWidth = 45;
-        name = "Unset";
+        name = "Boss Name is Unset";
+        taunt = "Taunt is Unset";
         tintColor = Color.WHITE;
         floating = false;
 
@@ -136,6 +141,10 @@ public class GameObject {
             if (invunerableTimer<=0){
                 invunerableTimer = 0;
             }
+        }
+        speechBubbleTimer -= dt;
+        if (speechBubbleTimer < 0){
+            speechBubbleTimer = 0;
         }
 
         if (attackCooldown > 0){
@@ -246,6 +255,32 @@ public class GameObject {
             batch.draw(tex, position.x + (width/1.5f), position.y + position.z, -width, height);
         }
         batch.setColor(Color.WHITE);
+
+        if (speechBubbleTimer > 0 && speechText != null){
+            Assets.emuLogicFont.getData().setScale(.7f);
+            float maxSpeechWidth = 150;
+            Assets.glyphLayout.setText(Assets.emuLogicFont, speechText, Color.BLACK, maxSpeechWidth, Align.left, true);
+
+            if (position.x > level.screen.cameraCenter.x){
+                Assets.speechBubble.draw(batch, position.x,
+                        position.y + position.z + height + 10,
+                        Assets.glyphLayout.width + 20,
+                        Assets.glyphLayout.height + 20);
+                Assets.emuLogicFont.draw(batch, Assets.glyphLayout,
+                        position.x + 10,
+                        position.y + position.z + height + 20 + Assets.glyphLayout.height);
+            } else {
+                Assets.speechBubble.draw(batch, position.x - Assets.glyphLayout.width - 20,
+                                         position.y + position.z + height + 10,
+                                         Assets.glyphLayout.width + 20,
+                                         Assets.glyphLayout.height + 20);
+                Assets.emuLogicFont.draw(batch, Assets.glyphLayout,
+                                         position.x - Assets.glyphLayout.width - 10,
+                                         position.y + position.z + height + 20 + Assets.glyphLayout.height);
+            }
+
+        }
+
         if (DRAW_BOUNDS) {
             batch.end();
             Assets.shapes.setColor(Color.RED);
@@ -389,5 +424,10 @@ public class GameObject {
             return true;
         }
         return false;
+    }
+
+    public void say(String text){
+        speechText = text;
+        speechBubbleTimer = 3f;
     }
 }
