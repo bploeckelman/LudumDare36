@@ -78,10 +78,11 @@ public class GameScreen extends BaseScreen {
         if (boundary == null && cameraDelay <= 0) {
             // have camera follow player
             if (debugPlayer.position.x > cameraCenter.x) {
-                float screenXDif = (debugPlayer.position.x - cameraCenter.x) * .05f;
+                float screenXDif = (debugPlayer.position.x - cameraCenter.x) * dt * 3f;
                 if (MathUtils.isEqual(screenXDif, 0, .5f)){
                     screenXDif = 0;
                 }
+                Math.min(screenXDif, 3);
                 cameraCenter.x += screenXDif;
             }
 

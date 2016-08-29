@@ -17,6 +17,10 @@ public class StateMachine {
         this.current.onEnter();
     }
 
+    public void addTransition(Transition tran){
+        transitions.add(tran);
+    }
+
     public void update(float dt) {
         current.update(dt);
 
@@ -30,7 +34,7 @@ public class StateMachine {
 
     public State getNextState() {
         for(Transition transition : transitions) {
-            if (!transition.from.equals(current)){
+            if (transition.from != null && !transition.from.equals(current)){
                 // Not the right transition from
                 continue;
             }

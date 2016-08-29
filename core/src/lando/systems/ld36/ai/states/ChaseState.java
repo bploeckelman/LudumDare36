@@ -23,12 +23,10 @@ public class ChaseState extends State {
 
     @Override
     public void onEnter() {
-        Gdx.app.log("STATE-MACHINE", "Enter Chase");
     }
 
     @Override
     public void onExit() {
-        Gdx.app.log("STATE-MACHINE", "Exit Chase");
 
     }
 }

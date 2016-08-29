@@ -34,12 +34,10 @@ public class WanderState extends State{
 
     @Override
     public void onEnter() {
-        Gdx.app.log("STATE-MACHINE", "Enter Wander");
     }
 
     @Override
     public void onExit() {
-        Gdx.app.log("STATE-MACHINE", "Exit Wander");
 
     }
 

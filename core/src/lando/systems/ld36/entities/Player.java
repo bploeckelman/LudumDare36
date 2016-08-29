@@ -43,6 +43,7 @@ public class Player extends GameObject {
 
     public void update(float dt, float leftEdge, float rightEdge){
         super.update(dt);
+        if (health <= 0) dead = true;
         if (dead){
             if (respawnTimer > 1) {
                 level.screen.screenShake.shake(1f);

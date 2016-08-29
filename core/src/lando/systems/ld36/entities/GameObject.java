@@ -164,7 +164,7 @@ public class GameObject {
         }
 
         if (position.y + position.z < -height){
-            dead = true;
+            health = -1;
         }
 
         if (isAttacking) {
@@ -319,7 +319,6 @@ public class GameObject {
         if ((health -= dmg) <= 0) {
             if (dead) return;
             health = 0;
-            dead = true;
             respawnTimer = 1.1f;
             Assets.particles.addParticle(hitBounds, Color.WHITE);
         } else {
@@ -358,7 +357,6 @@ public class GameObject {
             direction.nor().scl(moveLeft);
             testPosition.set(position);
             testPosition.add(direction.x, direction.y, 0);
-            if (!setPosition(testPosition))
             if (notSafeToWalk(testPosition)) {
                 movePoint.setZero();
             } else {

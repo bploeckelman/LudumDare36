@@ -43,5 +43,7 @@ public class FlashDriveHard extends FlashDriveMedium {
 
         // Create State Machine
         stateMachine = new StateMachine(wait, transitions);
+        addDieState();
+
     }
 }

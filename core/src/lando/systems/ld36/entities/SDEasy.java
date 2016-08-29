@@ -56,5 +56,7 @@ public class SDEasy extends Enemy {
 
         // Create State Machine
         stateMachine = new StateMachine(wait, transitions);
+        addDieState();
+
     }
 }

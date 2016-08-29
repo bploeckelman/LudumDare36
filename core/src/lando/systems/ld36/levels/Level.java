@@ -112,7 +112,7 @@ public class Level {
         Boundary b = getActiveBoundry();
         if (b != null && aliveActiveEnemiesCount <= 0){
             screen.lagdelay = 10;
-            screen.cameraDelay += 1.5f;
+            screen.cameraDelay += .9f;
             b.disable();
         }
 

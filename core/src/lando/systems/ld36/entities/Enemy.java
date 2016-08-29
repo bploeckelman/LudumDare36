@@ -9,11 +9,9 @@ import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.ai.StateMachine;
 import lando.systems.ld36.ai.Transition;
+import lando.systems.ld36.ai.conditions.HealthAtOrBelowCondition;
 import lando.systems.ld36.ai.conditions.NearScreenCondition;
-import lando.systems.ld36.ai.states.ChaseAvoidState;
-import lando.systems.ld36.ai.states.ChaseState;
-import lando.systems.ld36.ai.states.WaitState;
-import lando.systems.ld36.ai.states.WanderState;
+import lando.systems.ld36.ai.states.*;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Utils;
@@ -117,6 +115,13 @@ public class Enemy extends GameObject {
         if (dead) {
             Statistics.enemiesKilled++;
         }
+    }
+
+    public void addDieState(){
+        DieState die = new DieState(this);
+        HealthAtOrBelowCondition zeroHealth = new HealthAtOrBelowCondition(this, 0);
+        stateMachine.addTransition(new Transition(null, zeroHealth, die));
+
     }
 
 
