@@ -25,6 +25,7 @@ public class Level {
 
     public TiledMap map;
     public Array<GameObject> objects;
+    public Array<Boundary> boundaries;
     TiledMapRenderer renderer;
     TiledMapTileLayer groundLayer;
     Array<TiledMapImageLayer> imageLayers;
@@ -149,6 +150,7 @@ public class Level {
     }
 
     enum MapObjectType {
+        boundary(),
         player(),
         flash_drive_easy(),
         flash_drive_medium(),
@@ -166,6 +168,7 @@ public class Level {
         if (map == null) return;
 
         objects = new Array<GameObject>();
+        boundaries = new Array<Boundary>();
 
         MapProperties props;
         MapLayer objectLayer = map.getLayers().get("objects");
@@ -178,6 +181,10 @@ public class Level {
             String type = (String) props.get("type");
 
             switch (valueOf(type)) {
+                case boundary:
+                    boundaries.add(new Boundary(x, y));
+                    break;
+
                 case player:
                     Player p = new Player(this);
                     p.position.x = x;
