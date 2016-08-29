@@ -125,10 +125,8 @@ public class Level {
         if (!completed && boss.dead && aliveActiveEnemiesCount <= 0){
             completed = true;
             screen.cameraDelay += 3f;
+            Sounds.play(Sounds.Effect.bossDead);
         }
-
-
-
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
