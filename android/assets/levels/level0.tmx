@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="20" tilewidth="32" tileheight="32" nextobjectid="9">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="20" tilewidth="32" tileheight="32" nextobjectid="12">
  <tileset firstgid="1" name="spritesheet" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="../images/spritesheet.png" width="512" height="512"/>
  </tileset>
@@ -43,5 +43,8 @@
   <object id="5" type="smart_phone_medium" gid="241" x="1222" y="491" width="32" height="32"/>
   <object id="6" type="smart_phone_hard" gid="241" x="1261" y="550" width="32" height="32"/>
   <object id="8" type="cloud" gid="241" x="1554" y="539" width="32" height="32"/>
+  <object id="9" type="sd_medium" gid="241" x="984" y="613" width="32" height="32"/>
+  <object id="10" type="sd_hard" gid="241" x="1109" y="615" width="32" height="32"/>
+  <object id="11" type="sd_easy" gid="241" x="1052" y="555" width="32" height="32"/>
  </objectgroup>
 </map>

@@ -64,6 +64,10 @@ public class Assets {
 
     public static Animation sdWalk;
     public static Animation sdAttack;
+    public static Animation sdWalkMedium;
+    public static Animation sdAttackMedium;
+    public static Animation sdWalkHard;
+    public static Animation sdAttackHard;
 
     public static Animation smartPhone;
     public static Animation smartPhoneKnife;
@@ -203,11 +207,30 @@ public class Assets {
 
         sdWalk = new Animation(.15f, atlas.findRegions("SD_Walk"));
         sdWalk.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+
         Array<TextureAtlas.AtlasRegion> sdAttackTextures = atlas.findRegions("SD_Attack");
         sdAttackTextures.add(sdAttackTextures.get(2));
         sdAttackTextures.add(sdAttackTextures.get(1));
         sdAttackTextures.add(sdAttackTextures.get(0));
         sdAttack = new Animation(.05f, sdAttackTextures);
+
+        sdWalkMedium = new Animation(.15f, atlas.findRegions("SD_Walk_Medium"));
+        sdWalkMedium.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+
+        Array<TextureAtlas.AtlasRegion> sdAttackTexturesMedium = atlas.findRegions("SD_Attack_Medium");
+        sdAttackTexturesMedium.add(sdAttackTexturesMedium.get(2));
+        sdAttackTexturesMedium.add(sdAttackTexturesMedium.get(1));
+        sdAttackTexturesMedium.add(sdAttackTexturesMedium.get(0));
+        sdAttackMedium = new Animation(.05f, sdAttackTexturesMedium);
+
+        sdWalkHard = new Animation(.15f, atlas.findRegions("SD_Walk_Hard"));
+        sdWalkHard.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+
+        Array<TextureAtlas.AtlasRegion> sdAttackTexturesHard = atlas.findRegions("SD_Attack_Hard");
+        sdAttackTexturesHard.add(sdAttackTexturesHard.get(2));
+        sdAttackTexturesHard.add(sdAttackTexturesHard.get(1));
+        sdAttackTexturesHard.add(sdAttackTexturesHard.get(0));
+        sdAttackHard = new Animation(.05f, sdAttackTexturesHard);
 
         smartPhone = new Animation(.15f, atlas.findRegions("Smart_Phone_Walk"));
         smartPhone.setPlayMode(Animation.PlayMode.LOOP);

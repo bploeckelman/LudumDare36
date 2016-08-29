@@ -156,7 +156,10 @@ public class Level {
         smart_phone_easy(),
         smart_phone_medium(),
         smart_phone_hard(),
-        cloud();
+        cloud(),
+        sd_easy(),
+        sd_medium(),
+        sd_hard();
     }
 
     private void loadMapObjects() {
@@ -208,6 +211,18 @@ public class Level {
 
                 case cloud:
                     objects.add(new Cloud(this, x, y));
+                    break;
+
+                case sd_easy:
+                    objects.add(new SDEasy(this, x, y));
+                    break;
+
+                case sd_medium:
+                    objects.add(new SDMedium(this, x, y));
+                    break;
+
+                case sd_hard:
+                    objects.add(new SDHard(this, x, y));
                     break;
             }
         }

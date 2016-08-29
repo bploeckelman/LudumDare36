@@ -9,3 +9,8 @@ convert sprites/Smart_Phone_Walk_%d.png[0-2] -fuzz 10% -fill 'rgb(230,211,52)' -
 convert sprites/Smart_Phone_Knife_%d.png[0-5] -fuzz 10% -fill 'rgb(230,211,52)' -opaque 'rgb(17,143,226)' sprites/Smart_Phone_Knife_Medium_%d.png
 convert sprites/Smart_Phone_Walk_%d.png[0-2] -fuzz 10% -fill 'rgb(255,0,0)' -opaque 'rgb(17,143,226)' sprites/Smart_Phone_Walk_Hard_%d.png
 convert sprites/Smart_Phone_Knife_%d.png[0-5] -fuzz 10% -fill 'rgb(255,0,0)' -opaque 'rgb(17,143,226)' sprites/Smart_Phone_Knife_Hard_%d.png
+
+convert sprites/SD_Walk_%d.png[1-3] -fuzz 10% -fill 'rgb(230,211,52)' -opaque 'rgb(32,12,188)' -scene 1 sprites/SD_Walk_Medium_%d.png
+convert sprites/SD_Attack_%d.png[1-3] -fuzz 10% -fill 'rgb(230,211,52)' -opaque 'rgb(32,12,188)' -scene 1 sprites/SD_Attack_Medium_%d.png
+convert sprites/SD_Walk_%d.png[1-3] -fuzz 10% -fill 'rgb(255,0,0)' -opaque 'rgb(32,12,188)' -scene 1 sprites/SD_Walk_Hard_%d.png
+convert sprites/SD_Attack_%d.png[1-3] -fuzz 10% -fill 'rgb(255,0,0)' -opaque 'rgb(32,12,188)' -scene 1 sprites/SD_Attack_Hard_%d.png
