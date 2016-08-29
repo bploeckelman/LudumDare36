@@ -28,6 +28,7 @@ public class Level {
     TiledMapRenderer renderer;
     TiledMapTileLayer groundLayer;
     Array<TiledMapImageLayer> imageLayers;
+    Array<TiledMapTileLayer> backgroundLayers;
     public GameScreen screen;
     public Player player;
 
@@ -107,6 +108,9 @@ public class Level {
         for (TiledMapImageLayer imageLayer : imageLayers) {
             renderer.renderImageLayer(imageLayer);
         }
+        for (TiledMapTileLayer backgroundLayer : backgroundLayers) {
+            renderer.renderTileLayer(backgroundLayer);
+        }
         renderer.renderTileLayer(groundLayer);
 
         for (GameObject object : objects) {
@@ -125,14 +129,21 @@ public class Level {
         groundLayer = (TiledMapTileLayer) map.getLayers().get("ground");
 
         imageLayers = new Array<TiledMapImageLayer>();
+        backgroundLayers = new Array<TiledMapTileLayer>();
         final MapLayers mapLayers = map.getLayers();
         for (MapLayer layer : mapLayers) {
             if (layer.getName().startsWith("background")) {
-                final TiledMapImageLayer imageLayer = (TiledMapImageLayer) layer;
-                final MapProperties props = layer.getProperties();
-                imageLayer.setX(imageLayer.getX() + Float.parseFloat(props.get("offset_x", "0", String.class)));
-                imageLayer.setY(imageLayer.getY() + Float.parseFloat(props.get("offset_y", "0", String.class)));
-                imageLayers.add(imageLayer);
+                if (layer instanceof TiledMapImageLayer) {
+                    final TiledMapImageLayer imageLayer = (TiledMapImageLayer) layer;
+                    final MapProperties props = layer.getProperties();
+                    imageLayer.setX(imageLayer.getX() + Float.parseFloat(props.get("offset_x", "0", String.class)));
+                    imageLayer.setY(imageLayer.getY() + Float.parseFloat(props.get("offset_y", "0", String.class)));
+                    imageLayers.add(imageLayer);
+                }
+                else if (layer instanceof TiledMapTileLayer) {
+                    final TiledMapTileLayer tileLayer = (TiledMapTileLayer) layer;
+                    backgroundLayers.add(tileLayer);
+                }
             }
         }
     }
