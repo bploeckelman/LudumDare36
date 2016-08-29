@@ -29,6 +29,7 @@ public class GameObject {
 
     public final float RESPAWNDELAY = 4f;
     public final float GRAVITY = -200;
+    public float ATTACK_COOLDOWN = .6f;
     public float jumpVelocity = 200;
     public float moveSpeed;
 
@@ -65,6 +66,7 @@ public class GameObject {
     public int maxHealth;
     public int attackPower = 1;
     public float respawnTimer;
+    public float attackCooldown;
 
 
 
@@ -103,6 +105,7 @@ public class GameObject {
         shadowDisplayRectangles = new Array<Rectangle>();
         shadowSourceRectangles = new Array<Rectangle>();
         animationTimer = new MutableFloat(0f);
+        attackCooldown = 0;
 
     }
 
@@ -116,6 +119,13 @@ public class GameObject {
             invunerableTimer -= dt;
             if (invunerableTimer<=0){
                 invunerableTimer = 0;
+            }
+        }
+
+        if (attackCooldown > 0){
+            attackCooldown -= dt;
+            if (attackCooldown <= 0){
+                attackCooldown = 0;
             }
         }
         // Keep player on play area
@@ -247,8 +257,9 @@ public class GameObject {
     }
 
     public void attack(){
-        if (isAttacking || isInvulerable()) return;    // Early out if you are attacking
+        if (attackCooldown > 0 || isInvulerable()) return;    // Early out if you are attacking
 
+        attackCooldown = ATTACK_COOLDOWN;
         animationTimer.setValue(0f);
         Timeline.createSequence()
                 .push(Tween.to(animationTimer, -1, attackAnimation.getAnimationDuration() /3f)

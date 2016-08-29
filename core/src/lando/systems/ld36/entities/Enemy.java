@@ -3,6 +3,7 @@ package lando.systems.ld36.entities;
 import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.LudumDare36;
@@ -15,6 +16,7 @@ import lando.systems.ld36.ai.states.WaitState;
 import lando.systems.ld36.ai.states.WanderState;
 import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
+import lando.systems.ld36.utils.Utils;
 import lando.systems.ld36.utils.Statistics;
 
 public class Enemy extends GameObject {
@@ -22,6 +24,7 @@ public class Enemy extends GameObject {
     public boolean isMoving = false;
     public MutableFloat animationTimer;
     public float timer = 0f;
+    public Color healthColor;
 
 
     public StateMachine stateMachine;
@@ -67,6 +70,32 @@ public class Enemy extends GameObject {
         hitBounds.x = position.x + 15f;
         hitBounds.y = position.y + position.z;
 
+    }
+
+    public void render(SpriteBatch batch){
+        super.render(batch);
+
+        // healthbar
+        // Draw Player Health bar
+        batch.setColor(Color.BLACK);
+        batch.draw(
+                Assets.white,
+                position.x,
+                position.y + height,
+                45, // Full health
+                5
+        );
+        float n = health / (float) maxHealth;
+        healthColor = Utils.hsvToRgb(((n * 120f) - 20) / 365f, 1.0f, 1.0f, healthColor);
+        batch.setColor(healthColor);
+        batch.draw(
+                Assets.white,
+                position.x,
+                position.y + height,
+                ((float)health/maxHealth) * 45, // Full health
+                5
+        );
+        batch.setColor(Color.WHITE);
     }
 
     public void tryAttack(){

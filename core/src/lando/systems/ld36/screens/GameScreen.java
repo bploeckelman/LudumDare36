@@ -13,6 +13,7 @@ import lando.systems.ld36.levels.Level;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Config;
 import lando.systems.ld36.utils.Shake;
+import lando.systems.ld36.utils.Utils;
 import lando.systems.ld36.utils.Statistics;
 
 /**
@@ -26,6 +27,7 @@ public class GameScreen extends BaseScreen {
     float hudBorderWidth = 4;
     public Shake screenShake;
     public Vector2 cameraCenter;
+    public Color healthColor;
 
     public GameScreen(PlayerCharacter character) {
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
@@ -118,7 +120,10 @@ public class GameScreen extends BaseScreen {
             debugPlayer.maxHealth, // Full health
             15
         );
-        batch.setColor(Color.RED);
+
+        float n = debugPlayer.health / (float) debugPlayer.maxHealth;
+        healthColor = Utils.hsvToRgb(((n * 120f) - 20) / 365f, 1.0f, 1.0f, healthColor);
+        batch.setColor(healthColor);
         batch.draw(
             Assets.white,
             hudBorderWidth + Assets.hudPatch.getPadLeft(),
