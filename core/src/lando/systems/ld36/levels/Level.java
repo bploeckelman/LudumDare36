@@ -284,10 +284,10 @@ public class Level {
         }
     }
 
-    public float getTopBound(Vector3 position){
-        int startX = (int)(position.x / groundLayer.getTileWidth()) -1;
+    public float getTopBound(float position){
+        int startX = (int)(position / groundLayer.getTileWidth());
         int startY = 0;
-        int endX = startX + 2;
+        int endX = startX;
         int endY = 20; // something higher than the upper bound
 
         float topBound = 0;
@@ -296,7 +296,7 @@ public class Level {
             for (int y = startY; y <= endY; y++) {
                 TiledMapTileLayer.Cell cell = groundLayer.getCell(x, y);
                 if (cell != null) {
-                    topBoundInX = Math.max(topBoundInX, y * 32 + 32);
+                    topBoundInX = Math.max(topBoundInX, y * 32 + 16);
                 }
             }
             topBound = Math.max(topBound, topBoundInX);

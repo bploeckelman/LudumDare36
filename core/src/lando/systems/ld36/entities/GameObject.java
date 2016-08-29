@@ -124,7 +124,7 @@ public class GameObject {
 
     public void update(float dt){
         timer += dt;
-        topPlayArea = level.getTopBound(position) - 16f;
+        topPlayArea = level.getTopBound(position.x);
 
         if (invunerableTimer > 0){
             invunerableTimer -= dt;
@@ -176,8 +176,7 @@ public class GameObject {
             tex = walkAnimation.getKeyFrame(0);
         }
 
-        position.x += bounceBack.x;
-        position.y += bounceBack.y;
+        setPosition(position.x + bounceBack.x, position.y + bounceBack.y);
         bounceBack.scl(0.8f);
         if (bounceBack.epsilonEquals(0.0f, 0.0f, 0.1f)) {
             bounceBack.set(0f, 0f);
@@ -350,8 +349,7 @@ public class GameObject {
         if (dist < moveLeft){
             testPosition.set(movePoint.x, movePoint.y, 0);
             if (!notSafeToWalk(testPosition)) {
-                position.x = movePoint.x;
-                position.y = movePoint.y;
+                setPosition(movePoint.x, movePoint.y);
             }
             moveLeft -= dist;
             movePoint.setZero();
@@ -363,10 +361,25 @@ public class GameObject {
             if (notSafeToWalk(testPosition)) {
                 movePoint.setZero();
             } else {
-                position.set(testPosition);
+                setPosition(testPosition);
             }
             moveLeft = 0;
         }
         return moveLeft;
+    }
+
+    public void setPosition(Vector3 newPos){
+        setPosition(newPos.x, newPos.y, newPos.z);
+    }
+
+    public void setPosition(float x, float y){
+        setPosition(x, y, position.z);
+    }
+    public void setPosition(float x, float y, float z){
+        float leftY = level.getTopBound(x);
+        float rightY = level.getTopBound(x+characterSpriteWidth);
+        if (y < leftY && y < rightY){
+            position.set(x, y, z);
+        }
     }
 }
