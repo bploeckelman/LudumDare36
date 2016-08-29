@@ -62,6 +62,7 @@ public class GameObject {
     public MutableFloat animationTimer;
     public float timer = 0f;
     public int health;
+    public int maxHealth;
     public int attackPower = 1;
     public float respawnTimer;
 

@@ -22,6 +22,7 @@ public class FlashDriveHard extends FlashDriveMedium {
         tex = walkAnimation.getKeyFrame(timer);
 
         health = 10;
+        maxHealth = 10;
         attackPower = 4;
     }
 

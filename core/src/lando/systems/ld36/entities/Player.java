@@ -38,6 +38,7 @@ public class Player extends GameObject {
         footBounds = new Rectangle();
         hitBounds = new Rectangle(position.x + 15f, position.y + 4f, 30f, tex.getRegionHeight() - 8f);
         health = 100;
+        maxHealth = 100;
         attack_range = 32;
     }
 
@@ -105,7 +106,7 @@ public class Player extends GameObject {
         position.z = 0;
         jumpCount =0;
         verticalVelocity = 0;
-        health = 100;
+        health = maxHealth;
         position.x = lastSafePlace.get(0).x;
         position.y = lastSafePlace.get(0).y;
         invulerabilityFlashSpeed = .5f;

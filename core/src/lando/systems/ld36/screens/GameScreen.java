@@ -114,7 +114,7 @@ public class GameScreen extends BaseScreen {
             Assets.white,
             hudBorderWidth + Assets.hudPatch.getPadLeft(),
             hudCamera.viewportHeight - 75,
-            100, // Full health
+            debugPlayer.maxHealth, // Full health
             15
         );
         batch.setColor(Color.RED);

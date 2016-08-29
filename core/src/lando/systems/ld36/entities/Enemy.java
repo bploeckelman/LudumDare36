@@ -30,6 +30,7 @@ public class Enemy extends GameObject {
         super(level);
         animationTimer = new MutableFloat(0f);
         health = 5;
+        maxHealth = 5;
 
         moveSpeed = 50;
 

@@ -26,6 +26,7 @@ public class FlashDriveEasy extends Enemy {
         hitBounds = new Rectangle(position.x, position.y, 32f, tex.getRegionHeight());
 
         health = 2;
+        maxHealth = 2;
         position.x = x;
         position.y = y;
 

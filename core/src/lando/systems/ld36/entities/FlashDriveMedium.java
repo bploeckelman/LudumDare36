@@ -20,6 +20,7 @@ public class FlashDriveMedium extends FlashDriveEasy {
         tex = walkAnimation.getKeyFrame(timer);
 
         health = 5;
+        maxHealth = 5;
         attackPower = 2;
     }
 
