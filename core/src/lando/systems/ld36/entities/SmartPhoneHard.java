@@ -12,5 +12,6 @@ public class SmartPhoneHard extends SmartPhoneMedium {
 
         tex = walkAnimation.getKeyFrame(timer);
         attackPower = 15;
+        moveSpeed = 95;
     }
 }

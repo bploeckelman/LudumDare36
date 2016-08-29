@@ -21,6 +21,7 @@ public class SmartPhoneEasy extends Enemy {
         jumpVelocity = 50f;
         hitBounds = new Rectangle(position.x, position.y, 32f, tex.getRegionHeight());
         attackPower = 8;
+        moveSpeed = 75;
     }
 
     public void update(float dt) {

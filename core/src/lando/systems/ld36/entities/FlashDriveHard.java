@@ -24,6 +24,7 @@ public class FlashDriveHard extends FlashDriveMedium {
         health = 10;
         maxHealth = 10;
         attackPower = 4;
+        moveSpeed = 100;
     }
 
     public void initializeStates(){

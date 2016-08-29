@@ -22,6 +22,7 @@ public class FlashDriveMedium extends FlashDriveEasy {
         health = 5;
         maxHealth = 5;
         attackPower = 2;
+        moveSpeed = 75;
     }
 
     public void initializeStates(){
