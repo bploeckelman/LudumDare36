@@ -67,6 +67,7 @@ public class GameObject {
     public int attackPower = 1;
     public float respawnTimer;
     public float attackCooldown;
+    public float characterSpriteWidth;
 
 
 
@@ -76,10 +77,12 @@ public class GameObject {
 
     public boolean isOverFloor;
 
-    private static final int SHADOW_Y_OFFSET = -10;
-    private static final int SHADOW_DRAW_WIDTH = 64;
     private static final int SHADOW_TEXTURE_WIDTH = 32;
     private static final int SHADOW_TEXTURE_HEIGHT = 32;
+    public int shadowDrawWidth = 64;
+    public int shadowYOffset = -10;
+
+
     private Rectangle shadowMasterRectangle;
     private Array<Rectangle> shadowDisplayRectangles;
     private Array<Rectangle> shadowSourceRectangles;
@@ -106,6 +109,7 @@ public class GameObject {
         shadowSourceRectangles = new Array<Rectangle>();
         animationTimer = new MutableFloat(0f);
         attackCooldown = 0;
+        characterSpriteWidth = 45;
 
     }
 
@@ -174,7 +178,7 @@ public class GameObject {
 
         // Shadows!
         // Master shadow position
-        shadowMasterRectangle.set(position.x, position.y + SHADOW_Y_OFFSET, SHADOW_DRAW_WIDTH, height);
+        shadowMasterRectangle.set(position.x, position.y + shadowYOffset, shadowDrawWidth, height);
         shadowDisplayRectangles = new Array<Rectangle>();
         shadowSourceRectangles = new Array<Rectangle>();
         Rectangle r;

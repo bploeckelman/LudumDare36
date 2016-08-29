@@ -227,7 +227,7 @@ public class Level {
     public void getGroundTiles (Vector3 position, Array<Rectangle> tiles) {
         int startX = (int)(position.x / groundLayer.getTileWidth()) -1;
         int startY = (int)(position.y / groundLayer.getTileHeight()) -1;
-        int endX = startX + 4;
+        int endX = startX + 5;
         int endY = startY + 4;
 
         rectPool.freeAll(tiles);

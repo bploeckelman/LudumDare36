@@ -33,7 +33,7 @@ public class GameScreen extends BaseScreen {
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
         camera.update();
         screenShake = new Shake(35, 8);
-        level = new Level("levels/level1.tmx", this);
+        level = new Level("levels/level0.tmx", this);
         debugPlayer = new Player(character, level);
         level.setPlayer(debugPlayer);
         level.initilizeStates();
@@ -102,9 +102,11 @@ public class GameScreen extends BaseScreen {
             Color.WHITE,
             .4f
         );
+
+        // TODO: only show this when boss is active
         Assets.drawString(
             batch,
-            "Enemy",
+            "Boss",
             hudCamera.viewportWidth - 100 - hudBorderWidth - Assets.hudPatch.getPadRight(),
             hudCamera.viewportHeight - Assets.hudPatch.getPadTop(),
             Color.WHITE,

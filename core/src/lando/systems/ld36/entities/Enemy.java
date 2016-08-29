@@ -82,7 +82,7 @@ public class Enemy extends GameObject {
                 Assets.white,
                 position.x,
                 position.y + height,
-                45, // Full health
+                characterSpriteWidth, // Full health
                 5
         );
         float n = health / (float) maxHealth;
@@ -92,7 +92,7 @@ public class Enemy extends GameObject {
                 Assets.white,
                 position.x,
                 position.y + height,
-                ((float)health/maxHealth) * 45, // Full health
+                ((float)health/maxHealth) * characterSpriteWidth, // Full health
                 5
         );
         batch.setColor(Color.WHITE);
