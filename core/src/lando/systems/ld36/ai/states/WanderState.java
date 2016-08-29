@@ -27,7 +27,7 @@ public class WanderState extends State{
             }
             owner.movePoint.x = MathUtils.clamp(owner.movePoint.x,
                                                 owner.level.screen.cameraCenter.x - owner.level.screen.camera.viewportWidth/2,
-                                                owner.level.screen.cameraCenter.x + owner.level.screen.camera.viewportWidth/2);
+                                                owner.level.screen.cameraCenter.x + owner.level.screen.camera.viewportWidth/2 - owner.width);
             moveLeft = owner.updateMove(dt, moveLeft);
         }
     }

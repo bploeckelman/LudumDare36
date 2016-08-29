@@ -54,7 +54,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void update(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            LudumDare36.game.setScreen(Statistics.getStatisticsScreen());
+            LudumDare36.game.setScreen(new CharacterSelectScreen());
         }
 
         cameraDelay -= dt;
@@ -80,7 +80,7 @@ public class GameScreen extends BaseScreen {
             }
 
             if (cameraCenter.x == lastCameraX &&
-               (level.activeBoundries() > 0 || !atRightEdge)){
+               (level.activeBoundries() > 0 || !atRightEdge) && level.getActiveEnemies() == 0){
                 lagdelay += dt;
             } else {
                 lagdelay = 0;
