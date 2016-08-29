@@ -13,9 +13,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.entities.Boundary;
+import lando.systems.ld36.entities.GameObject;
 import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.entities.PlayerCharacter;
 import lando.systems.ld36.levels.Level;
@@ -38,6 +41,7 @@ public class GameScreen extends BaseScreen {
     public Color healthColor;
     public MutableFloat nagSize;
     public float cameraDelay;
+    public float timeAccumulator;
 
     public GameScreen(PlayerCharacter character) {
         camera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
@@ -48,6 +52,7 @@ public class GameScreen extends BaseScreen {
         level.initilizeStates();
         cameraCenter = new Vector2(camera.position.x, camera.position.y);
         nagSize = new MutableFloat(0);
+        timeAccumulator = 0;
     }
 
     @Override
@@ -56,6 +61,7 @@ public class GameScreen extends BaseScreen {
             LudumDare36.game.setScreen(new CharacterSelectScreen());
         }
 
+        timeAccumulator += dt;
         cameraDelay -= dt;
         if (cameraDelay < 0) cameraDelay = 0;
 
@@ -92,7 +98,7 @@ public class GameScreen extends BaseScreen {
             }
 
             if (cameraCenter.x == lastCameraX &&
-               (level.activeBoundries() > 0 || !atRightEdge) && level.getActiveEnemies() == 0){
+               (level.activeBoundries() > 0 || !atRightEdge) && level.getActiveEnemies().size == 0){
                 lagdelay += dt;
             } else {
                 lagdelay = 0;
@@ -152,7 +158,7 @@ public class GameScreen extends BaseScreen {
         batch.setProjectionMatrix(hudCamera.combined);
         // Draw HUD stuff
 
-        TextureRegion keepGoing = Assets.keepGoing.getKeyFrame(lagdelay);
+        TextureRegion keepGoing = Assets.keepGoing.getKeyFrame(timeAccumulator);
         batch.draw(keepGoing,
                 hudCamera.viewportWidth - ((keepGoing.getRegionWidth()*nagSize.floatValue()) + 20),
                 200,
@@ -239,6 +245,29 @@ public class GameScreen extends BaseScreen {
             15
         );
         batch.setColor(Color.WHITE);
+
+        Array<GameObject> activeEnemies = level.getActiveEnemies();
+        if (activeEnemies.size != 0){
+            boolean enemiesOnScreen = false;
+            Rectangle screenArea = new Rectangle(cameraCenter.x - camera.viewportWidth/2 - 32,
+                                                  cameraCenter.y - camera.viewportHeight/2,
+                                                  camera.viewportWidth + 32, camera.viewportHeight - hudHeight - hudBorderWidth );
+            for (GameObject enemy : activeEnemies){
+                if (screenArea.contains(enemy.position.x, enemy.position.y)){
+                    enemiesOnScreen = true;
+                }
+            }
+            if (!enemiesOnScreen){
+                Vector2 arrowVec = new Vector2();
+                for (GameObject enemy : activeEnemies){
+                    arrowVec.set(enemy.position.x - cameraCenter.x, enemy.position.y - cameraCenter.y);
+                    arrowVec.nor();
+                    float arrowX = hudCamera.position.x + (arrowVec.x * (150 + (10 * MathUtils.sin(timeAccumulator * 10))));
+                    float arrowY = hudCamera.position.y - (hudHeight - hudBorderWidth)/2 + (arrowVec.y * (150 + (10 * MathUtils.sin(timeAccumulator * 10))));
+                    batch.draw(Assets.arrow, arrowX, arrowY, 25, 25, 50, 50, 1, 1, arrowVec.angle());
+                }
+            }
+        }
 
         batch.end();
     }

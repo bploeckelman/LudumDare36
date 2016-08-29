@@ -323,17 +323,17 @@ public class Level {
         return count;
     }
 
-    public int getActiveEnemies(){
-        int count = 0;
+    public Array<GameObject> getActiveEnemies(){
+        Array<GameObject> es = new Array<GameObject>();
         for (int i = objects.size -1; i>=0; i--) {
             GameObject object = objects.get(i);
             if (!(object instanceof Enemy)) continue;
 
             final Enemy enemy = (Enemy) object;
-            if (enemy.activated) count++;
+            if (enemy.activated) es.add(enemy);
 
         }
-        return count;
+        return es;
     }
 
 }

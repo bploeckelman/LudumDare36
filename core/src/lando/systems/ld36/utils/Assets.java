@@ -85,6 +85,7 @@ public class Assets {
     public static NinePatch hudPatch;
 
     public static TextureRegion white;
+    public static TextureRegion arrow;
     public static NinePatch speechBubble;
 
 
@@ -285,6 +286,7 @@ public class Assets {
         speechBubble = new NinePatch(atlas.findRegion("speech"), 10, 10, 10, 10);
 
         white = atlas.findRegion("white");
+        arrow = atlas.findRegion("arrow");
 
         return 1f;
     }
