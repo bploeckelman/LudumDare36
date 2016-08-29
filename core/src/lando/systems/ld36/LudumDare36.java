@@ -14,6 +14,7 @@ import lando.systems.ld36.screens.BaseScreen;
 import lando.systems.ld36.screens.MenuScreen;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Config;
+import lando.systems.ld36.utils.Sounds;
 
 public class LudumDare36 extends ApplicationAdapter {
 

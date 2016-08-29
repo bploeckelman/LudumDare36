@@ -120,6 +120,7 @@ public class Assets {
 
         atlas = new TextureAtlas(Gdx.files.internal("sprites.atlas"));
 
+        Sounds.load();
 
         keyMapping = new KeyMapping();
     }
@@ -285,6 +286,7 @@ public class Assets {
         shapes.dispose();
         font.dispose();
         mgr.clear();
+        Sounds.dispose();
     }
 
     private static ShaderProgram compileShaderProgram(FileHandle vertSource, FileHandle fragSource) {

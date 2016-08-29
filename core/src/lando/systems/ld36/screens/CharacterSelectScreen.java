@@ -12,6 +12,7 @@ import lando.systems.ld36.LudumDare36;
 import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.entities.PlayerCharacter;
 import lando.systems.ld36.utils.Assets;
+import lando.systems.ld36.utils.Sounds;
 import lando.systems.ld36.utils.Statistics;
 
 public class CharacterSelectScreen extends BaseScreen {
@@ -62,6 +63,8 @@ public class CharacterSelectScreen extends BaseScreen {
             LudumDare36.game.setScreen( new MenuScreen());
         }
 
+        boolean playerSelectChanged = false;
+
         PlayerCharacter[] characters = PlayerCharacter.values();
         cursorPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         hudCamera.unproject(cursorPoint);
@@ -69,6 +72,9 @@ public class CharacterSelectScreen extends BaseScreen {
         if (!cursorPoint.epsilonEquals(lastCursorPoint, .5f)) {
             for (int i = 0; i < characterPanels.size; i++) {
                 if (characterPanels.get(i).contains(cursorPoint.x, cursorPoint.y)) {
+                    if (hoverCharacter != i) {
+                        playerSelectChanged = true;
+                    }
                     hoverCharacter = i;
                     break;
                 }
@@ -82,6 +88,7 @@ public class CharacterSelectScreen extends BaseScreen {
             if (hoverCharacter<0){
                 hoverCharacter += characterPanels.size;
             }
+            playerSelectChanged = true;
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.D) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
@@ -89,12 +96,18 @@ public class CharacterSelectScreen extends BaseScreen {
             if (hoverCharacter >= characterPanels.size){
                 hoverCharacter -= characterPanels.size;
             }
+            playerSelectChanged = true;
+        }
+
+        if (playerSelectChanged) {
+            Sounds.play(Sounds.Effect.playerSwitch);
         }
 
         if (hoverCharacter >= 0) {
             characters[hoverCharacter].keyframe = characters[hoverCharacter].walkAnimation.getKeyFrame(timer);
             if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER))) {
                 LudumDare36.game.setScreen(new GameScreen(characters[hoverCharacter]));
+                Sounds.play(Sounds.Effect.playerSelect);
             }
         }
     }
