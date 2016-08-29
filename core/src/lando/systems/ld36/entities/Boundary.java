@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Boundary {
 
-    Vector2 position;
-    boolean enabled;
+    public Vector2 position;
+    public boolean enabled;
 
     public Boundary(Vector2 position) {
         this.position = position;

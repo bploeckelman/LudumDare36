@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Sort;
+import lando.systems.ld36.ai.states.WaitState;
 import lando.systems.ld36.entities.*;
 import lando.systems.ld36.screens.GameScreen;
 import lando.systems.ld36.utils.Assets;
@@ -85,6 +86,7 @@ public class Level {
             }
         }
 
+        int aliveActiveEnemiesCount = 0;
         for (int i = objects.size -1; i>=0; i--){
             GameObject object = objects.get(i);
             if (!(object instanceof Enemy)) continue;
@@ -97,10 +99,19 @@ public class Level {
                     player.getHurt(enemy.attackPower, dir);
                 }
             }
+            if (enemy.activated){
+                aliveActiveEnemiesCount++;
+            }
             if (enemy.dead) {
                 objects.removeIndex(i);
             }
         }
+        Boundary b = getActiveBoundry();
+        if (b != null && aliveActiveEnemiesCount <= 0){
+            b.disable();
+        }
+
+
 
     }
 
@@ -265,5 +276,22 @@ public class Level {
             }
         }
     }
+
+    public Boundary getActiveBoundry(){
+        float cameraRightEdge = screen.cameraCenter.x + screen.camera.viewportHeight / 2f;
+        for (Boundary b : boundaries){
+            if (b.enabled && b.position.x < cameraRightEdge) return b;
+        }
+        return null;
+    }
+
+    public int activeBoundries(){
+        int count = 0;
+        for (Boundary b : boundaries){
+            if (b.enabled) count++;
+        }
+        return count;
+    }
+
 
 }

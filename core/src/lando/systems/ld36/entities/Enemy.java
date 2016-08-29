@@ -38,6 +38,7 @@ public class Enemy extends GameObject {
         maxHealth = 5;
 
         moveSpeed = 50;
+        activated = false;
 
 
     }
@@ -60,6 +61,8 @@ public class Enemy extends GameObject {
     }
 
     public void update(float dt) {
+        rightEdge = level.getLevelWidth() - (width/2);
+
         super.update(dt);
 
         stateMachine.update(dt);

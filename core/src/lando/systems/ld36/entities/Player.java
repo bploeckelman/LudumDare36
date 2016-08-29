@@ -41,7 +41,7 @@ public class Player extends GameObject {
         attack_range = 32;
     }
 
-    public void update(float dt, float leftEdge){
+    public void update(float dt, float leftEdge, float rightEdge){
         super.update(dt);
         if (dead){
             if (respawnTimer > 1) {
@@ -55,6 +55,7 @@ public class Player extends GameObject {
 
         isMoving = false;
         this.leftEdge = leftEdge;
+        this.rightEdge = rightEdge;
 
         if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.JUMP)){
             jump();

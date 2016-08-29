@@ -49,6 +49,7 @@ public class GameObject {
     Array<Rectangle> tiles;
     public Rectangle footBounds;
     public float leftEdge;
+    public float rightEdge;
     public int jumpCount;
     public boolean dead;
     public Array<Vector2> lastSafePlace;
@@ -81,6 +82,8 @@ public class GameObject {
     private static final int SHADOW_TEXTURE_HEIGHT = 32;
     public int shadowDrawWidth = 64;
     public int shadowYOffset = -10;
+    public boolean activated;
+
 
 
     private Rectangle shadowMasterRectangle;
@@ -134,7 +137,7 @@ public class GameObject {
         }
         // Keep player on play area
         position.y = MathUtils.clamp(position.y, bottomPlayArea, topPlayArea);
-        position.x = MathUtils.clamp(position.x, leftEdge, level.getLevelWidth() - (width/2)) ;
+        position.x = MathUtils.clamp(position.x, leftEdge, rightEdge) ;
 
         falling = notSafeToWalk(position);
 

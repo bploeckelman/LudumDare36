@@ -5,8 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld36.LudumDare36;
+import lando.systems.ld36.entities.Boundary;
 import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.entities.PlayerCharacter;
 import lando.systems.ld36.levels.Level;
@@ -21,12 +23,15 @@ import lando.systems.ld36.utils.Statistics;
  */
 public class GameScreen extends BaseScreen {
 
+    final float NAG_DELAY = 5f;
     Player debugPlayer;
     Level level;
     float hudHeight = 100;
     float hudBorderWidth = 4;
     public Shake screenShake;
     public Vector2 cameraCenter;
+    public float lastCameraX;
+    public float lagdelay = 0;
     public Color healthColor;
 
     public GameScreen(PlayerCharacter character) {
@@ -45,16 +50,29 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             LudumDare36.game.setScreen(Statistics.getStatisticsScreen());
         }
-        debugPlayer.update(dt, cameraCenter.x - camera.viewportWidth/2);
+        debugPlayer.update(dt, cameraCenter.x - camera.viewportWidth/2, cameraCenter.x + camera.viewportWidth/2 - 64);
 
-        // have camera follow player
-        if (debugPlayer.position.x > cameraCenter.x + camera.viewportWidth /6){
-            float screenXDif = debugPlayer.position.x - cameraCenter.x - camera.viewportWidth /6;
-            cameraCenter.x += screenXDif * .1f;
-        }
+        Boundary boundary = level.getActiveBoundry();
 
-        if (cameraCenter.x > level.getLevelWidth() - (camera.viewportWidth/2))  {
-            cameraCenter.x = level.getLevelWidth() - (camera.viewportWidth/2);
+        if (boundary == null) {
+            // have camera follow player
+            if (debugPlayer.position.x > cameraCenter.x) {
+                float screenXDif = debugPlayer.position.x - cameraCenter.x;
+                cameraCenter.x += screenXDif * .05f;
+            }
+            boolean atRightEdge = false;
+            if (cameraCenter.x > level.getLevelWidth() - (camera.viewportWidth / 2)) {
+                atRightEdge = true;
+                cameraCenter.x = level.getLevelWidth() - (camera.viewportWidth / 2);
+            }
+
+            if (cameraCenter.x == lastCameraX &&
+                    (level.activeBoundries() > 0 || !atRightEdge)){
+                lagdelay += dt;
+            } else {
+                lagdelay = 0;
+            }
+            lastCameraX = cameraCenter.x;
         }
 
 //        camera.update();
@@ -79,6 +97,15 @@ public class GameScreen extends BaseScreen {
         batch.begin();
         batch.setProjectionMatrix(hudCamera.combined);
         // Draw HUD stuff
+        if (lagdelay > NAG_DELAY){
+            TextureRegion keepGoing = Assets.keepGoing.getKeyFrame(lagdelay);
+            batch.draw(keepGoing,
+                    hudCamera.viewportWidth - (keepGoing.getRegionWidth() + 20),
+                    200,
+                    keepGoing.getRegionWidth(),
+                    keepGoing.getRegionHeight());
+        }
+
         Assets.hudPatch.draw(
             batch,
             hudBorderWidth,

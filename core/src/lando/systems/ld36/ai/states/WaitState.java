@@ -25,6 +25,7 @@ public class WaitState extends State {
 
     @Override
     public void onExit() {
+        owner.activated = true;
         Gdx.app.log("STATE-MACHINE", "Exit Wait");
     }
 }

@@ -76,6 +76,8 @@ public class Assets {
     public static Animation smartPhoneHard;
     public static Animation smartPhoneKnifeHard;
 
+    public static Animation keepGoing;
+
     public static Animation cloud;
 
     public static NinePatch hudPatch;
@@ -167,6 +169,9 @@ public class Assets {
 
         flashWalk = new Animation(.15f, atlas.findRegions("Flash_Walk"));
         flashWalk.setPlayMode(Animation.PlayMode.LOOP);
+
+        keepGoing = new Animation(.1f, atlas.findRegions("Keep_Going"));
+        keepGoing.setPlayMode(Animation.PlayMode.LOOP);
 
         Array<TextureAtlas.AtlasRegion> flashPunchMediumTextures = atlas.findRegions("Flash_Punch_Medium");
         flashPunchMediumTextures.add(flashPunchMediumTextures.get(2));
