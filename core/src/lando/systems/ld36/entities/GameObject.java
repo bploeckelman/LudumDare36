@@ -32,6 +32,7 @@ public class GameObject {
     public float ATTACK_COOLDOWN = .6f;
     public float jumpVelocity = 200;
     public float moveSpeed;
+    public boolean floating;
 
 
     public final float bottomPlayArea = 0;
@@ -86,7 +87,7 @@ public class GameObject {
     public int shadowYOffset = -10;
     public boolean activated;
 
-
+    public Color tintColor;
 
     private Rectangle shadowMasterRectangle;
     private Array<Rectangle> shadowDisplayRectangles;
@@ -116,6 +117,8 @@ public class GameObject {
         attackCooldown = 0;
         characterSpriteWidth = 45;
         name = "Unset";
+        tintColor = Color.WHITE;
+        floating = false;
 
     }
 
@@ -234,7 +237,7 @@ public class GameObject {
         if (invunerableTimer > 0){
             alpha = (invunerableTimer % invulerabilityFlashSpeed) * (1/ invulerabilityFlashSpeed);
         }
-        batch.setColor(1,1,1,alpha);
+        batch.setColor(tintColor.r,tintColor.g,tintColor.b,alpha);
         if (isFacingRight) {
             batch.draw(tex, position.x, position.y + position.z, width, height);
         } else {
@@ -316,8 +319,8 @@ public class GameObject {
     }
 
     public void getHurt(int dmg, int dir) {
+        if (dead) return;
         if ((health -= dmg) <= 0) {
-            if (dead) return;
             health = 0;
             respawnTimer = 1.1f;
             Assets.particles.addParticle(hitBounds, Color.WHITE);
@@ -347,7 +350,7 @@ public class GameObject {
         isMoving = dist > 0;
         if (dist < moveLeft){
             testPosition.set(movePoint.x, movePoint.y, 0);
-            if (!notSafeToWalk(testPosition)) {
+            if (floating || !notSafeToWalk(testPosition)) {
                 setPosition(movePoint.x, movePoint.y);
             }
             moveLeft -= dist;
@@ -357,7 +360,7 @@ public class GameObject {
             direction.nor().scl(moveLeft);
             testPosition.set(position);
             testPosition.add(direction.x, direction.y, 0);
-            if (notSafeToWalk(testPosition)) {
+            if (!floating && notSafeToWalk(testPosition)) {
                 movePoint.setZero();
             } else {
                 if (!setPosition(testPosition)){
@@ -379,7 +382,7 @@ public class GameObject {
     public boolean setPosition(float x, float y, float z){
         float leftY = level.getTopBound(x);
         float rightY = level.getTopBound(x+characterSpriteWidth);
-        if (y < leftY && y < rightY){
+        if (floating  || (y < leftY && y < rightY)){
             position.set(x, y, z);
             return true;
         }

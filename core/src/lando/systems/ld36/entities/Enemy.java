@@ -84,7 +84,7 @@ public class Enemy extends GameObject {
         batch.draw(
                 Assets.white,
                 position.x,
-                position.y + height,
+                position.y + height + position.z,
                 characterSpriteWidth, // Full health
                 5
         );
@@ -94,7 +94,7 @@ public class Enemy extends GameObject {
         batch.draw(
                 Assets.white,
                 position.x,
-                position.y + height,
+                position.y + height + position.z,
                 ((float)health/maxHealth) * characterSpriteWidth, // Full health
                 5
         );

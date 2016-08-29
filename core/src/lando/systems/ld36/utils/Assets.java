@@ -96,6 +96,7 @@ public class Assets {
             Tween.registerAccessor(Vector2.class, new Vector2Accessor());
             Tween.registerAccessor(Vector3.class, new Vector3Accessor());
             Tween.registerAccessor(OrthographicCamera.class, new CameraAccessor());
+            Tween.setWaypointsLimit(3);
         }
 
         glyphLayout = new GlyphLayout();
