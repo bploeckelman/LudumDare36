@@ -59,6 +59,7 @@ public class CloudStage2State extends State {
     public void onEnter() {
         cloud.shootDelay = SHOOT_DELAY;
         cloud.moveSpeed = 150;
+        owner.say("This isn't even my final form!");
     }
 
     @Override

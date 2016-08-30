@@ -60,6 +60,7 @@ public class CloudStage1State extends State {
     public void onEnter() {
         cloud.shootDelay = SHOOT_DELAY;
         cloud.moveSpeed = 100;
+        owner.say("Death from above!");
     }
 
     @Override

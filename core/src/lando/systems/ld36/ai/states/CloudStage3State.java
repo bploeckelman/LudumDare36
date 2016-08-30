@@ -96,6 +96,7 @@ public class CloudStage3State extends State {
                 .target(leftSide.x, leftSide.y, leftSide.z)
                 .start(Assets.tween);
         cloud.invunerableTimer = 1f;
+        owner.say("Dodge this!");
     }
 
     @Override

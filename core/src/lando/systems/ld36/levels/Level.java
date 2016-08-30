@@ -127,7 +127,9 @@ public class Level {
         if (!completed && boss.dead && aliveActiveEnemiesCount <= 0){
             completed = true;
             screen.cameraDelay += 3f;
-            Sounds.play(Sounds.Effect.bossDead);
+            if (!(boss instanceof Cloud)) {
+                Sounds.play(Sounds.Effect.bossDead);
+            }
         }
     }
 

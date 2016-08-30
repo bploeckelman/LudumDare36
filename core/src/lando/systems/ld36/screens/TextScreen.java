@@ -24,7 +24,7 @@ public class TextScreen extends BaseScreen {
     BaseScreen nextScreen;
 
     public TextScreen(String text, BaseScreen screen) {
-        this(text, .07f, screen);
+        this(text, .04f, screen);
     }
 
     public TextScreen(String text, float typingRate, BaseScreen screen) {

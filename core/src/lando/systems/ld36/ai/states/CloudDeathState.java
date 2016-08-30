@@ -9,6 +9,7 @@ import lando.systems.ld36.entities.Cassette;
 import lando.systems.ld36.entities.GameObject;
 import lando.systems.ld36.entities.Player;
 import lando.systems.ld36.utils.Assets;
+import lando.systems.ld36.utils.Sounds;
 import lando.systems.ld36.utils.accessors.Vector3Accessor;
 
 /**
@@ -69,8 +70,8 @@ public class CloudDeathState extends State {
                     }
                 }))
                 .start(Assets.tween);
-
-
+        Sounds.play(Sounds.Effect.bossDead);
+        Sounds.play(Sounds.Effect.cloudDead);
     }
 
     @Override
