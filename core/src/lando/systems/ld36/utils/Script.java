@@ -18,8 +18,31 @@ public class Script {
                         .append("\n\n\nWe must save Cass-ette...\n")
                         .append("or she will be lost to history.")
                         .toString();
+            case 2:
+                return new com.badlogic.gdx.utils.StringBuilder()
+                        .append("And our heros are underway.\n\n")
+                        .append("Having defeated the first of the smart phones they continue on.")
+                        .toString();
+            case 3:
+                return new com.badlogic.gdx.utils.StringBuilder()
+                        .append("Already killing many SD cards and Flash drives.\n\nThey continue ")
+                        .append("their quest to find Cass-ette and claim victory for the COOT \"COUNCIL ")
+                        .append("OF OBSOLETE TECHNOLOGIES.\"")
+                        .toString();
+
+            case 4:
+                return new com.badlogic.gdx.utils.StringBuilder()
+                        .append("Now the heros find themselves in a room made of a series of tubes.\n")
+                        .append("They must be getting close to their goal. (hint: this is the final level)")
+                        .toString();
+            case 5:
+                return new com.badlogic.gdx.utils.StringBuilder()
+                        .append("As you might have already guessed. Our heros defeated \"The Cloud\" ")
+                        .append("and saved Cass-ette.\n\n\n")
+                        .append("It turns out the Cloud was just somebody elses computer.")
+                        .toString();
         }
-        return "You didn't write a script yet... ";
+        return "Oops we missed a text segment";
     }
 
     public static String getLevelFileName(){

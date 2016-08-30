@@ -72,7 +72,7 @@ public class TextScreen extends BaseScreen {
         Assets.hudPatch.draw(batch, panel.x, panel.y, panel.width, panel.height);
         Assets.emuLogicFont.getData().setScale(1f);
         Assets.glyphLayout.setText(Assets.emuLogicFont, textToRender, Color.WHITE, textBounds.width, Align.left, true);
-        Assets.emuLogicFont.draw(batch, Assets.glyphLayout, textBounds.x, textBounds.y + textBounds.height);
+        Assets.emuLogicFont.draw(batch, Assets.glyphLayout, textBounds.x, textBounds.y + (textBounds.height + Assets.glyphLayout.height)/2f);
 
         batch.end();
     }
