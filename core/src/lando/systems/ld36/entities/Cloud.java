@@ -81,6 +81,7 @@ public class Cloud extends Enemy {
         CloudStage1State stage1 = new CloudStage1State(this);
         CloudStage2State stage2 = new CloudStage2State(this);
         CloudStage3State stage3 = new CloudStage3State(this);
+        CloudDeathState death = new CloudDeathState(this);
 
         // Conditions
         EndOfScreenCondition endOfScreen = new EndOfScreenCondition(this);
@@ -101,6 +102,7 @@ public class Cloud extends Enemy {
         transitions.add(new Transition(floatUp, floatingCondition, stage1));
         transitions.add(new Transition(stage1, healthBelow50, stage2));
         transitions.add(new Transition(stage2, healthBelow15, stage3));
+        transitions.add(new Transition(stage3, healthBelow0, death));
 
         // Create State Machine
         stateMachine = new StateMachine(wait, transitions);

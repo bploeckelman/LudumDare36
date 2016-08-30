@@ -36,6 +36,7 @@ public class Level {
     public Player player;
     public GameObject boss;
     public boolean completed;
+    public boolean allowPlayerInput;
 
     private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
@@ -57,6 +58,7 @@ public class Level {
         this.screen = screen;
         load(name, character, Assets.batch);
         completed = false;
+        allowPlayerInput = true;
     }
 
     public void setPlayer(Player player) {

@@ -30,6 +30,7 @@ public class Cassette extends GameObject {
         jumpVelocity = 50f;
         position.x = x;
         position.y = y;
+        canWalkOnWall = true;
     }
 
     public void initializeStates() {
@@ -48,8 +49,13 @@ public class Cassette extends GameObject {
     }
 
     public void update(float dt){
-
-        stateMachine.update(dt);
+        if (showHealthBar) {
+            speechBubbleTimer -= dt;
+            if (speechBubbleTimer < 0) {
+                speechBubbleTimer = 0;
+            }
+        }
+//        stateMachine.update(dt);
 
     }
 

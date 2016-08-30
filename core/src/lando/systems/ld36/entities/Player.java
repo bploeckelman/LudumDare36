@@ -1,6 +1,8 @@
 package lando.systems.ld36.entities;
 
 import aurelienribon.tweenengine.primitives.MutableFloat;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld36.levels.Level;
@@ -63,35 +65,48 @@ public class Player extends GameObject {
         this.leftEdge = leftEdge;
         this.rightEdge = rightEdge;
 
-        if (Assets.keyMapping.isActionJustPressed(KeyMapping.ACTION.JUMP)){
-            jump();
-        }
+        if (level.allowPlayerInput) {
+            if (Assets.keyMapping.isActionJustPressed(KeyMapping.ACTION.JUMP)) {
+                jump();
+            }
 
-        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) &&
-                Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)){
-            // Do nothing
-        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT)) {
-            setPosition(position.x + moveSpeed * dt * (falling ? 0.5f : 1f), position.y);
-            isMoving = true;
-            isFacingRight = true;
-        } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)) {
-            setPosition(position.x - moveSpeed * dt * (falling ? 0.5f : 1f), position.y);
-            isMoving = true;
-            isFacingRight = false;
-        }
+            //TODO REMOVE ME
+            if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+                for(int i = 0; i < level.objects.size; i++)
+                {
+                    GameObject obj = level.objects.get(i);
+                    if (obj instanceof Enemy) obj.health = 0;
+                }
+                level.boss.health = 0;
+            }
 
-        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.UP)){
-            setPosition(position.x, position.y + moveSpeed * dt);
-            isMoving = true;
-        }
-        if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.DOWN)){
-            setPosition(position.x, position.y - moveSpeed * dt);
-            isMoving = true;
-        }
+            if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) &&
+                    Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)) {
+                // Do nothing
+            } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT)) {
+                setPosition(position.x + moveSpeed * dt * (falling ? 0.5f : 1f), position.y);
+                isMoving = true;
+                isFacingRight = true;
+            } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)) {
+                setPosition(position.x - moveSpeed * dt * (falling ? 0.5f : 1f), position.y);
+                isMoving = true;
+                isFacingRight = false;
+            }
+
+            if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.UP)) {
+                setPosition(position.x, position.y + moveSpeed * dt);
+                isMoving = true;
+            }
+            if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.DOWN)) {
+                setPosition(position.x, position.y - moveSpeed * dt);
+                isMoving = true;
+            }
 
 
-        if(Assets.keyMapping.isActionJustPressed(KeyMapping.ACTION.ATTACK)) {
-            attack();
+            if (Assets.keyMapping.isActionJustPressed(KeyMapping.ACTION.ATTACK)) {
+                attack();
+            }
+
         }
 
 
