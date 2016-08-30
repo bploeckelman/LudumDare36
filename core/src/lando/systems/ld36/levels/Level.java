@@ -15,6 +15,7 @@ import lando.systems.ld36.entities.*;
 import lando.systems.ld36.screens.GameScreen;
 import lando.systems.ld36.utils.Assets;
 import lando.systems.ld36.utils.Sounds;
+import lando.systems.ld36.utils.Statistics;
 
 import java.util.Comparator;
 
@@ -115,6 +116,7 @@ public class Level {
             }
             if (enemy.dead) {
                 objects.removeIndex(i);
+                Statistics.enemiesKilled++;
             }
         }
         Boundary b = getActiveBoundry();

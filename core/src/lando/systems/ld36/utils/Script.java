@@ -29,7 +29,7 @@ public class Script {
                 return new com.badlogic.gdx.utils.StringBuilder()
                         .append("Already killing many SD cards and Flash drives.")
                         .append("\n\nThey continue their quest to find Cass-ette and claim victory for the C.O.O.T.")
-                        .append("\n\"COUNCIL OF OBSOLETE TECHNOLOGIES.\"")
+                        .append("\n\n\"COUNCIL OF OBSOLETE TECHNOLOGIES.\"")
                         .toString();
 
             case 4:
