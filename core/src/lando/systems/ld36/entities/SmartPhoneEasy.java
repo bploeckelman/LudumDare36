@@ -23,6 +23,7 @@ public class SmartPhoneEasy extends Enemy {
         hitBounds = new Rectangle(position.x, position.y, 32f, tex.getRegionHeight());
         attackPower = 8;
         moveSpeed = 75;
+        health = maxHealth = 20;
 
         if (isBoss) level.boss = this;
         name = "Shutters";

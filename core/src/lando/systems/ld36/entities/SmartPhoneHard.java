@@ -15,5 +15,8 @@ public class SmartPhoneHard extends SmartPhoneMedium {
         moveSpeed = 95;
         name = "SlamDroid";
         taunt = "Slamdroids are the most customizable";
+
+        health = maxHealth = 50;
+
     }
 }

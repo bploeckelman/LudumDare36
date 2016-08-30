@@ -15,5 +15,8 @@ public class SmartPhoneMedium extends SmartPhoneEasy {
         moveSpeed = 85;
         name = "Fruit";
         taunt = "Fruit phones are easy to use";
+
+        health = maxHealth = 30;
+
     }
 }

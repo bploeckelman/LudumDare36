@@ -29,12 +29,12 @@ public class FlashDriveMedium extends FlashDriveEasy {
         // States enemy can have
         WaitState wait = new WaitState(this);
         WanderState wander = new WanderState(this);
-        ChaseState chase = new ChaseState(this);
+        ChaseAvoidState chase = new ChaseAvoidState(this);
 
         // Conditions
         NearScreenCondition nearCond = new NearScreenCondition(level.screen.camera, this);
-        NearObjectCondition nearPlayer = new NearObjectCondition(this, level.player, 100);
-        AwayFromObjectCondition farPlayer = new AwayFromObjectCondition(this, level.player, 100);
+        NearObjectCondition nearPlayer = new NearObjectCondition(this, level.player, 200);
+        AwayFromObjectCondition farPlayer = new AwayFromObjectCondition(this, level.player, 200);
 
         // Transitions
         Array<Transition> transitions = new Array<Transition>();

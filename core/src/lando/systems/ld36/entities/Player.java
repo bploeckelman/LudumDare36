@@ -70,34 +70,34 @@ public class Player extends GameObject {
                 jump();
             }
 
-            //TODO REMOVE ME
-            if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
-                for(int i = 0; i < level.objects.size; i++)
-                {
-                    GameObject obj = level.objects.get(i);
-                    if (obj instanceof Enemy) obj.health = 0;
-                }
-                level.boss.health = 0;
-            }
+//            //TODO REMOVE ME
+//            if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+//                for(int i = 0; i < level.objects.size; i++)
+//                {
+//                    GameObject obj = level.objects.get(i);
+//                    if (obj instanceof Enemy) obj.health = 0;
+//                }
+//                level.boss.health = 0;
+//            }
 
             if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) &&
                     Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)) {
                 // Do nothing
-            } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT)) {
+            } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 setPosition(position.x + moveSpeed * dt * (falling ? 0.5f : 1f), position.y);
                 isMoving = true;
                 isFacingRight = true;
-            } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT)) {
+            } else if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.LEFT) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 setPosition(position.x - moveSpeed * dt * (falling ? 0.5f : 1f), position.y);
                 isMoving = true;
                 isFacingRight = false;
             }
 
-            if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.UP)) {
+            if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.UP) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 setPosition(position.x, position.y + moveSpeed * dt);
                 isMoving = true;
             }
-            if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.DOWN)) {
+            if (Assets.keyMapping.isActionPressed(KeyMapping.ACTION.DOWN) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 setPosition(position.x, position.y - moveSpeed * dt);
                 isMoving = true;
             }

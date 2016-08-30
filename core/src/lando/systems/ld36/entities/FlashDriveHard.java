@@ -6,6 +6,7 @@ import lando.systems.ld36.ai.Transition;
 import lando.systems.ld36.ai.conditions.AwayFromObjectCondition;
 import lando.systems.ld36.ai.conditions.NearObjectCondition;
 import lando.systems.ld36.ai.conditions.NearScreenCondition;
+import lando.systems.ld36.ai.states.ChaseAvoidState;
 import lando.systems.ld36.ai.states.ChaseState;
 import lando.systems.ld36.ai.states.WaitState;
 import lando.systems.ld36.ai.states.WanderState;
@@ -30,7 +31,7 @@ public class FlashDriveHard extends FlashDriveMedium {
     public void initializeStates(){
         // States enemy can have
         WaitState wait = new WaitState(this);
-        ChaseState chase = new ChaseState(this);
+        ChaseAvoidState chase = new ChaseAvoidState(this);
 
         // Conditions
         NearScreenCondition nearCond = new NearScreenCondition(level.screen.camera, this);
